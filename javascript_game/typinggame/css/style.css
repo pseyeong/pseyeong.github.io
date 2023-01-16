@@ -8,4 +8,4 @@ header{width:100%;background:rgb(69, 123, 155);color:#fff;text-align: center;pad
 .game_info {margin-top: 2rem;font-size: .8rem;display:flex;justify-content: space-between;width:250px}
 .time, .score{font-size:30px;}
 .btn {width:50%;height:40px;background:rgb(69, 123, 155);color:#fff;border:none;margin-top:3rem;cursor: pointer;}
-.loading {background:#ccc;}
+.loading {background:#ccc;cursor:not-allowed;}
