@@ -2,8 +2,8 @@
 body{display:flex;flex-direction: column;justify-content: center;align-items: center;}
 
 header{width:100%;background:rgb(69, 123, 155);color:#fff;text-align: center;padding:1rem 0;}
-.display {width:80%;text-align:center;}
-.display p{margin-top:3rem;font-size:80px;text-align:center;color:rgb(69, 123, 155);font-weight:600}
+.display {width:80%;text-align:center;margin-top:3rem;font-size:80px;color:rgb(69, 123, 155);font-weight:600}
+.display p{}
 .word_input {padding:.5rem;margin-top:1rem;width:80%;text-align:left;}
 .game_info {margin-top: 2rem;font-size: .8rem;display:flex;justify-content: space-between;width:250px}
 .time, .score{font-size:30px;}

@@ -1,6 +1,6 @@
 //사용변수
 
-const GAME_TIME = 3; // const ->> 변경 불가능
+const GAME_TIME = 6; // const ->> 변경 불가능
 let score = 0;
 let time = GAME_TIME;
 let isPlaying = false;
@@ -21,6 +21,7 @@ function init(){ //단어를 불러옴
     btnChange('게임 로딩 중');
     getWords();
     wordInput.addEventListener('input', checkMatch);
+    
 }
 
 //게임실행
@@ -36,6 +37,7 @@ function run(){
     timeInterval = setInterval(countDown, 1000);
     checkInterval = setInterval(checkStatus, 50); // 상태체크
     btnChange('게임 중');
+    
 }
 
 //게임 실행 상태확인
@@ -43,6 +45,8 @@ function checkStatus(){
     if(!isPlaying && time === 0){
         btnChange("게임 시작");
         clearInterval(checkInterval);
+        button.classList.remove('loading');
+        
     }
 }
 
@@ -58,6 +62,7 @@ function getWords(){
                 }
             })
             btnChange('게임 시작');
+            button.classList.remove('loading');
 
             // handle success
             //console.log(response.data);
