@@ -14,7 +14,7 @@
 </head>
 <body>
     <div class="wrap">
-        <div class="bak_btn on" onclick="bak_change()"><!--on일때 white-->            
+        <div class="bak_btn" onclick="bak_change()"><!--on일때 white-->            
             <span class="round_btn"></span>
         </div>
         <header>
@@ -27,7 +27,16 @@
                 </div>
             </div>
             
-            <p></p>
+            <div class="head_menu">
+                <div>
+                    <ul>
+                        <li>about me</li>
+                        <li>skill</li>
+                        <li>game</li>
+                        <li>publisher</li>
+                    </ul>
+                <div>
+            </div>
             <div class="tab">
                 <div></div>
                 <div></div>
@@ -35,6 +44,20 @@
             </div>          
         </header>
         <section class="main">
+            <!--이름 모션 ST-->
+            <div class="ct_name_box">
+                <span class="ct_name"></span>
+                <span class="blink">|</span>
+            </div>
+            <!--이름 모션 ED-->
+            <!--notion 이력서 버튼 ST-->
+            <div class="notion">
+                <span class="notion_txt">notion<br/>이력서<br/>보러가기</span>
+                <svg id="circle">
+                    <circle cx="40" cy="40" r="39" stroke="#141414" stroke-width="2" fill="transparent"></circle>
+                </svg>
+            </div>
+            <!--notion 이력서 버튼 ED-->
 
         </section>
         <footer></footer>

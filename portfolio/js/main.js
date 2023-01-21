@@ -2,29 +2,59 @@ const loding = document.querySelector(".loding");
 const bak_btn = document.querySelector(".bak_btn");
 const wrap_box = document.querySelector(".wrap");
 
-setTimeout(()=>{
+let i = 0;
+
+setTimeout(()=>{ // 3초 뒤 실행
     loding.classList.add("on");
+
+    //타이핑 ST
+    (function(){
+        const ct_name = "SE YEONG \n FRONT-END DEVELOPER \n PORTFOLIO";
+        const ct_name_typing = document.querySelector(".ct_name");
+        
+        let i = 0;
+    
+        function ct_name_typing_txt(){
+            if(i < ct_name.length){
+                let ct_txt = ct_name.charAt(i);
+                ct_name_typing.innerHTML += ct_txt === "\n" ? "<br/>" : ct_txt;
+                i++; 
+            }
+    
+        }
+        
+        setInterval(ct_name_typing_txt, 100);
+    }());
+    //타이핑 ED
+
 }, 3000);
 
 
-let i = 0;
+
 
 function bak_change(){
 
     let bg_col = ["#141414","#ffffff"];
     
-    wrap_box.style.backgroundColor = bg_col[i];
+    wrap_box.style.backgroundColor = bg_col[i];    
 
     i++;
 
     if(i>=bg_col.length){
         i=0;
-
-        bak_btn.classList.add("on");
-    }else{
+        //하얀배경
         bak_btn.classList.remove("on");
+        wrap_box.classList.remove("on");
+        wrap_box.style.color = '#141414';
+    }else{
+        //검정배경
+        bak_btn.classList.add("on"); 
+        wrap_box.classList.add("on"); 
+        wrap_box.style.color = 'white';
+        
     }
     
 
     
 }
+
