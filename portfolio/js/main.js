@@ -58,3 +58,16 @@ function bak_change(){
     
 }
 
+
+//마우스 이동
+const mouse_pit = document.querySelector(".mouse_pointer");
+
+document.addEventListener('mousemove',(event)=>{
+    const mouseX = event.clientX;
+    const mouseY = event.clientY;
+
+    mouse_pit.style.left = mouseX + 'px';
+    mouse_pit.style.top = mouseY + 'px';
+
+
+});
