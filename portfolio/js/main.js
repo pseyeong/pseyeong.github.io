@@ -78,3 +78,18 @@ document.addEventListener('mousemove', (e) => {
   docStyle.setProperty('--mouse-x', e.clientX);
   docStyle.setProperty('--mouse-y', e.clientY);
 });
+
+const hover_mtxt = document.querySelector(".dot");
+
+hover_mtxt.addEventListener('mouseover',()=>{
+    hover_mtxt.classList.add('hover');
+    hover_mtxt.classList.remove('hover02');
+});
+
+hover_mtxt.addEventListener('mouseout',()=>{
+    hover_mtxt.classList.remove('hover');
+    hover_mtxt.classList.add('hover02');
+});
+
+
+
