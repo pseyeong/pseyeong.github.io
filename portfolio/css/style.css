@@ -11,6 +11,9 @@
     font-weight: 700;
     font-style: normal;
 }
+/*
+포인트 색상 : rgba(50, 255, 245, 0.7) - 민트
+*/
 
 *{margin:0;padding:0;list-style: none;box-sizing: border-box;}
 
@@ -33,12 +36,23 @@ header {width:100%;height:5rem;position: absolute;top:0;left:0;z-index: 999999;}
 .head_menu > div{display:inline-block;}
 .head_menu ul {display:flex;cursor: pointer;}
 .head_menu li {padding:0 20px;font-size:16px;font-family: 'S-CoreDream-3Light';text-transform: uppercase;}
-.tab {position:absolute;top:1rem;right:2vw;}
-.tab div{display:block;width:25px;height:3px;border-radius:3px;background:#141414;margin-top:.5rem}
-.tab div:nth-child(2){width:15px;transform:translateX(60%);}
-.ct_name_box {text-align:center;padding-top:25rem}
+.head_menu li:hover {position:relative;}
+.head_menu li:hover::after {content:'';display:inline-block;width:100%;height:12px;position: absolute;bottom:0;left:0;background:rgba(50, 255, 245, 0.7);z-index:-1;animation:width_100 1s forwards}
+
+
+
+@keyframes width_100{
+    0%{width:0;}
+    100%{width:100%}
+}
+.tab {position:absolute;top:1.4rem;right:2vw;}
+.tab div{display:block;width:25px;height:3px;border-radius:3px;background:#141414;margin-top:.3rem}
+.ct_name_box {text-align:center;padding-top:25rem;position:relative;z-index:999}
 .ct_name {font-size:3.5rem;font-family: 'KIMM_Bold';text-align:center;}
 .blink{animation: blink .8s infinite;font-family: 'KIMM_Bold';font-size:3.5rem;display:inline-block}
+
+.round_3d {overflow: hidden;width:100%;position:absolute;top:13rem;left:0;text-align:center;z-index:1;}
+.round_3d img {width:25%;opacity:.5;transform: translateX(calc(var(--mouse-x) * 0.01px)) translateY(calc(var(--mouse-y) * 0.01px));margin:2rem 5rem;}
 
 @keyframes blink {
     to {opacity: 0;}
@@ -48,7 +62,30 @@ header {width:100%;height:5rem;position: absolute;top:0;left:0;z-index: 999999;}
 #circle {position:absolute;top:0;left:0;stroke-dasharray:400;stroke-dashoffset:400;stroke-linecap:round;-webkit-transition:all 2s ease-out;-moz-transition:all 2s ease-out;-ms-transition:all 2s ease-out;-o-transition:all 2s ease-out;transition:all 2s ease-out;}
 .notion:hover #circle{stroke-dashoffset:0;stroke-dasharray:400;stroke-width:0.7;}
 .notion_txt {font-family: 'S-CoreDream-3Light';font-size:.8rem;text-align: center;display:inline-block;width:80px;height:80px;text-transform: uppercase;padding-top:12px}
-.mouse_pointer {display:inline-block;width:40px;height:40px;border:1px solid #ddd ;border-radius:50%;position:absolute;top:0;left:0;transform: translate(-25%, -25%);background:rgba(255,255,255,.3)}
+.mouse_pointer {display:inline-block;width:40px;height:40px;border:1px solid rgba(50, 255, 245, 0.5) ;border-radius:50%;position:absolute;top:0;left:0;transform: translate(-25%, -25%);background:rgba(50, 255, 245, 0.2)}
+.dot {position:absolute;z-index:99999;cursor:pointer}
+.dot > div{width:15px;height:15px;background:rgba(50, 255, 245, 0.5);border-radius: 50%;position:relative;transition:1s}
+.dot > div::after{content:'';display:inline-block;width:30px;height:30px;border:1px solid rgba(50, 255, 245, 0.5);position:absolute;top:0;left:0;border-radius: 50%;animation:op_wi 2s infinite;}
+.dot:hover > div:before{content:'';display:inline-block;width:13rem;height:13rem;background:url('../../portfolio/images/me2.gif') no-repeat;background-position:center;background-size:100% 100%;border-radius: 50%;animation:opacity_0_1 1s forwards;border:2px solid rgba(50, 255, 245, 0.3);}
+
+.dot:hover > div:after{display:none;}
+
+.dot p {font-size:1.2rem;font-family: 'KIMM_Bold';position:absolute;top:-2px;left:30px;white-space: nowrap;color:rgba(50, 255, 245, 0.7);z-index:-1}
+
+.dot.aboutMe {top:15rem;left:40rem}
+.dot.skill {top:23rem;right:37rem}
+.dot.game {bottom:12rem;right:47rem}
+
+@keyframes opacity_0_1 {
+    0% {opacity: 0;transform:scale(0);transform:translate(0,0);width:30px;height:30px;}
+    100% {opacity:1;transform:scale(1);transform:translate(-100px,-100px);width:13rem;height:13rem;}
+  }
+
+@keyframes op_wi{
+    0%{opacity:0;transform:scale(0) translate(0px,0px);width:15px;height:15px;}
+    50%{opacity:1;transform:scale(1) translate(-7px,-7px)}
+    100%{opacity:0;transform:scale(1) translate(-9px,-9px)}
+}
 
 /*블랙배경*/
 
