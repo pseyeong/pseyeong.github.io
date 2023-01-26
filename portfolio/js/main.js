@@ -81,15 +81,16 @@ document.addEventListener('mousemove', (e) => {
 
 const hover_mtxt = document.querySelector(".dot");
 
-hover_mtxt.addEventListener('mouseover',()=>{
+
+hover_mtxt.addEventListener('mouseenter',()=>{
+    
     hover_mtxt.classList.add('hover');
     hover_mtxt.classList.remove('hover02');
 });
 
-hover_mtxt.addEventListener('mouseout',()=>{
+hover_mtxt.addEventListener('mouseleave',()=>{
     hover_mtxt.classList.remove('hover');
     hover_mtxt.classList.add('hover02');
 });
-
 
 

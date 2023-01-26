@@ -18,7 +18,7 @@
 *{margin:0;padding:0;list-style: none;box-sizing: border-box;}
 
 .wrap {background:#fff;color:#141414;position: relative;width:100%;height:100vh;overflow: hidden;}
-header {width:100%;height:5rem;position: absolute;top:0;left:0;z-index: 999999;}
+header {width:100%;height:5rem;position: absolute;top:0;left:0;z-index: 9999999;}
 
 
 .bak_btn {position:absolute;top:2rem;right:5vw;border:2px solid #ddd;display:inline-block;height:10px;width:40px;border-radius: 10px;cursor:pointer;z-index:999999999}
@@ -58,24 +58,24 @@ header {width:100%;height:5rem;position: absolute;top:0;left:0;z-index: 999999;}
     to {opacity: 0;}
   }
 
-.notion{position:fixed;bottom:3rem;right:2rem;border-radius:50%;cursor:pointer;border:1px solid rgba(221,221,221,.6);width:80px;height:80px;}
+.notion{position:fixed;bottom:3rem;right:4rem;border-radius:50%;cursor:pointer;border:1px solid rgba(221,221,221,.6);width:80px;height:80px;z-index:99999999999}
 #circle {position:absolute;top:0;left:0;stroke-dasharray:400;stroke-dashoffset:400;stroke-linecap:round;-webkit-transition:all 2s ease-out;-moz-transition:all 2s ease-out;-ms-transition:all 2s ease-out;-o-transition:all 2s ease-out;transition:all 2s ease-out;}
 .notion:hover #circle{stroke-dashoffset:0;stroke-dasharray:400;stroke-width:0.7;}
 .notion_txt {font-family: 'S-CoreDream-3Light';font-size:.8rem;text-align: center;display:inline-block;width:80px;height:80px;text-transform: uppercase;padding-top:12px}
-.mouse_pointer {display:inline-block;width:40px;height:40px;border:1px solid rgba(50, 255, 245, 0.5) ;border-radius:50%;position:absolute;top:0;left:0;transform: translate(-25%, -25%);background:rgba(50, 255, 245, 0.2)}
+.mouse_pointer {display:inline-block;width:40px;height:40px;border:1px solid rgba(50, 255, 245, 0.5) ;border-radius:50%;position:absolute;top:0;left:0;transform: translate(-25%, -25%);background:rgba(50, 255, 245, 0.2);z-index:9999999}
 .dot {position:absolute;z-index:99999;cursor:pointer}
 .dot > div{width:15px;height:15px;background:rgba(50, 255, 245, 0.5);border-radius: 50%;position:relative;transition:1s}
 .dot > div::after{content:'';display:inline-block;width:30px;height:30px;border:1px solid rgba(50, 255, 245, 0.5);position:absolute;top:0;left:0;border-radius: 50%;animation:op_wi 2s infinite;}
-.dot.hover > div:before{content:'';display:inline-block;width:13rem;height:13rem;background:url('../../portfolio/images/me2.gif') no-repeat;background-position:center;background-size:100% 100%;border-radius: 50%;animation:opacity_0_1 1s forwards;border:2px solid rgba(50, 255, 245, 0.3);}
-.dot.hover02 > div:before{content:'';display:inline-block;width:13rem;height:13rem;background:url('../../portfolio/images/me2.gif') no-repeat;background-position:center;background-size:100% 100%;border-radius: 50%;animation:opacity_1_0 1s forwards;border:2px solid rgba(50, 255, 245, 0.3);}
+.dot.hover > div:before{content:'';display:inline-block;width:13rem;height:13rem;background:url('../../portfolio/images/me2.gif') no-repeat;background-position:center;background-size:100% 100%;border-radius: 50%;animation:opacity_0_1 1s forwards;border:4px solid rgba(50, 255, 245, 1);}
+.dot.hover02 > div:before{content:'';display:inline-block;width:13rem;height:13rem;background:url('../../portfolio/images/me2.gif') no-repeat;background-position:center;background-size:100% 100%;border-radius: 50%;animation:opacity_1_0 1s forwards;border:4px solid rgba(50, 255, 245, 1);}
 
 .dot:hover > div:after{display:none;}
 
 .dot p {font-size:1.2rem;font-family: 'KIMM_Bold';position:absolute;top:-2px;left:30px;white-space: nowrap;color:rgba(50, 255, 245, 0.7);z-index:-1}
 
-.dot.aboutMe {top:15rem;left:40rem}
-.dot.skill {top:23rem;right:37rem}
-.dot.game {bottom:12rem;right:47rem}
+.dot.aboutMe {top:15rem;left:30rem}
+.dot.skill {top:23rem;right:32rem}
+.dot.game {bottom:10rem;right:47rem}
 
 @keyframes opacity_0_1 {
     0% {opacity: 0;transform:scale(0);transform:translate(0,0);width:30px;height:30px;}
@@ -93,7 +93,30 @@ header {width:100%;height:5rem;position: absolute;top:0;left:0;z-index: 999999;}
     100%{opacity:0;transform:scale(1) translate(-9px,-9px)}
 }
 
+
+/*sub박스*/
+.sub_box {position:fixed;width:100%;transition:1s;z-index:99999}
+.mint_border {background:#fff;border:1px solid #efefef;width:80%;height:80vh;position:absolute;right:0;left:auto;top:0;border-radius:15px;}
+.hide_box {display:none;transition:1s}
+
+.sub_box.on {top:12vh;left:0;bottom:auto;right:auto;display:inline-block;text-align:center;transition:1s}
+.sub_box.on .mint_border {margin:0 auto;position:unset;border:1px solid rgba(50, 255, 245, 0.5)}
+.sub_box.on .hide_box {display:block;transition:1s}
+.aboutMe_box{top:12vh;left:-98%}
+.skill_box{top:12vh;right:-78%}
+.game_box{top:auto;bottom:-76vh;left:0}
+.game_box .mint_border {left:0;right:auto;margin:0 auto;position:unset}
+
+.mint_border .mint_txt {font-family: 'KIMM_Bold';color:rgba(50, 255, 245,.7);font-size:2rem;padding:5vh;}
+.mint_border .mint_inner_box {display:flex;padding:1vw 2vw;}
+.mint_border .mint_img {width:25%;background:#ddd;overflow: hidden;border-radius: 15px;margin-right:5rem}
+.mint_border .mint_img img {width:100%}
+.mint_inner_txt p{font-family: 'S-CoreDream-3Light';font-size:1rem;text-align:left;line-height:28px}
+
+
+
 /*블랙배경*/
 
 .wrap.on .tab div{background:#fff;}
 .wrap.on circle {stroke: #fff;}
+.wrap.on .mint_border {background:#141414}
