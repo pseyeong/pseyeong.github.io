@@ -79,18 +79,54 @@ document.addEventListener('mousemove', (e) => {
   docStyle.setProperty('--mouse-y', e.clientY);
 });
 
-const hover_mtxt = document.querySelector(".dot");
+
+/*sub박스 안에 문자배열*/
+const ul_aboutMe = document.querySelector(".ul_aboutMe");
+
+const ul_aboutMe_intxt = ['#책임감','#도전정신','#자기개발','#성취감','#노력형'];
+let abm_intxtLength = ul_aboutMe_intxt.length;
+
+let ul_text = "<ul>";
+
+for(let k = 0; k < abm_intxtLength;k++){
+    ul_text += "<li>" + ul_aboutMe_intxt[k] + "</li>";
+}
+
+ul_text += "</ul>";
+
+ul_aboutMe.innerHTML = ul_text;
 
 
-hover_mtxt.addEventListener('mouseenter',()=>{
-    
-    hover_mtxt.classList.add('hover');
-    hover_mtxt.classList.remove('hover02');
-});
+/*클릭 이벤트*/
 
-hover_mtxt.addEventListener('mouseleave',()=>{
-    hover_mtxt.classList.remove('hover');
-    hover_mtxt.classList.add('hover02');
-});
+const tabBtn = document.querySelectorAll(".box_open");
+const tabContent = document.querySelectorAll(".sub_box");
+const close_btn = document.querySelector('.close_btn');
+for (let i = 0; i < tabBtn.length; i++) {
+  tabBtn[i].addEventListener("click", () => {
+    tabBtn.forEach((e) => { //배열을 순회하면서 인자로 전달한 함수를 호출하는 반복문
+      e.classList.remove("on");
+      tabContent.forEach((e) => {
+        e.classList.remove("on");
+        
+      });
+    });
 
+    tabBtn[i].classList.add("on");
+    tabContent[i].classList.add("on");
+    close_btn.classList.add('on');
+  });
+  
+}
+
+const tab_Content = document.querySelectorAll(".sub_box");
+  close_btn.addEventListener('click',()=>{  
+
+    tab_Content.forEach((ev)=>{
+        ev.classList.remove('on');
+    });
+
+    close_btn.classList.remove('on');
+      
+  });
 

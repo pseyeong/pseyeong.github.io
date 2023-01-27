@@ -13,6 +13,7 @@
 }
 /*
 포인트 색상 : rgba(50, 255, 245, 0.7) - 민트
+포인트 폰트 색상 : #00a39b 
 */
 
 *{margin:0;padding:0;list-style: none;box-sizing: border-box;}
@@ -64,14 +65,14 @@ header {width:100%;height:5rem;position: absolute;top:0;left:0;z-index: 9999999;
 .notion_txt {font-family: 'S-CoreDream-3Light';font-size:.8rem;text-align: center;display:inline-block;width:80px;height:80px;text-transform: uppercase;padding-top:12px}
 .mouse_pointer {display:inline-block;width:40px;height:40px;border:1px solid rgba(50, 255, 245, 0.5) ;border-radius:50%;position:absolute;top:0;left:0;transform: translate(-25%, -25%);background:rgba(50, 255, 245, 0.2);z-index:9999999}
 .dot {position:absolute;z-index:99999;cursor:pointer}
-.dot > div{width:15px;height:15px;background:rgba(50, 255, 245, 0.5);border-radius: 50%;position:relative;transition:1s}
+.dot > div{width:15px;height:15px;background:#00a39b;border-radius: 50%;position:relative;transition:1s}
 .dot > div::after{content:'';display:inline-block;width:30px;height:30px;border:1px solid rgba(50, 255, 245, 0.5);position:absolute;top:0;left:0;border-radius: 50%;animation:op_wi 2s infinite;}
 .dot.hover > div:before{content:'';display:inline-block;width:13rem;height:13rem;background:url('../../portfolio/images/me2.gif') no-repeat;background-position:center;background-size:100% 100%;border-radius: 50%;animation:opacity_0_1 1s forwards;border:4px solid rgba(50, 255, 245, 1);}
 .dot.hover02 > div:before{content:'';display:inline-block;width:13rem;height:13rem;background:url('../../portfolio/images/me2.gif') no-repeat;background-position:center;background-size:100% 100%;border-radius: 50%;animation:opacity_1_0 1s forwards;border:4px solid rgba(50, 255, 245, 1);}
 
 .dot:hover > div:after{display:none;}
 
-.dot p {font-size:1.2rem;font-family: 'KIMM_Bold';position:absolute;top:-2px;left:30px;white-space: nowrap;color:rgba(50, 255, 245, 0.7);z-index:-1}
+.dot p {font-size:1.2rem;font-family: 'KIMM_Bold';position:absolute;top:-2px;left:30px;white-space: nowrap;color:#00a39b;z-index:-1}
 
 .dot.aboutMe {top:15rem;left:30rem}
 .dot.skill {top:23rem;right:32rem}
@@ -97,22 +98,47 @@ header {width:100%;height:5rem;position: absolute;top:0;left:0;z-index: 9999999;
 /*sub박스*/
 .sub_box {position:fixed;width:100%;transition:1s;z-index:99999}
 .mint_border {background:#fff;border:1px solid #efefef;width:80%;height:80vh;position:absolute;right:0;left:auto;top:0;border-radius:15px;}
-.hide_box {display:none;transition:1s}
+.hide_box {transition:1s}
 
 .sub_box.on {top:12vh;left:0;bottom:auto;right:auto;display:inline-block;text-align:center;transition:1s}
 .sub_box.on .mint_border {margin:0 auto;position:unset;border:1px solid rgba(50, 255, 245, 0.5)}
-.sub_box.on .hide_box {display:block;transition:1s}
+.sub_box.on .hide_box {display:block;transition:1s;position:relative;}
 .aboutMe_box{top:12vh;left:-98%}
 .skill_box{top:12vh;right:-78%}
 .game_box{top:auto;bottom:-76vh;left:0}
 .game_box .mint_border {left:0;right:auto;margin:0 auto;position:unset}
 
-.mint_border .mint_txt {font-family: 'KIMM_Bold';color:rgba(50, 255, 245,.7);font-size:2rem;padding:5vh;}
+.mint_border .mint_txt {font-family: 'KIMM_Bold';color:#00a39b;font-size:2rem;padding:5vh;display:inline-block}
 .mint_border .mint_inner_box {display:flex;padding:1vw 2vw;}
-.mint_border .mint_img {width:25%;background:#ddd;overflow: hidden;border-radius: 15px;margin-right:5rem}
+.mint_border .mint_img {width:25%;background:transparent;overflow: hidden;border-radius: 15px;margin-right:5rem}
 .mint_border .mint_img img {width:100%}
-.mint_inner_txt p{font-family: 'S-CoreDream-3Light';font-size:1rem;text-align:left;line-height:28px}
+.mint_inner_txt {width:70%}
+.mint_inner_txt p{font-family: 'S-CoreDream-3Light';font-size:1rem;text-align:left;line-height:28px;position:relative;z-index:9}
 .mint_inner_txt p span {font-family: 'KIMM_Bold';font-size:1.5rem;line-height:36px}
+.mint_inner_txt p span i {font-style:normal;position:relative;display:inline-block;}
+.mint_inner_txt p span i::after{content:'';display:inline-block;width:100%;height:18px;background:rgba(50, 255, 245, 0.3);position:absolute;bottom:4px;left:0;z-index: -1;}
+.sub_title {font-family: 'KIMM_Bold';font-size:1.2em;position:absolute;top:4rem;right:-5rem;transform:rotate(90deg);color:#ddd;opacity:.4}
+.sub_box.on .sub_title{color:#00a39b}
+.ul_aboutMe {margin-top:4vh}
+.ul_aboutMe ul {display:flex;}
+.ul_aboutMe li {padding:5px 20px;border:1px solid rgba(50, 255, 245, 0.5);margin-right:20px;border-radius: 8px;font-family: 'S-CoreDream-3Light';font-size:.8rem;color:#00a39b}
+
+.close_btn.on {width:30px;height:30px;position:absolute;top:4rem;right:13rem;z-index:9999999;display:block;animation:close_op 1s forwards;animation-delay: 1s;opacity:0;cursor:pointer;}
+.close_btn.on::after{content:'';display:inline-block;width:2px;height:30px;transform:rotate(45deg);position:absolute;top:0;left:0;background:#00a39b;}
+.close_btn.on::before{content:'';display:inline-block;width:2px;height:30px;transform:rotate(-45deg);position:absolute;top:0;left:0;background:#00a39b;}
+@keyframes close_op{
+    0%{opacity: 0;}
+    100%{opacity: 1;}
+}
+
+.close_btn{display:none;}
+
+.aboutMe_box.on svg text {fill:transparent;stroke: rgb(0, 163, 155,.3);stroke-width: 1px;stroke-dasharray: 326px;animation:stroke 4s linear forwards;animation-delay:1s;font-size: 2em;font-family: 'KIMM_Bold';text-transform:capitalize;}
+@keyframes stroke {
+    0%{stroke-dashoffset: 326px;}
+    100%{stroke-dashoffset: 0}
+}
+
 
 
 /*블랙배경*/
