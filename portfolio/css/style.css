@@ -97,7 +97,7 @@ header {width:100%;height:5rem;position: absolute;top:0;left:0;z-index: 9999999;
 
 /*sub박스*/
 .sub_box {position:fixed;width:100%;transition:1s;z-index:99999}
-.mint_border {background:#fff;border:1px solid #efefef;width:80%;height:80vh;position:absolute;right:0;left:auto;top:0;border-radius:15px;}
+.mint_border {background:#fff;border:1px solid rgba(239, 239, 239,.3);width:80%;height:80vh;position:absolute;right:0;left:auto;top:0;border-radius:15px;}
 .hide_box {transition:1s}
 
 .sub_box.on {top:12vh;left:0;bottom:auto;right:auto;display:inline-block;text-align:center;transition:1s}
@@ -110,11 +110,26 @@ header {width:100%;height:5rem;position: absolute;top:0;left:0;z-index: 9999999;
 .game_box{top:auto;bottom:-76vh;left:0}
 .game_box .mint_border {left:0;right:auto;margin:0 auto;position:unset}
 
+.aboutMe_box.on .mint_img img{opacity:0;animation:b_t_hig 1s forwards;animation-delay: 1s;}
+.aboutMe_box.on .mint_inner_txt p{opacity:0;animation:l_r_wit 2s forwards;animation-delay: 2s;}
+.aboutMe_box.on .ul_aboutMe {opacity:0;animation:opacity0_1 1s forwards;animation-delay: 3s;}
+
+@keyframes b_t_hig {
+    0%{transform: translateY(100%);opacity:0}
+    100%{transform: translateY(0);opacity:1}
+}
+
+@keyframes l_r_wit {
+    0%{transform: translateX(-100%);opacity:0}
+    100%{transform: translateX(0);opacity:1}
+}
+
+
 .mint_border .mint_txt {font-family: 'KIMM_Bold';color:#00a39b;font-size:2rem;padding:5vh;}
 .mint_border .mint_inner_box {display:flex;padding:1vw 2vw;}
 .mint_border .mint_img {width:25%;background:transparent;overflow: hidden;border-radius: 15px;margin-right:5rem}
 .mint_border .mint_img img {width:100%}
-.mint_inner_txt {width:70%}
+.mint_inner_txt {width:70%;overflow:hidden}
 .mint_inner_txt p{font-family: 'S-CoreDream-3Light';font-size:1rem;text-align:left;line-height:28px;position:relative;z-index:9}
 .mint_inner_txt p span {font-family: 'KIMM_Bold';font-size:1.5rem;line-height:36px}
 .mint_inner_txt p span i {font-style:normal;position:relative;display:inline-block;}
@@ -127,20 +142,20 @@ header {width:100%;height:5rem;position: absolute;top:0;left:0;z-index: 9999999;
 .ul_aboutMe ul {display:flex;}
 .ul_aboutMe li {padding:5px 20px;border:1px solid rgba(50, 255, 245, 0.5);margin-right:20px;border-radius: 8px;font-family: 'S-CoreDream-3Light';font-size:.8rem;color:#00a39b}
 
-.close_btn.on {width:30px;height:30px;position:absolute;top:4rem;right:13rem;z-index:9999999;display:block;animation:close_op 1s forwards;animation-delay: 1s;opacity:0;cursor:pointer;}
+.close_btn.on {width:30px;height:30px;position:absolute;top:4rem;right:13rem;z-index:9999999;display:block;animation:opacity0_1 1s forwards;animation-delay: 1s;opacity:0;cursor:pointer;}
 .close_btn.on::after{content:'';display:inline-block;width:2px;height:30px;transform:rotate(45deg);position:absolute;top:0;left:0;background:#00a39b;}
 .close_btn.on::before{content:'';display:inline-block;width:2px;height:30px;transform:rotate(-45deg);position:absolute;top:0;left:0;background:#00a39b;}
-@keyframes close_op{
+@keyframes opacity0_1{
     0%{opacity: 0;}
     100%{opacity: 1;}
 }
 
 .close_btn{display:none;}
 
-.aboutMe_box.on svg text {fill:transparent;stroke: rgb(0, 163, 155,.3);stroke-width: 1px;stroke-dasharray: 326px;animation:stroke 4s linear forwards;animation-delay:1s;font-size: 2em;font-family: 'KIMM_Bold';text-transform:capitalize;}
+.aboutMe_box.on svg text {fill:transparent;stroke: rgb(0, 163, 155,.4);stroke-width: 1px;stroke-dasharray: 326px;animation:stroke 5s linear forwards;animation-delay:2s;font-size: 2em;font-family: 'KIMM_Bold';text-transform:capitalize;opacity: 0;}
 @keyframes stroke {
-    0%{stroke-dashoffset: 326px;}
-    100%{stroke-dashoffset: 0}
+    0%{stroke-dashoffset: 326px;opacity: 0.5;}
+    100%{stroke-dashoffset: 0;opacity: 1;}
 }
 
 

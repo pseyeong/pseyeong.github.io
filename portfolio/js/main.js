@@ -130,6 +130,16 @@ const tab_Content = document.querySelectorAll(".sub_box");
       
   });
 
+/*hover*/
+
+/*const mouse_hover = document.querySelector('.mouse_hover');
 
 
+mouse_hover.addEventListener('mouseover',()=>{
+    mouse_pit.classList.add('on_mouse');
+});
 
+mouse_hover.addEventListener('mouseout',()=>{
+    mouse_pit.classList.remove('on_mouse');
+});
+*/
