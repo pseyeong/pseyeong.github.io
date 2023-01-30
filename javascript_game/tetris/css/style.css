@@ -1,7 +1,8 @@
 *{margin:0;padding:0;box-sizing: border-box;list-style: none;}
 body {height:100%;overflow: hidden;}
 .score{text-align: center;font-size: 32px;margin-bottom:2rem;}
-.playground > ul{border: 1px solid #999;}
+.playground > ul{border: 1px solid #999;width:250px;margin:0 auto}
 .playground > ul > li {width:100%;height:25px;}
 .playground > ul > li > ul {display:flex;}
 .playground > ul > li > ul > li {width:25px;height:25px;outline: 1px solid #ccc;}
+.tree {background:#0092cc}

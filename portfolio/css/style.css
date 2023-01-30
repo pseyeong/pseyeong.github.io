@@ -111,8 +111,8 @@ header {width:100%;height:5rem;position: absolute;top:0;left:0;z-index: 9999999;
 .game_box .mint_border {left:0;right:auto;margin:0 auto;position:unset}
 
 .aboutMe_box.on .mint_img img{opacity:0;animation:b_t_hig 1s forwards;animation-delay: 1s;}
-.aboutMe_box.on .mint_inner_txt p{opacity:0;animation:l_r_wit 2s forwards;animation-delay: 2s;}
-.aboutMe_box.on .ul_aboutMe {opacity:0;animation:opacity0_1 1s forwards;animation-delay: 3s;}
+.aboutMe_box.on .mint_inner_txt p{opacity:0;animation:l_r_wit 2s forwards;animation-delay: 1s;}
+.aboutMe_box.on .ul_aboutMe {opacity:0;animation:opacity0_1 1s forwards;animation-delay: 2s;}
 
 @keyframes b_t_hig {
     0%{transform: translateY(100%);opacity:0}
