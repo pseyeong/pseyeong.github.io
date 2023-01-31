@@ -1,3 +1,29 @@
+//윈도우 사이즈 확인 + 리사이즈 
+window.addEventListener('resize', resizeHandler);
+
+function resizeHandler(e){  
+  resize();
+}
+
+function resize(){
+  const w = window.innerWidth;
+  const resize_w = document.querySelector(".wrap");
+
+
+  if(w >= 1025){
+    resize_w.classList.add('pc');
+    resize_w.classList.remove('tablet', 'mobile');
+  }else if(w >= 768 ){
+    resize_w.classList.add('tablet');
+    resize_w.classList.remove('pc', 'mobile');
+  }else if(w <= 767){
+    resize_w.classList.add('mobile');
+    resize_w.classList.remove('tablet', 'pc');
+  }
+}
+
+
+
 const loding = document.querySelector(".loding");
 const bak_btn = document.querySelector(".bak_btn");
 const wrap_box = document.querySelector(".wrap");
