@@ -143,7 +143,7 @@ for (let i = 0; i < tabBtn.length; i++) {
     close_btn.classList.add('on');
   });
   
-}
+};
 
 const tab_Content = document.querySelectorAll(".sub_box");
   close_btn.addEventListener('click',()=>{  
@@ -156,16 +156,28 @@ const tab_Content = document.querySelectorAll(".sub_box");
       
   });
 
-/*hover*/
+const playBox_list = document.querySelectorAll(".game_playBox_list_in");
+const game_playBox = document.querySelectorAll(".game_playBox_inner");
 
-/*const mouse_hover = document.querySelector('.mouse_hover');
+ 
+  for(let e = 0; e < playBox_list.length; e++){
+    playBox_list[e].addEventListener('click',()=>{
+      playBox_list.forEach((w)=>{
+        w.classList.remove('on');
+        
+        game_playBox.forEach((w)=>{
+          w.classList.remove('on');
+        });
 
 
-mouse_hover.addEventListener('mouseover',()=>{
-    mouse_pit.classList.add('on_mouse');
-});
+      });
 
-mouse_hover.addEventListener('mouseout',()=>{
-    mouse_pit.classList.remove('on_mouse');
-});
-*/
+      playBox_list[e].classList.add('on');
+      game_playBox[e].classList.add('on');
+
+    });
+   };
+   
+
+
+

@@ -13,6 +13,7 @@ const wordDisplay = document.querySelector('.display');
 const scoreDisplay = document.querySelector('.score');
 const timeDisplay = document.querySelector('.time');
 const button =  document.querySelector('.btn');
+const body_box = document.body;
 
 //선언
 init();
@@ -26,6 +27,7 @@ function init(){ //단어를 불러옴
 
 //게임실행
 function run(){
+    
     wordInput.value = "";
     if(isPlaying){
         return;
@@ -37,6 +39,8 @@ function run(){
     timeInterval = setInterval(countDown, 1000);
     checkInterval = setInterval(checkStatus, 50); // 상태체크
     btnChange('게임 중');
+
+    body_box.classList.add('on');
     
 }
 
@@ -47,6 +51,7 @@ function checkStatus(){
         clearInterval(checkInterval);
         button.classList.remove('loading');
         
+        body_box.classList.remove('on');
     }
 }
 
