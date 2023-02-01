@@ -71,7 +71,7 @@
             <div class="notion" onclick="window.open('https://sable-bladder-e66.notion.site/D-75c87180296e4cd3972f06c93c94ff3d')">
                 <span class="notion_txt">notion<br/>이력서<br/>보러가기</span>
                 <svg id="circle">
-                    <circle cx="40" cy="40" r="39" stroke="#141414" stroke-width="2" fill="transparent"></circle>
+                    <circle cx="40" cy="40" r="39" stroke="#00a39b" stroke-width="2" fill="transparent"></circle>
                 </svg>
             </div>
             <!--notion 이력서 버튼 ED-->
@@ -153,13 +153,28 @@
                     <p class="mint_txt">GAME</p>
                 </div>                
                 <div class="game_list" id="game_box">
-                    <ul>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
+                    <ul class="game_playBox_list">
+                        <li class="on">
+                            <p>Typing game</p>
+                        </li>
+                        <li>
+                            <p>Tetris game</p>
+                        </li>
+                        <li>
+                            <p>Todo</p>
+                        </li>
                     </ul>
+                    <div class="game_playBox">
+                        <ul>
+                            <li class="on">
+                                <iframe src="../javascript_game/typinggame/index.html" width="100%" height="600px" frameborder="0"></iframe>
+                            </li>
+                            <li>
+                                <iframe src="../javascript_game/tetris/index.html" width="100%" height="600px" frameborder="0"></iframe>
+                            </li>
+                            <li></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </section>
