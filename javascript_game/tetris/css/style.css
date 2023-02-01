@@ -9,13 +9,13 @@
 
 
 body {height:100%;overflow: hidden;font-family: 'TTTtangsbudaejjigaeB';}
-.score_box {margin-top:2rem;text-align: center;margin-bottom:2rem;font-size:1.5rem;}
+.score_box {margin-top:2rem;text-align: center;margin-bottom:1rem;font-size:1.5rem;}
 .score_txt {}
 .score_box p {display:inline-block;}
 .score{color:rgb(221, 48, 48)}
 .center {margin:0 auto;}
 .playground {}
-.playground > ul{border: 2px solid #ffcece;width:250px;margin:0 auto;overflow: hidden;}
+.playground > ul{border: 2px solid #00a39b;width:250px;margin:0 auto;overflow: hidden;}
 .playground > ul > li {width:100%;height:25px;}
 .playground > ul > li > ul {display:flex;}
 .playground > ul > li > ul > li {width:25px;height:25px;outline: 1px solid #efefef;}
@@ -26,6 +26,8 @@ body {height:100%;overflow: hidden;font-family: 'TTTtangsbudaejjigaeB';}
 .elLeft{background:#282cff}
 .elRight{background:#9728ff}
 
-.game_text{display:none;justify-content: center;align-items: center;flex-direction: column;position: fixed;width: 100%;height:100%;background:rgba(0,0,0,.7);left:0;top:0;color:#fff;font-size:3rem;}
-.game_text p {margin-bottom:2rem}
-.game_text button {padding:14px 30px 10px 30px;color: rgb(221, 48, 48);background:#ffcece;border:none;cursor: pointer;border-radius: 8px;font-size:1.2rem;font-family: 'TTTtangsbudaejjigaeB';}
+.game_text{text-align: center;align-items: center;flex-direction: column;position: fixed;width: 100%;height:100%;background:rgba(0,0,0,.7);left:0;top:0;color:#fff;font-size:3rem;}
+
+.game_text p {margin-bottom:2rem;}
+.game_text button {padding:14px 30px 10px 30px;color: #fff;background:#00a39b;border:none;cursor: pointer;border-radius: 8px;font-size:1.2rem;font-family: 'TTTtangsbudaejjigaeB';margin-top:20rem}
+

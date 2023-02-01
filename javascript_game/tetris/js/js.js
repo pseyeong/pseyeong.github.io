@@ -27,8 +27,18 @@ const movingItem = {
 };
 
 
-init();
+const button_box = document.querySelector(".game_text button");
 
+
+
+function run(){
+
+    button_box.addEventListener('click',()=>{
+        init();
+    });
+
+    
+}
 
 //functions
 function init(){ // 화면이 스크립트가 호출이 될때 바로 시작되는거
@@ -222,9 +232,15 @@ restartButton.addEventListener('click',()=>{
     init();
 });
 
+
+function btnChange(text){
+    button_box.innerText = text;
+    text === '게임시작' ? button_box.classList.remove('loading') : button_box.classList.add('loading');
+}
+
+
 /*
 
-44:15
 
 append() : 컨텐츠를 선택된 요소 내부의 끝 부분에서 삽입
 prepend() : 컨텐츠를 선택한 요소 내부의 시작 부분에서 삽입
