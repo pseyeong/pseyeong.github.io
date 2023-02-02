@@ -179,5 +179,12 @@ const game_playBox = document.querySelectorAll(".game_playBox_inner");
    };
    
 
+const tab_box = document.querySelector(".tab_line");
+const tabBox = document.querySelector(".tab");
 
+tab_box.addEventListener('click',()=>{
+  
+  tabBox.classList.toggle('on');
+
+});
 
