@@ -141,9 +141,19 @@ for (let i = 0; i < tabBtn.length; i++) {
     tabBtn[i].classList.add("on");
     tabContent[i].classList.add("on");
     close_btn.classList.add('on');
+    tabBox.classList.remove('on');
+
   });
   
 };
+
+const dot_01 = document.querySelector('.dot.aboutMe');
+const about_sub_box = document.querySelector('.aboutMe_box.sub_box')
+dot_01.addEventListener('click',()=>{
+  about_sub_box.classList.add('on');
+  close_btn.classList.add('on');
+});
+
 
 const tab_Content = document.querySelectorAll(".sub_box");
   close_btn.addEventListener('click',()=>{  
