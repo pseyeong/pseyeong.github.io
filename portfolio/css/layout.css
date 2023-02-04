@@ -37,7 +37,7 @@
     .mint_border .mint_img {width:20%;}
     .mint_inner_txt {width:76%;}
     .mint_border .mint_inner_box {margin-bottom:.5rem;}
-    .game_box.sub_box.on {bottom:13vh;}
+    .game_box.sub_box.on {bottom:8vh;}
     .game_playBox_list li > p {font-size:1.2rem;line-height:45px;padding:0 1.1rem;}
     .game_playBox {height:62vh}
     .game_playBox_inner iframe {height:62vh}
