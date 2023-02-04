@@ -19,7 +19,7 @@
 
 
 /*tablet 768 ~ 1024*/
-@media (min-width: 768px) and (max-width:1024px){
+@media (min-width: 768px) and (max-width:1200px){
     .logo_head{width:400px;height:400px;}
     .head_menu li {font-size:1.2rem;}
     .ct_name_box {padding-top:18rem;}
