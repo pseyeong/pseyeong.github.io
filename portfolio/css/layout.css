@@ -1,9 +1,52 @@
-/*미디어쿼리 없이 반응형 작업*/
 
-/*tablet 768 ~ 1024*/
-.tablet{
+/*노트북*/
+@media (min-width: 1500px) and (max-width:1910px){
+    .ct_name_box{padding-top:18rem}
+    .dot.aboutMe{top:13rem;left:20rem;}
+    .dot.game {bottom:10rem;}
+    .tab_txt li{font-size:2.5rem;}
+    .tab_txt ul{margin-top:13rem;}
+    .logo_head{margin-top:15vh}
+    .close_btn.on {top:3rem;right:11rem;}
+    .game_playBox {height:70vh}
+    .game_playBox_inner iframe {height:70vh}
+    .mint_border .mint_txt {padding:2vh;}
+    .mint_border .mint_inner_box{margin-bottom:2rem;}
+    .game_box {bottom:-78vh;}
+    .round_3d {top:9rem;}
 
 }
+
+
+/*tablet 768 ~ 1024*/
+@media (min-width: 768px) and (max-width:1024px){
+    .logo_head{width:400px;height:400px;}
+    .head_menu li {font-size:1.2rem;}
+    .ct_name_box {padding-top:18rem;}
+    .ct_name {font-size:3rem;}
+    .dot.aboutMe {left:8rem;}
+    .dot.game {bottom:12rem;right:13rem;}
+    .notion {bottom:1rem;}
+    .tab_txt li {font-size:2.5rem;padding-top:20px;}
+    .tab_txt ul {margin-top:15rem;}
+    .mint_border {width:82%;height:75vh;}
+    .mint_border .mint_txt {padding:3vh;}
+    .close_btn.on {top:3.5rem;right:7rem;}
+    .mint_inner_txt p span {font-size:1.3rem;line-height:28px;}
+    .mint_border .mint_img {margin-right:1rem;}
+    .mint_border .mint_img {width:20%;}
+    .mint_inner_txt {width:76%;}
+    .mint_border .mint_inner_box {margin-bottom:1rem;}
+    .game_box.sub_box.on {bottom:13vh;}
+    .game_playBox_list li > p {font-size:1.2rem;line-height:45px;padding:0 1.1rem;}
+    .game_playBox {height:62vh}
+    .game_playBox_inner iframe {height:62vh}
+    .round_3d {top:9rem;}
+    .round_3d img {width:40%;}
+    .game_box {bottom:-73vh;}
+    .bak_btn {right:7vw;}
+}
+
 
 /*mobile ~767*/
 .mobile {}

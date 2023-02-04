@@ -9,16 +9,19 @@ function resize(){
   const w = window.innerWidth;
   const resize_w = document.querySelector(".wrap");
 
-
-  if(w >= 1025){
+  
+  if(w >= 1500 && w <= 1910){
+    resize_w.classList.add('noteBook');
+    resize_w.classList.remove('tablet', 'mobile','pc');
+  }else if(w >= 1025){
     resize_w.classList.add('pc');
-    resize_w.classList.remove('tablet', 'mobile');
+    resize_w.classList.remove('tablet', 'mobile','noteBook');
   }else if(w >= 768 ){
     resize_w.classList.add('tablet');
-    resize_w.classList.remove('pc', 'mobile');
+    resize_w.classList.remove('pc', 'mobile','noteBook');
   }else if(w <= 767){
     resize_w.classList.add('mobile');
-    resize_w.classList.remove('tablet', 'pc');
+    resize_w.classList.remove('tablet', 'pc','noteBook');
   }
 }
 

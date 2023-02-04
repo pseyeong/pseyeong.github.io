@@ -16,9 +16,9 @@ body {height:100%;overflow: hidden;font-family: 'TTTtangsbudaejjigaeB';}
 .center {margin:0 auto;}
 .playground {}
 .playground > ul{border: 2px solid #00a39b;width:250px;margin:0 auto;overflow: hidden;}
-.playground > ul > li {width:100%;height:25px;}
+.playground > ul > li {width:100%;height:4vh;}
 .playground > ul > li > ul {display:flex;}
-.playground > ul > li > ul > li {width:25px;height:25px;outline: 1px solid #efefef;}
+.playground > ul > li > ul > li {width:25px;height:4vh;outline: 1px solid #efefef;}
 .tree {background:#ff2828}
 .bar{background:#ff6c28}
 .square{background:#ffd828}
