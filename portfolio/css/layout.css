@@ -58,6 +58,13 @@
     .mint_inner_txt {width:100% !important;}
     
     .tab_txt ul{margin-top:23rem !important;}
+    .ct_name_box {padding-top:26rem;}
+    .round_3d {top:16rem;}
+    .round_3d img {width:55%;}
+    .dot.aboutMe{left:5rem;top:19rem;}
+    .dot.game {bottom:17rem;right:8rem;}
+    .dot p {font-size:1.5rem;top:-4px;}
+
 
 }
 
