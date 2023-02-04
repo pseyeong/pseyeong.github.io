@@ -58,12 +58,12 @@
     .mint_inner_txt {width:100% !important;}
     
     .tab_txt ul{margin-top:23rem !important;}
-    .ct_name_box {padding-top:26rem;}
-    .round_3d {top:16rem;}
-    .round_3d img {width:55%;}
-    .dot.aboutMe{left:5rem;top:19rem;}
-    .dot.game {bottom:17rem;right:8rem;}
-    .dot p {font-size:1.5rem;top:-4px;}
+    .ct_name_box {padding-top:26rem !important;}
+    .round_3d {top:16rem !important;}
+    .round_3d img {width:55% !important;}
+    .dot.aboutMe{left:5rem !important;top:19rem !important;}
+    .dot.game {bottom:17rem !important;right:8rem !important;}
+    .dot p {font-size:1.5rem !important;top:-4px !important;}
 
 
 }
