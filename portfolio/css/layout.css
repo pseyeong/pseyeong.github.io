@@ -36,7 +36,7 @@
     .mint_border .mint_img {margin-right:1rem;}
     .mint_border .mint_img {width:20%;}
     .mint_inner_txt {width:76%;}
-    .mint_border .mint_inner_box {margin-bottom:1rem;}
+    .mint_border .mint_inner_box {margin-bottom:.5rem;}
     .game_box.sub_box.on {bottom:13vh;}
     .game_playBox_list li > p {font-size:1.2rem;line-height:45px;padding:0 1.1rem;}
     .game_playBox {height:62vh}
@@ -45,7 +45,17 @@
     .round_3d img {width:40%;}
     .game_box {bottom:-73vh;}
     .bak_btn {right:7vw;}
+    .aboutMe_box.on svg text {animation:stroke 1s linear forwards;stroke-dasharray:150px}
+    @keyframes stroke {
+        0%{stroke-dashoffset: 150px;opacity: 0.5;}
+        100%{stroke-dashoffset: 0;opacity: 1;}
+    }
+    
 }
+@media (min-width: 800px) and (max-width:834px){
+    .mint_inner_txt p span {font-size:1.2rem;line-height:33px;}
+}
+
 
 
 /*mobile ~767*/
