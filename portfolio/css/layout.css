@@ -49,7 +49,7 @@
     
     
 }
-@media (min-width: 800px) and (max-width:834px){
+@media (min-height: 1024px){
     .mint_inner_txt p span {font-size:1.2rem;line-height:33px;}
     .mint_border{width:85%;}
     .mint_border .mint_inner_box {display:block;}
