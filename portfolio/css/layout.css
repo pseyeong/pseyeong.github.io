@@ -52,6 +52,11 @@
 @media (min-width: 800px) and (max-width:834px){
     .mint_inner_txt p span {font-size:1.2rem;line-height:33px;}
     .mint_border{width:85%;}
+    .mint_border .mint_inner_box {display:block;}
+    .mint_border .mint_img {width:100%;}
+    .mint_border .mint_img img {width:20%;}
+    .mint_inner_txt {width:100%;}
+
 }
 
 
