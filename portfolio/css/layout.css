@@ -64,6 +64,7 @@
     .dot.aboutMe{left:5rem !important;top:19rem !important;}
     .dot.game {bottom:17rem !important;right:8rem !important;}
     .dot p {font-size:1.5rem !important;top:-4px !important;}
+    .game_box.sub_box.on {top:12vh !important;bottom:auto !important}
 
 
 }
