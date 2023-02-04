@@ -148,12 +148,39 @@ for (let i = 0; i < tabBtn.length; i++) {
 };
 
 const dot_01 = document.querySelector('.dot.aboutMe');
-const about_sub_box = document.querySelector('.aboutMe_box.sub_box')
+const about_sub_box = document.querySelector('.aboutMe_box.sub_box');
+const dot_02 = document.querySelector('.game.dot');
+const game_sub_box = document.querySelector('.game_box.sub_box');
+
 dot_01.addEventListener('click',()=>{
   about_sub_box.classList.add('on');
   close_btn.classList.add('on');
 });
 
+dot_02.addEventListener('click',()=>{
+  game_sub_box.classList.add('on');
+  close_btn.classList.add('on');
+});
+
+const tab_about = document.querySelector('.tab_about');
+const tab_game = document.querySelector('.tab_game');
+const tab = document.querySelector('.tab');
+
+tab_about.addEventListener('click',()=>{
+  about_sub_box.classList.add('on');
+  close_btn.classList.add('on');
+  game_sub_box.classList.remove('on');
+  tab.classList.remove('on');
+
+});
+
+tab_game.addEventListener('click',()=>{
+  game_sub_box.classList.add('on');
+  close_btn.classList.add('on');
+  about_sub_box.classList.remove('on');
+  tab.classList.remove('on');
+
+});
 
 const tab_Content = document.querySelectorAll(".sub_box");
   close_btn.addEventListener('click',()=>{  

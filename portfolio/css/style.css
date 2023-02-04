@@ -46,7 +46,7 @@ header {width:100%;height:5rem;position: absolute;top:0;left:0;z-index: 99999999
     0%{width:0;}
     100%{width:100%}
 }
-.tab {position:fixed;top:0;right:0;width:50px;height:100%;background:rgba(0, 163, 155,.5);z-index:999999999;}
+.tab {position:fixed;top:0;right:0;width:50px;height:100%;background:rgba(0, 163, 155,.5);z-index:99999999;}
 .tab div.tab_line {transform:rotate(90deg);position:absolute;top:50%;left:12px;cursor:pointer;z-index:9999999999}
 .tab div.tab_line div{display:block;width:25px;height:3px;border-radius:3px;background:#fff;margin-top:.3rem;}
 .tab div.tab_line div:nth-child(1){margin-top:0}
@@ -62,9 +62,10 @@ header {width:100%;height:5rem;position: absolute;top:0;left:0;z-index: 99999999
     100%{width:40%;}
 }
 .tab.on .tab_txt{opacity: 1;}
-.tab_txt li{font-size:3.5rem;font-family: 'KIMM_Bold';color:#fff;text-align:center;padding-top:30px;cursor: pointer;width:80%;margin:0 auto}
-.tab_txt {opacity: 0}
+.tab_txt li{font-size:3.5rem;font-family: 'KIMM_Bold';color:#fff;text-align:center;padding-top:30px;cursor: pointer;width:80%;margin:0 auto;position:relative;overflow: hidden;}
+.tab_txt {opacity: 0;margin-left:2rem}
 .tab_txt ul {margin-top:17rem;}
+.tab_txt li:hover:after {content:'';display:inline-block;width:100%;height:3px;border-radius:50%;background:#fff;position:absolute;bottom:35%;left:0;animation:l_r_wit .5s forwards}
 
 .ct_name_box {text-align:center;padding-top:25rem;position:relative;z-index:999}
 .ct_name {font-size:3.5rem;font-family: 'KIMM_Bold';text-align:center;}
@@ -95,7 +96,7 @@ header {width:100%;height:5rem;position: absolute;top:0;left:0;z-index: 99999999
 
 .dot.aboutMe {top:15rem;left:30rem}
 .dot.skill {top:23rem;right:32rem}
-.dot.game {bottom:10rem;right:47rem}
+.dot.game {bottom:17rem;right:22rem}
 
 @keyframes opacity_0_1 {
     0% {opacity: 0;transform:scale(0);transform:translate(0,0);width:30px;height:30px;}
@@ -125,7 +126,7 @@ header {width:100%;height:5rem;position: absolute;top:0;left:0;z-index: 99999999
 .aboutMe_box{top:12vh;left:-98%}
 .skill_box.sub_box.on{right:0;left:auto;}
 .skill_box{top:12vh;right:-78%}
-.game_box.sub_box.on{bottom:8vh;top:auto;z-index:99999999}
+.game_box.sub_box.on{bottom:8vh;top:auto;z-index:9999999}
 .game_box{top:auto;bottom:-76vh;left:0}
 .game_box .mint_border {left:0;right:auto;margin:0 auto;position:unset}
 
