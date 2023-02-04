@@ -50,17 +50,17 @@
     
 }
 @media (min-height: 1000px) and (max-height: 1024px){
-    .mint_inner_txt p span {font-size:1.2rem;line-height:33px;}
-    .mint_border{width:85%;}
-    .mint_border .mint_inner_box {display:block;}
-    .mint_border .mint_img {width:100%;}
-    .mint_border .mint_img img {width:20%;}
-    .mint_inner_txt {width:100%;}
+    .mint_inner_txt p span {font-size:1.2rem !important;line-height:33px !important;}
+    .mint_border{width:85% !important;}
+    .mint_border .mint_inner_box {display:block !important;}
+    .mint_border .mint_img {width:100% !important;}
+    .mint_border .mint_img img {width:20% !important;}
+    .mint_inner_txt {width:100% !important;}
     @keyframes wh_50_100{
         0%{width:50px;}
         100%{width:60%;}
     }
-    .tab_txt ul{margin-top:23rem;}
+    .tab_txt ul{margin-top:23rem !important;}
 
 }
 
