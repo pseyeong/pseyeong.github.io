@@ -45,9 +45,9 @@
     .round_3d img {width:40%;}
     .game_box {bottom:-73vh;}
     .bak_btn {right:7vw;}
-    .aboutMe_box.on svg text {animation:stroke 1s linear forwards;stroke-dasharray:550px}
+    .aboutMe_box.on svg text {animation:stroke 1s linear forwards;stroke-dasharray:850px}
     @keyframes stroke {
-        0%{stroke-dashoffset: 550px;opacity: 0.5;}
+        0%{stroke-dashoffset: 850px;opacity: 0.5;}
         100%{stroke-dashoffset: 0;opacity: 1;}
     }
     
