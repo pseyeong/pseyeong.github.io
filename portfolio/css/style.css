@@ -46,20 +46,21 @@ header {width:100%;height:5rem;position: absolute;top:0;left:0;z-index: 99999999
     0%{width:0;}
     100%{width:100%}
 }
-.tab {position:fixed;top:0;right:0;width:50px;height:100%;background:rgba(0, 163, 155,.5);z-index:99999999;}
-.tab div.tab_line {transform:rotate(90deg);position:absolute;top:50%;left:12px;cursor:pointer;z-index:9999999999}
-.tab div.tab_line div{display:block;width:25px;height:3px;border-radius:3px;background:#fff;margin-top:.3rem;transition:1s}
+.tab {position:fixed;top:10px;right:10px;width:50px;height:50px;background:rgba(0, 163, 155,.5);z-index:9999999999999;border-radius:50%}
+.tab div.tab_line {position:absolute;top:1rem;right:1rem;cursor:pointer;z-index:9999999999}
+.tab div.tab_line div{display:block;width:20px;height:3px;border-radius:3px;background:#fff;margin-top:.3rem;transition:1s}
 .tab div.tab_line div:nth-child(1){margin-top:0}
 .tab_line div:nth-child(2){display:block}
-.tab.on {width:100%;animation:wh_50_100 1s forwards}
+.tab.on {width:100%;height:100%;animation:wh_50_100 1s forwards;border-radius: 0;top:0;right:0}
 .tab.remove {animation:wh_50_100 1s forwards reverse}
+.tab.on div.tab_line {padding-top:10px;padding-right:10px;}
 .tab.on div.tab_line div:nth-child(1){transform:rotate(45deg) translate(5px, 5px);transition:1s}
 .tab.on div.tab_line div:nth-child(2){display:none;transition:1s}
 .tab.on div.tab_line div:nth-child(3){transform:rotate(-45deg) translate(0px, 0px);transition:1s}
 
 @keyframes wh_50_100{
-    0%{width:50px;}
-    100%{width:40%;}
+    0%{width:50px;height:50px;border-radius:50%}
+    100%{width:40%;height:100%;border-radius:0}
 }
 .tab.on .tab_txt{opacity: 1;}
 .tab_txt li{font-size:3.5rem;font-family: 'KIMM_Bold';color:#fff;text-align:center;padding-top:30px;cursor: pointer;width:80%;margin:0 auto;position:relative;overflow: hidden;}
