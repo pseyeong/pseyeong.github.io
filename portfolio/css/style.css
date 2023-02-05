@@ -95,7 +95,7 @@ header {width:100%;height:5rem;position: absolute;top:0;left:0;z-index: 99999999
 .dot p {font-size:1.2rem;font-family: 'KIMM_Bold';position:absolute;top:-2px;left:30px;white-space: nowrap;color:#00a39b;z-index:-1}
 
 .dot.aboutMe {top:15rem;left:30rem}
-.dot.skill {top:23rem;right:32rem}
+.dot.vue {top:23rem;right:32rem}
 .dot.game {bottom:17rem;right:22rem}
 
 @keyframes opacity_0_1 {
@@ -124,8 +124,8 @@ header {width:100%;height:5rem;position: absolute;top:0;left:0;z-index: 99999999
 .sub_box.on .mint_border {margin:0 auto;position:unset;border:1px solid rgba(0, 163, 155,.5)}
 .sub_box.on .hide_box {display:block;transition:1s;position:relative;}
 .aboutMe_box{top:12vh;left:-98%}
-.skill_box.sub_box.on{right:0;left:auto;}
-.skill_box{top:12vh;right:-78%}
+.vue_box.sub_box.on{right:0;left:auto;}
+.vue_box{top:12vh;right:-78%}
 .game_box.sub_box.on{bottom:8vh;top:auto;z-index:9999999}
 .game_box{top:auto;bottom:-76vh;left:0}
 .game_box .mint_border {left:0;right:auto;margin:0 auto;position:unset}
@@ -155,7 +155,7 @@ header {width:100%;height:5rem;position: absolute;top:0;left:0;z-index: 99999999
 .mint_inner_txt p span i {font-style:normal;position:relative;display:inline-block;}
 .mint_inner_txt p span i::after{content:'';display:inline-block;width:100%;height:18px;background:rgba(50, 255, 245, 0.3);position:absolute;bottom:4px;left:0;z-index: -1;}
 .sub_title {font-family: 'KIMM_Bold';font-size:1.2em;position:absolute;top:4rem;right:-5rem;transform:rotate(90deg);color:#ddd;opacity:.2}
-.skill_box .sub_title {left:-3.5rem;right:auto;transform:rotate(-90deg);top:2.5rem}
+.vue_box .sub_title {left:-3.5rem;right:auto;transform:rotate(-90deg);top:2.5rem}
 .game_box .sub_title{left:auto;top:-2rem;right:auto;transform:rotate(0)}
 .sub_box.on .sub_title{color:#00a39b}
 .ul_aboutMe {margin-top:4vh}
@@ -198,9 +198,9 @@ header {width:100%;height:5rem;position: absolute;top:0;left:0;z-index: 99999999
     100%{opacity: 1;transform:translateX(0)}
 }
 
-.skill_list {width:95%;margin:0 auto;}
-.skill_list li {float:left;display:inline-block;width:calc(100%/3)}
-.skill_list li:nth-child(3n+1){clear:both;}
+.vue_list {width:95%;margin:0 auto;}
+.vue_list li {float:left;display:inline-block;width:calc(100%/3)}
+.vue_list li:nth-child(3n+1){clear:both;}
 
 /*블랙배경*/
 
