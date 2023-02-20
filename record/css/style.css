@@ -14,9 +14,10 @@ button {cursor: pointer;}
 table{border-collapse:collapse; border-spacing:0;width:100%;margin:2rem 0;clear: both;}
 table tr {border-top:1px solid #efefef;border-bottom:1px solid #efefef;width:100%;width:100%;}
 table td {padding:.8rem 0;}
-table td:nth-child(1){width:20%;text-align: center;}
+table td:nth-child(1){width:20%;text-align: center;border-right:1px solid #efefef}
 table td:nth-child(2){width:auto;}
 table td:nth-child(3){width:20%;text-align: center;}
 table .memo {text-align:center;}
 .plus_memo button {height:30px;border:2px solid #a3b1ff;background:transparent;border-radius: 10px;font-size:.8rem;color:#a3b1ff;padding:0 5px;font-weight:500;}
 .plus_memo td:nth-child(2) {text-indent:20px;}
+.memo td:nth-child(1) {border-right:0}
