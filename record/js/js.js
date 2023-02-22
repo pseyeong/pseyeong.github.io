@@ -9,6 +9,7 @@ plus.addEventListener('click',(e)=>{
     const se_memo = document.querySelector('.se_memo');
     const value_first = word.value;
     const value_second = word_content.value;
+    const in_ul = document.getElementById("in_ul");
     //console.log(value);
         
     
@@ -19,24 +20,23 @@ plus.addEventListener('click',(e)=>{
         
     }else if(value_second === ''){
         alert('내용을 입력하세요.');
-        return
-
         
-    }
-    //단어 입력 체크
-    fr_memo.innerHTML = value_first;
-    se_memo.innerHTML = value_second;
+        return;
+    }else{
+         //단어 입력 체크
+        fr_memo.innerHTML = value_first;
+        se_memo.innerHTML = value_second;
 
+        const in_li = document.createElement('li');
+        in_ul.appendChild(in_li).classList.add('plus_memo');
+        
 
-    const table_tr = document.createElement('tr');
-    const table_td = document.createElement('td');
-
-    for(let i=0;i<20;i++){
-        console.log(i);
-    }
-    
-    //단어 내용 체크 
-    
+        for(let i = 0;i < in_ul;i++){
+            console.log(i);
+        }
+        
+    };
+   
 
     //인풋 텍스트 삭제
     word.value = "";
