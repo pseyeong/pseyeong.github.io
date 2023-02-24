@@ -27,12 +27,26 @@ plus.addEventListener('click',(e)=>{
         fr_memo.innerHTML = value_first;
         se_memo.innerHTML = value_second;
 
-        const in_li = document.createElement('li');
-        in_ul.appendChild(in_li).classList.add('plus_memo');
+        const in_li = document.querySelector('.plus_memo');
+        const in_li_txt = `
+        <li class="plus_memo">
+                        <p class="fr_memo"></p>
+                        <p class="se_memo"></p>
+                        <div class="btn_box">
+                            <button class="modify">수정</button>
+                            <button class="del">삭제</button>
+                        </div>
+                    </li>
+        `;
+        in_li.insertAdjacentHTML('beforebegin', in_li_txt);
+        //appendChild(in_li).classList.add('plus_memo');
+        
+        
         
 
         for(let i = 0;i < in_ul;i++){
             console.log(i);
+
         }
         
     };
