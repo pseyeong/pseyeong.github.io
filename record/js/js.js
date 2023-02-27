@@ -2,6 +2,8 @@ var word = document.getElementById('word');
 var word_content = document.getElementById('word_content');
 var plus = document.querySelector('.plus');
 
+
+
 plus.addEventListener('click',(e)=>{
     //console.log(word.value, word_content.value);
     
@@ -40,31 +42,25 @@ plus.addEventListener('click',(e)=>{
         `;
         in_li.insertAdjacentHTML('beforebegin', in_li_txt);
         //appendChild(in_li).classList.add('plus_memo');
-        
-        
-        
-
-        for(let i = 0;i < in_ul;i++){
-            console.log(i);
-
-        }
-        
+                
     };
    
-
     //인풋 텍스트 삭제
     word.value = "";
     word_content.value = "";
-
-
-
-
 });
 
+
+
+
 const modify = document.querySelector(".modify");
+const del  = document.querySelector(".del");
 
 modify.addEventListener('click',()=>{
     console.log(1);
 });
 
+del.addEventListener('click',()=>{
+    
+});
 

@@ -17,3 +17,4 @@ button {cursor: pointer;}
 .btn_box{width:20%;text-align: center;}
 .plus_memo {display:flex;}
 .btn_box button {height:30px;border:2px solid #a3b1ff;background:transparent;border-radius: 10px;font-size:.8rem;color:#a3b1ff;padding:0 5px;font-weight:500;}
+#in_ul li:first-child{opacity: 0;}
