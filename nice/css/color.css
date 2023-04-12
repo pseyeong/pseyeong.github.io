@@ -1,0 +1,91 @@
+:root {
+    /*
+        mono 기본 컬러
+        //웹 접근성을 고려해 mono_g7~ monob 까지만 텍스트 컬러로 사용, 이때 bg mono_wh/mono_g1 사용가능
+    */
+    --mono_wh:#ffffff;
+    --mono_bg:#fafafa;
+    --mono_g1:#f1f1f1;
+    --mono_g2:#e0e0e0;
+    --mono_g3:#cccccc;
+    --mono_g4:#B8B8B8;
+    --mono_g5:#a3a3a3;
+    --mono_g6:#8f8f8f;
+    --mono_g7:#666666;
+    --mono_g8:#525252;
+    --mono_g9:#282828;
+    --mono_b:#121212;
+
+    /*
+        primary 기본 컬러
+        //웹 접근성을 고려해 흰 텍스트에는 pri_5~ 사용
+    */
+    --pri_bg:#f3f7ff;
+    --pri_1:#c6daff;
+    --pri_2:#98b5ff;
+    --pri_3:#6c94fe;
+    --pri_4:#2b77f1;
+    --pri_5:#005ee7;
+    --pri_6:#0056dd;
+    --pri_7:#004ccf;
+    --pri_8:#0041c3;
+    --pri_9:#002cab;
+
+    /*secondary 기본 컬러*/
+    --sec_bg:#c1f3ff;
+    --sec_1:#9fdcea;
+    --sec_2:#58a6ba;
+    --sec_3:#3a94aa;
+    --sec_4:#008097;
+    --sec_5:#007186;
+    --sec_dark:#00485a;
+
+    /*warning 컬러*/
+    --error_bg:#ffe8e8;
+    --error_1:#fd8686;
+    --error_2:#f05454;
+    --error_3:#cf250d;
+    --error_4:#b02212;
+    --error_5:#76171b;
+}
+
+.mono_wh{background:var(--mono_wh)}
+.mono_bg{background:var(--mono_bg)}
+.mono_g1{background:var(--mono_g1)}
+.mono_g2{background:var(--mono_g2)}
+.mono_g3{background:var(--mono_g3)}
+.mono_g4{background:var(--mono_g4)}
+.mono_g5{background:var(--mono_g5)}
+.mono_g6{background:var(--mono_g6)}
+.mono_g7{background:var(--mono_g7)}
+.mono_g8{background:var(--mono_g8)}
+.mono_g9{background:var(--mono_g9)}
+.mono_b{background:var(--mono_b)}
+
+
+.pri_bg{background:var(--pri_bg)}
+.pri_1{background:var(--pri_1)}
+.pri_2{background:var(--pri_2)}
+.pri_3{background:var(--pri_3)}
+.pri_4{background:var(--pri_4)}
+.pri_5{background:var(--pri_5)}
+.pri_6{background:var(--pri_6)}
+.pri_7{background:var(--pri_7)}
+.pri_8{background:var(--pri_8)}
+.pri_9{background:var(--pri_9)}
+
+
+.sec_bg {background:var(--sec_bg)}
+.sec_1 {background:var(--sec_1)}
+.sec_2 {background:var(--sec_2)}
+.sec_3 {background:var(--sec_3)}
+.sec_4 {background:var(--sec_4)}
+.sec_5 {background:var(--sec_5)}
+.sec_dark {background:var(--sec_dark)}
+
+.error_bg{background:var(--error_bg)}
+.error_1{background:var(--error_1)}
+.error_2{background:var(--error_2)}
+.error_3{background:var(--error_3)}
+.error_4{background:var(--error_4)}
+.error_5{background:var(--error_5)}
