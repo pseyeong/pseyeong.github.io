@@ -52,3 +52,8 @@ section.on_page {display:block;}
 .blurBg {position:absolute;top:50px;right:80px}
 .blurBox{position:relative;z-index: 1}
 
+/*button*/
+.btn_ListBox th{padding:20px 0;border-bottom:1px solid var(--mono_g1)}
+.btn_ListBox .flex {align-items: center;margin:20px 0;}
+.btn_ListBox .flex li {width:calc(100% / 4)}
+.btn_ListBox td{padding:20px 0}
