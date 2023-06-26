@@ -66,3 +66,5 @@ section.on_page {display:block;}
 .gr_iconBox .gr_icon, .wh_iconBox .wh_icon, .pri_iconBox .pri_icon{display:inline-block;margin:12px;}
 
 .wh_bg {background:var(--mono_g6)}
+
+span.title_sTxt {font-size:20px;color:var(--mono_g9);}
