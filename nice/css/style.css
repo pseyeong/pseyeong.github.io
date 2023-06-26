@@ -57,3 +57,12 @@ section.on_page {display:block;}
 .btn_ListBox .flex {align-items: center;margin:20px 0;}
 .btn_ListBox .flex li {width:calc(100% / 4)}
 .btn_ListBox td{padding:20px 0}
+
+/*icons*/
+.gr_icon, .wh_icon, .pri_icon {width:24px;height:24px;}
+.gr_iconBox h2, .wh_iconBox h2, .pri_iconBox h2{margin-bottom:20px;}
+.gr_iconBox h4, .pri_iconBox h4{color:var(--mono_g8);margin:30px 0 10px 0;padding-bottom:20px;border-bottom:1px solid #ddd}
+.wh_iconBox h4{color:var(--mono_g8);margin:30px 0 10px 0;}
+.gr_iconBox .gr_icon, .wh_iconBox .wh_icon, .pri_iconBox .pri_icon{display:inline-block;margin:12px;}
+
+.wh_bg {background:var(--mono_g6)}
