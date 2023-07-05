@@ -16,7 +16,7 @@ section.on_page {display:block;}
 
 /*메인*/
 .index_tab {width:1280px;margin:0 auto;height:auto;overflow:hidden;}
-.index_tab li {width:calc(100% / 4 - 10px);padding:60px 0;text-align:center;border:1px solid var(--mono_g1);border-radius:8px;float:left;margin:5px;cursor:pointer;font-size:18px;}
+.index_tab li {width:calc(100% / 4 - 10px);padding:60px 0;text-align:center;border:1px solid var(--mono_g1);border-radius:8px;float:left;margin:5px;cursor:pointer;font-size:18px;text-transform: uppercase}
 .index_tab li:nth-child(4n+1){clear:both;}
 .index_tab li:hover {border:1px solid var(--pri_5);color:var(--pri_5)}
 .title_index{font-size:32px;font-weight:700;text-align:center;margin:60px 0}
@@ -68,3 +68,10 @@ section.on_page {display:block;}
 .wh_bg {background:var(--mono_g6)}
 
 span.title_sTxt {font-size:20px;color:var(--mono_g9);}
+
+/*form*/
+.formList li{float:left;width:calc(100% / 4 - 10px);padding:60px 0;text-align:center;border:1px solid var(--mono_g1);border-radius:8px;margin:5px;cursor:pointer;font-size:18px;}
+.formList li:nth-child(4n + 1){clear:both;}
+.formList li:hover {border:1px solid var(--pri_5);}
+.formList li a {color:var(--mono_b);text-decoration: none;}
+.formList li:hover a {color:var(--pri_5)}
