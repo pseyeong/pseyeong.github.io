@@ -72,6 +72,9 @@ span.title_sTxt {font-size:20px;color:var(--mono_g9);}
 /*form*/
 .formList li{float:left;width:calc(100% / 4 - 10px);padding:60px 0;text-align:center;border:1px solid var(--mono_g1);border-radius:8px;margin:5px;cursor:pointer;font-size:18px;}
 .formList li:nth-child(4n + 1){clear:both;}
-.formList li:hover {border:1px solid var(--pri_5);}
-.formList li a {color:var(--mono_b);text-decoration: none;}
-.formList li:hover a {color:var(--pri_5)}
+.formList li:hover {border:1px solid var(--pri_5);color:var(--pri_5)}
+.form .title p {font-size:60px;}
+.form .title span {font-size:18px}
+.form_table tr{border-bottom:1px solid var(--mono_g1)}
+.form_table th {text-align:center;}
+.form_table th, .form_table td {padding:20px}
