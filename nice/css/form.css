@@ -14,3 +14,36 @@ input[name="switch_default"]:checked + label {background:var(--pri_5)}
 input[name="switch_default"] + label::after{content:'';position: absolute;left: 3px;top:3px;width:20px;height:20px;border-radius:50%;background:var(--mono_wh);transition:.4s}
 input[name="switch_default"]:checked + label::after{content:'';right:3px;left:auto;transition:.4s;}
 input[name="switch_default"].switch_default.disabled + label{background:var(--mono_g2);pointer-events: none;}
+
+/*squareCheck_small*/
+input[name="squareCheck_small"] + label{display: inline-block;position: relative;padding-left:22px}
+input[name="squareCheck_small"] + label:before {content:'';width: 14px;height: 14px;border-radius:4px;background:var(--mono_g2);position:absolute;top:4px;left:0;}
+input[name="squareCheck_small"]:checked + label::after{content:'';position: absolute;left:0;top:4px;width:14px;height:14px;background:var(--pri_5) url('/images/icons/check-wh.svg') no-repeat center center / 12px 12px;border-radius:4px;}
+input[name="squareCheck_small"].inde:checked + label::after{content:'';position: absolute;left:0;top:4px;width:14px;height:14px;background:var(--pri_5) url('/images/icons/remove-wh.svg') no-repeat center center / 12px 12px;border-radius:4px;}
+input[name="squareCheck_small"].squareCheck_small.disabled + label{pointer-events: none;}
+input[name="squareCheck_small"].squareCheck_small.disabled + label:before{content:'';background:var(--mono_g1)}
+input[name="squareCheck_small"].squareCheck_small.disabled + label span {color:var(--mono_g5)}
+.squareCheck_small_text {padding-left:22px;margin-top:4px;color:var(--mono_g7)}
+.disabled .squareCheck_small_text {color:var(--mono_g3)}
+
+/*squareCheck_small*/
+input[name="squareCheck_medium"] + label{display: inline-block;position: relative;padding-left:26px}
+input[name="squareCheck_medium"] + label:before {content:'';width: 18px;height: 18px;border-radius:4px;background:var(--mono_g2);position:absolute;top:1px;left:0;}
+input[name="squareCheck_medium"]:checked + label::after{content:'';position: absolute;left:0;top:1px;width:18px;height:18px;background:var(--pri_5) url('/images/icons/check-wh.svg') no-repeat center center / 15px 15px;border-radius:4px;}
+input[name="squareCheck_medium"].inde:checked + label::after{content:'';position: absolute;left:0;top:1px;width:18px;height:18px;background:var(--pri_5) url('/images/icons/remove-wh.svg') no-repeat center center / 15px 15px;border-radius:4px;}
+input[name="squareCheck_medium"].squareCheck_medium.disabled + label{pointer-events: none;}
+input[name="squareCheck_medium"].squareCheck_medium.disabled + label:before{content:'';background:var(--mono_g1)}
+input[name="squareCheck_medium"].squareCheck_medium.disabled + label span {color:var(--mono_g5)}
+.squareCheck_medium_text {padding-left:26px;margin-top:6px;color:var(--mono_g7)}
+.disabled .squareCheck_medium_text {color:var(--mono_g3)}
+
+/*squareCheck_default*/
+input[name="squareCheck_default"] + label{display: inline-block;position: relative;padding-left:34px}
+input[name="squareCheck_default"] + label:before {content:'';width: 24px;height: 24px;border-radius:4px;background:var(--mono_g2);position:absolute;top:-2px;left:0;}
+input[name="squareCheck_default"]:checked + label::after{content:'';position: absolute;left:0;top:-2px;width:24px;height:24px;background:var(--pri_5) url('/images/icons/check-wh.svg') no-repeat center center / 20px 20px;border-radius:4px;}
+input[name="squareCheck_default"].inde:checked + label::after{content:'';position: absolute;left:0;top:-2px;width:24px;height:24px;background:var(--pri_5) url('/images/icons/remove-wh.svg') no-repeat center center / 20px 20px;border-radius:4px;}
+input[name="squareCheck_default"].squareCheck_default.disabled + label{pointer-events: none;}
+input[name="squareCheck_default"].squareCheck_default.disabled + label:before{content:'';background:var(--mono_g1)}
+input[name="squareCheck_default"].squareCheck_default.disabled + label span {color:var(--mono_g5)}
+.squareCheck_default_text {padding-left:34px;margin-top:6px;color:var(--mono_g7)}
+.disabled .squareCheck_default_text {color:var(--mono_g3)}
