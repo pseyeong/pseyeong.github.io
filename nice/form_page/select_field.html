@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FORM</title>
+    <script src="http://code.jquery.com/jquery-3.7.0.min.js"></script>
 
     <link rel="stylesheet" href="/design_system_guide/css/common.css"/>
     <link rel="stylesheet" href="/design_system_guide/css/style.css"/>
@@ -12,6 +13,13 @@
     <link rel="stylesheet" href="/design_system_guide/css/color.css"/>
 
     <link rel="stylesheet" href="/design_system_guide/css/form.css"/>
+
+
+
+    <script>
+            
+    </script>
+
 </head>
 <body>
 <div class="wrap">
@@ -20,9 +28,72 @@
         <section class="typoBox on_page mb120">
             <div class="title">
                 <p>Select / Field</p>
-                <span class="dpl_b mt20"></span>
+                <span class="dpl_b mt20">사용자가 선택 할 수 있는 값들을 포함하고 있는 필드입니다. 액션리스트, 혹은 다른 UI들과 함께 사용할 수 있습니다.</span>
             </div>
+            <table class="form_table mb40">
+                <colgroup>
+                    <col width="10%"/>
+                    <col width=""/>
+                    <col width=""/>
 
+                </colgroup>
+                <tr>
+                    <th>state/disclosure</th>
+                    <th>O</th>
+                    <th>X</th>
+                </tr>
+                <tr>
+                    <td>default</td>
+                    <td>
+                        <div class="select_default" role="combobox">
+                            <div class="select_default_box" data-value="op1" role="option">
+                                <p class="txt_n_m">본문텍스트 노멀 미디엄 txt_n_m</p>
+                            </div>
+                            <div class="select_default_optionBox">
+                                <div class="scrollY">
+                                    <div class="select_default_option" data-value="op1" tabindex="0">
+                                        <p class="txt_n_sb">텍스트 txt_n_sb - 옵션1</p>
+                                        <span class="txt_s_m">본문텍스트 스몰 미디엄 txt_s_m</span>
+                                    </div>
+                                    <div class="select_default_option" data-value="op2" tabindex="0">
+                                        <p class="txt_n_sb">텍스트 txt_n_sb - 옵션2</p>
+                                        <span class="txt_s_m">본문텍스트 스몰 미디엄 txt_s_m</span>
+                                    </div>
+                                    <div class="select_default_option" data-value="op3" tabindex="0">
+                                        <p class="txt_n_sb">텍스트 txt_n_sb - 옵션3</p>
+                                        <span class="txt_s_m">본문텍스트 스몰 미디엄 txt_s_m</span>
+                                    </div>
+                                    <div class="select_default_option" data-value="op4" tabindex="0">
+                                        <p class="txt_n_sb">텍스트 txt_n_sb - 옵션4</p>
+                                        <span class="txt_s_m">본문텍스트 스몰 미디엄 txt_s_m</span>
+                                    </div>
+                                    <div class="select_default_option" data-value="op5" tabindex="0">
+                                        <p class="txt_n_sb">텍스트 txt_n_sb - 옵션5</p>
+                                        <span class="txt_s_m">본문텍스트 스몰 미디엄 txt_s_m</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>active</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>disabled</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>error</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
         </section>
     </div>
 </div>
