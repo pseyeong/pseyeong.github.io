@@ -6,12 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FOOTER</title>
 
+    <script src="http://code.jquery.com/jquery-3.7.0.min.js"></script>
+
     <link rel="stylesheet" href="./css/common.css"/>
     <link rel="stylesheet" href="./css/style.css"/>
     <link rel="stylesheet" href="./css/typo.css"/>
     <link rel="stylesheet" href="./css/color.css"/>
 
     <link rel="stylesheet" href="./css/footer.css"/>
+
+    <script>
+        $(function(){
+            $('.mo_foot_menuTit').click(function(){
+                $('.foot_menu').toggleClass('active');
+            });
+        });
+    </script>
 </head>
 <body>
 <div class="wrap">
@@ -24,8 +34,38 @@
                     푸터는 컴포넌트의 맨 하단에 위치하고 페이지의 근간이 되는 정보가 모여 있는 컴포넌트 입니다.
                 </span>
             </div>
-
         </section>
+        <footer>
+            <div class="foot">
+                <ul class="foot_topCont">
+                    <li class="foot_logo">
+                        <div class="logoBox">로고</div>
+                        <p class="logoText txt_n">
+                            킹메이커와 함께 지역정보를 바탕으로<br/>
+                            유권자 공략포인트를 확인하고 선거전략을 수립해보세요
+                        </p>
+                    </li>
+                    <li class="foot_menu">
+                        <div class="mo_foot_menuTit">
+                            <p class="txt_l_sb">퀵링크</p>
+                        </div>
+                        <ul class="foot_menuList">
+                            <li class="txt_n">메뉴1</li>
+                            <li class="txt_n">메뉴2</li>
+                            <li class="txt_n">메뉴3</li>
+                            <li class="txt_n">메뉴4</li>
+                            <li class="txt_n">메뉴5</li>
+                            <li class="txt_n">메뉴6</li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="smLogo">로고</div>
+                <p class="smText">데이터 출처: 주식회사 티브릿지코퍼레이션</p>
+                <p class="copyLight">주식회사 티브릿지코퍼레이션 ㅣ 사업자등록번호 107-87-81775 ㅣ 대표자 박해성<br/>
+                    Tel. 02-784-0025 l Fax. 02-784-0026 l Email. tbridge@tbridge.kr l 서울시 영등포 국회대로 76가길 14. 10층 (우 07239)<br/>
+                    Copyright 2020. T·bridge All rights reserved.</p>
+            </div>
+        </footer>
     </div>
 </div>
 </body>

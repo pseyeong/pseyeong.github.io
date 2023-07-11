@@ -79,3 +79,8 @@ span.title_sTxt {font-size:20px;color:var(--mono_g9);}
 .form_table th {text-align:center;}
 .form_table th, .form_table td {padding:20px}
 
+
+@media  screen and (max-width:1200px) {
+    section {width: 100%}
+}
+
