@@ -277,7 +277,7 @@ input[name="ck_round_secDefault"].ck_round_secDefault_disabled + label span{colo
 
 /*TextAreaField*/
 .textAreaBox {border:1px solid var(--mono_g3);border-radius:4px;height:auto;position:relative;}
-.textAreaBox textarea {border:0;width:100%;border-radius:4px;padding:16px;margin-bottom:24px;min-height:100px}
+.textAreaBox textarea {border:0;width:100%;border-radius:4px;padding:16px;margin-bottom:24px;min-height:100px;resize:auto;max-width:100%;min-width:100%}
 .textAreaBox textarea::-webkit-scrollbar{}
 .textAreaBox p {position:absolute;bottom:8px;right:16px;}
 .textAreaBox:hover {border:1px solid var(--pri_2)}
