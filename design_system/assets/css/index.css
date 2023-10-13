@@ -1,0 +1,13 @@
+.main{}
+header{background:var(--mono_bk);}
+.head{width:1360px;margin:0 auto;padding:50px 0}
+.head p{color:var(--mono_wh);font-size:40px;clear:both;}
+.head img {width:155px;height:33px;float:right;}
+
+.guide_popup{display:none;width:100%;height:100vh;position:fixed;top:0;left:0;}
+.guide_popup.active {display:block;}
+.guide_close{position:absolute;top:-30px;right:0;width:24px;height:24px;cursor:pointer;}
+.guide_close:after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(45deg);width:2px;height:24px;background:var(--mono_wh);}
+.guide_close:before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-45deg);width:2px;height:24px;background:var(--mono_wh);}
+.popup_bg {background:var(--mono_bk);opacity: .4;position:fixed;top:0;left:0;width:100%;height:100vh;z-index:8;cursor:pointer;}
+.guide_popupInner{width:1360px;height:calc(100vh - 120px);position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--mono_wh);z-index:9;border-radius: 16px;}

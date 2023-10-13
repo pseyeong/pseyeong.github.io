@@ -2,9 +2,35 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>디자인 시스템 가이드</title>
-</head>
-<body>
+    <title>Design System Guide</title>
 
+    <link rel="stylesheet" href="./assets/common/css/common.css"/>
+
+    <!--index만 사용하는 css st-->
+    <link rel="stylesheet" href="./assets/css/index.css"/>
+    <!--index만 사용하는 css ed-->
+
+    <script type="text/javascript" src="./assets/common/js/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" src="./assets/common/js/common.js"></script>
+    <script type="text/javascript" src="./assets/js/main.js"></script>
+
+</head>
+
+<body>
+    <div class="main">
+        <header>
+            <div class="head">
+                <div class="nice_logo"><img src="./assets/images/nice_logo.svg" alt="나이스 로고"/></div>
+                <p class="font_w600">Design System Guide</p>
+            </div>
+        </header>
+    </div>
+
+    <div class="guide_popup active">
+        <div class="guide_popupInner">
+            <div class="guide_close"></div>
+        </div>
+        <div class="popup_bg"></div>
+    </div>
 </body>
 </html>
