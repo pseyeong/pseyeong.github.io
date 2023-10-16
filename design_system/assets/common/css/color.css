@@ -1,4 +1,17 @@
 :root {
     --mono_wh:#ffffff;
     --mono_bk:#121212;
+
+    /*gray*/
+    --gray_30:#F9F9F9;
+    --gray_50:#F1F1F1;
+    --gray_100:#DFDFDF;
+    --gray_200:#CACACA;
+    --gray_300:#A9A9A9;
+    --gray_400:#8C8C8C;
+    --gray_500:#737373;
+    --gray_600:#5C5C5C;
+    --gray_700:#444444;
+    --gray_800:#323232;
+    --gray_900:#282828;
 }
