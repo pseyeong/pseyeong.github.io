@@ -7,6 +7,11 @@ $(function(){
         $('.guide_popup').removeClass('active');
     });
 
+    $('.guide_btn li').click(function(){
+        $('.guide_btn li').removeClass('active');
+        $(this).addClass('active');
+    });
+
     text();
 });
 

@@ -1,16 +1,16 @@
-.main{}
+.main{overflow:hidden;height:100vh;}
 header{background:var(--mono_bk);}
-.head{width:1360px;margin:0 auto;padding:50px 0}
-.head p{color:var(--mono_wh);font-size:40px;clear:both;}
+.head{width:1360px;margin:0 auto;padding:40px 0}
+.head p{color:var(--mono_wh);font-size:32px;clear:both;}
 .head img {width:155px;height:33px;float:right;}
 
 /*가이드 버튼*/
-.guide_list{width:1360px;margin:0 auto;}
-.guide_btn {width:auto;overflow:hidden;padding:80px 0}
-.guide_btn li {float:left;width:calc(100% / 3 - 20px);margin-right:20px;margin-bottom:40px;padding:20px 0;text-align:center;background:var(--gray_30);border-radius: 36px;cursor:pointer;font-size:16px;font-weight:600;text-transform: uppercase}
-.guide_btn li:hover {background:var(--gray_100)}
-.guide_btn li:nth-child(3n+1){clear:both;}
-.guide_btn li:nth-child(3n){margin-right:0}
+.guide_list{width:240px;height:100vh;box-shadow:1px 0 2px 0 rgba(16, 24, 40, 0.08)}
+.guide_btn {width:auto;overflow:hidden;}
+.guide_btn li {width:100%;padding:16px;cursor:pointer;font-size:16px;font-weight:600;text-transform: uppercase;border-bottom:1px solid var(--gray_30)}
+.guide_btn li:hover {background:var(--gray_30)}
+.guide_btn li.active {background:var(--gray_30);position:relative}
+.guide_btn li.active:after {content:'';display:inline-block;width:3px;height:100%;position:absolute;top:0;right:0;background:var(--mono_bk);}
 
 
 /*가이드 팝업*/
@@ -26,6 +26,11 @@ header{background:var(--mono_bk);}
 
 
 /*iframe*/
-.common_top {padding:80px 120px;background:var(--mono_bk);border-top-left-radius:16px;border-top-right-radius:16px;color:var(--mono_wh);}
-.common_top p {text-transform: uppercase;font-size:48px;font-weight:700;margin-bottom:24px;}
+.guide_box {width:calc(100% - 240px);overflow-y:scroll;padding:24px}
+.guide_box::-webkit-scrollbar{display:none;}
+.common_top p {text-transform: uppercase;font-size:32px;font-weight:700;margin-bottom:24px;}
 .common_top span {font-size:18px;font-weight:400;}
+iframe{border:0;outline:0;}
+.iframe{height:calc(100vh - 250px)}
+.iframe::-webkit-scrollbar{width:4px;}
+.iframe::-webkit-scrollbar-thumb{width:4px;background:var(--gray_30);border-radius:3px;}
