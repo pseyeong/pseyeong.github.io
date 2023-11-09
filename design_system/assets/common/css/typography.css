@@ -1,3 +1,9 @@
+/* #### pretendard github ####
+https://github.com/orioncactus/pretendard#pretendard
+*/
+
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+
 .tit_xl_b{font-size:36px;font-weight:700;line-height:140%;}
 .tit_l_b{font-size:28px;font-weight:700;line-height:140%;}
 .tit_l_sb{font-size:28px;font-weight:600;line-height:140%;}

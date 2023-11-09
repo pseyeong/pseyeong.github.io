@@ -1,17 +1,19 @@
 /*@import url("경로/파일이름")*/
 
 @import url("./color.css");
+@import url("./typography.css");
 
 /*공통 CSS*/
 *{padding:0;margin:0;list-style:none;box-sizing:border-box}
 html{height: 100%;}
-body {margin:0;padding:0;width: 100%;height:100%;font-family: 'Pretendard', sans-serif;word-break: keep-all;overflow-x: hidden;  }
+body {margin:0;padding:0;width: 100%;height:100%;word-break: keep-all;overflow-x: hidden;  }
+body, h1, h2, h3, h4, h5, h6, form, fieldset, dl, dt, dd, p, span, td, th, div, li, ul, button, input, select, textarea, option, form {font-family:'Pretendard'}
 html, h1, h2, h3, h4, h5, h6, form, fieldset, img, dl, dt, dd, p {margin:0;padding:0;border:0}
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
 header ul, nav ul, footer ul {margin:0;padding:0;list-style:none}
 legend {position:absolute;font-size:0;line-height:0;text-indent:-9999em;overflow:hidden}
 label, input, button, select, img {vertical-align:middle}
-input, button {margin:0;padding:0;font-size:1em; font-family: 'Pretendard', sans-serif;}
+input, button {margin:0;padding:0;font-size:1em;}
 button,input[type=button],input[type=submit]{cursor:pointer;}
 input[type=text], input[type=number], input[type=password], input[type=submit], input[type=image], button {-webkit-appearance:none;}
 textarea, select {font-size:1em;}
@@ -20,7 +22,8 @@ p {margin:0;padding:0;word-break:break-all}
 pre {overflow-x:scroll;font-size:1.1em}
 a:link, a:visited {color:inherit;text-decoration:none}
 ul,ol,li{list-style:none;padding:0;margin:0;}
-input, button, textarea, select {font-family: 'Pretendard', sans-serif, sans-serif;outline: none}
+input, button, textarea, select {outline: none}
+table {width:100%; border-collapse:collapse; border-spacing:0;}
 
 /*사파리 버튼 초기화*/
 input[type="text"], input[type="password"], input[type="button"], input[type="submit"], textarea { -webkit-appearance: none; -webkit-border-radius: 0; }
@@ -43,6 +46,8 @@ textarea::-moz-placeholder { font-weight: 400; color: #a2a2a2; }
 body {overflow-x:hidden;}
 body::-webkit-scrollbar{background:none;width:4px;}
 body::-webkit-scrollbar-thumb{background:#dfdfdf;border-radius:999px;width:4px;}
+
+.cursor{cursor:pointer}
 
 /* Border */
 .nbd {border:none !important;}
@@ -491,59 +496,7 @@ body::-webkit-scrollbar-thumb{background:#dfdfdf;border-radius:999px;width:4px;}
 input:focus, select:focus {outline:none;}
 select, button {cursor:pointer;}
 
-/*font*/
-@font-face {
-    font-family: 'Pretendard';
-    src: url('./assets/common/fonts/Pretendard-Thin.otf') format('opentype');
-    font-weight: 100;
-    font-display: swap;
-}
-@font-face {
-    font-family: 'Pretendard';
-    src: url('./assets/common/fonts/Pretendard-ExtraLight.otf') format('opentype');
-    font-weight: 200;
-    font-display: swap;
-}
-@font-face {
-    font-family: 'Pretendard';
-    src: url('./assets/common/fonts/Pretendard-Light.otf') format('opentype');
-    font-weight: 300;
-    font-display: swap;
-}
-@font-face {
-    font-family: 'Pretendard';
-    src: url('./assets/common/fonts/Pretendard-Regular.otf') format('opentype');
-    font-weight: 400;
-    font-display: swap;
-}
-@font-face {
-    font-family: 'Pretendard';
-    src: url('./assets/common/fonts/Pretendard-Medium.otf') format('opentype');
-    font-weight: 500;
-    font-display: swap;
-}
-@font-face {
-    font-family: 'Pretendard';
-    src: url('./assets/common/fonts/Pretendard-SemiBold.otf') format('opentype');
-    font-weight: 600;
-    font-display: swap;
-}
-@font-face {
-    font-family: 'Pretendard';
-    src: url('./assets/common/fonts/Pretendard-Bold.otf') format('opentype');
-    font-weight: 700;
-    font-display: swap;
-}
-@font-face {
-    font-family: 'Pretendard';
-    src: url('./assets/common/fonts/Pretendard-ExtraBold.otf') format('opentype');
-    font-weight: 800;
-    font-display: swap;
-}
-@font-face {
-    font-family: 'Pretendard';
-    src: url('./assets/common/fonts/Pretendard-Black.otf') format('opentype');
-    font-weight: 900;
-    font-display: swap;
-}
-
+/*shadow*/
+.shadow_s{box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.07), 0 0 2px 0 rgba(0, 0, 0, 0.07);}
+.shadow_m{box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.12);}
+.shadow_l{box-shadow: 0 1px 15px 0 rgba(0, 0, 0, 0.07);}
