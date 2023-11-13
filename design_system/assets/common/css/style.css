@@ -43,6 +43,7 @@
 .rainbowTable td{padding:16px 0;text-align:center;}
 
 /*shadow*/
+.shadowBox {padding:0 20px;}
 .shadowBox div.flex {margin-bottom:70px;align-items: center;}
 .shadowBox div.flex div{width:142px;height:142px;border-radius:14px;margin-right:40px;}
 .shadowBox div.flex p {font-size:18px;font-weight:400;color:var(--mono_bk)}
