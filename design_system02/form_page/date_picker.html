@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FORM</title>
+
+    <link rel="stylesheet" href="/design_system_guide/css/common.css"/>
+    <link rel="stylesheet" href="/design_system_guide/css/style.css"/>
+    <link rel="stylesheet" href="/design_system_guide/css/typo.css"/>
+    <link rel="stylesheet" href="/design_system_guide/css/color.css"/>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/design_system_guide/css/form.css"/>
+
+    <script>
+        $(function() {
+            $.datepicker.setDefaults($.datepicker.regional['ko']);
+            $('#datepickerSt').datepicker({
+                dateFormat: 'yy-mm-dd',
+                prevText: '이전 달',
+                nextText: '다음 달',
+                monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+                monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+                dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+                dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+                dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+                showMonthAfterYear: true,
+                yearSuffix: '년',
+                changeYear: true,
+                changeMonth: true,
+                minDate:0,
+
+            });
+
+            $('#datepickerEd').datepicker({
+                dateFormat: 'yy-mm-dd',
+                prevText: '이전 달',
+                nextText: '다음 달',
+                monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+                monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+                dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+                dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+                dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+                showMonthAfterYear: true,
+                changeYear: true,
+                changeMonth: true,
+                yearSuffix: '년',
+            });
+
+            $('#datepickerSt').datepicker("option", "maxDate", $("#datepickerEd").val());
+            $('#datepickerSt').datepicker("option", "onClose", function (selectedDate){
+                $("#datepickerEd").datepicker("option", "minDate", selectedDate);
+            });
+            //아직 안끝남
+        });
+    </script>
+</head>
+<body>
+<div class="wrap">
+    <div class="cont form">
+        <!--폼-->
+        <section class="typoBox on_page mb120">
+            <div class="title">
+                <p>Date_Picker</p>
+                <span class="dpl_b mt20">달력을 품고 있으며 입력시 날짜와 시간을 선택할 수 있습니다. </span>
+            </div>
+            <div class="datepickerWrap">
+                <label for="datepickerSt" class="label_hidden"></label>
+                <input type="text" id="datepickerSt" class="datePicker_common" placeholder="YYYY.MM.DD"/>
+            </div>
+        </section>
+    </div>
+</div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+

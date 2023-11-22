@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FORM</title>
+
+    <script src="http://code.jquery.com/jquery-3.7.0.min.js"></script>
+
+    <link rel="stylesheet" href="/design_system_guide/css/common.css"/>
+    <link rel="stylesheet" href="/design_system_guide/css/style.css"/>
+    <link rel="stylesheet" href="/design_system_guide/css/typo.css"/>
+    <link rel="stylesheet" href="/design_system_guide/css/color.css"/>
+
+    <link rel="stylesheet" href="/design_system_guide/css/form.css"/>
+
+    <script>
+        $(function(){
+            //input 숫자 카운트
+            $('.textLength input').keyup(function(){
+                const input_val = $(this).val();
+                $(this).parent().children().find('span').text(input_val.length);
+            });
+
+            //패스워드 보이기 / 숨기기
+            $('.showPw button').click(function(){
+                $(this).parent().toggleClass('active');
+
+                if($(this).parent().hasClass('active')){
+                    $(this).prev('input').attr('type','text');
+                }else{
+                    $(this).prev('input').attr('type','password');
+                }
+            });
+
+            //textAreaBox
+            $('.textAreaBox textarea').keyup(function(){
+                const input_val = $(this).val();
+                $(this).parent().children().find('span').text(input_val.length);
+            });
+        });
+    </script>
+</head>
+<body>
+<div class="wrap">
+    <div class="cont form">
+        <!--폼-->
+        <section class="typoBox on_page mb120">
+            <div class="title">
+                <p>Input / TextField</p>
+                <span class="dpl_b mt20">사용자가 직접 타이핑을 통해 내용을 입력할 수 있는 필드입니다. 사용자의 편의를 위해 특정 데이터마다의 스타일이 지정되어 있습니다.</span>
+            </div>
+            <table class="form_table">
+                <colgroup>
+                    <col width="10%"/>
+                    <col width=""/>
+                    <col width=""/>
+                    <col width=""/>
+                    <col width=""/>
+                    <col width=""/>
+                </colgroup>
+                <tr>
+                    <th>default</th>
+                    <td><label for="label01"></label><input type="text" id="label01" class="textField_input txt_n_m" placeholder="본문텍스트 노멀 미디엄 txt_n_m"/></td>
+                    <td><label for="label02"></label><input type="text" id="label02" class="textField_input txt_n_m" placeholder="ABCD - ABCD - ABCD"/></td>
+                    <td>
+                        <div class="input_del">
+                            <label for="label03"></label><input type="text" id="label03" class="textField_input txt_n_m " placeholder="본문텍스트 노멀 미디엄 txt_n_m"/>
+                            <button type="button" class="input_del_btn"></button>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="textLength">
+                            <label for="label04"></label><input type="text" id="label04" class="textField_input txt_n_m" placeholder="본문텍스트 노멀 미디엄 txt_n_m" maxlength="15"/>
+                            <p class="txt_s_m"><span>00</span>/15</p>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="showPw">
+                            <label for="label05"></label><input type="password" id="label05" class="textField_input txt_n_m" placeholder="패스워드를 입력하세요."/>
+                            <button type="button"></button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>active</th>
+                    <td><label for="label06"></label><input type="text" id="label06" class="textField_input txt_n_m active" placeholder="본문텍스트 노멀 미디엄 txt_n_m"/></td>
+                    <td><label for="label07"></label><input type="text" id="label07" class="textField_input txt_n_m active" placeholder="ABCD - ABCD - ABCD"/></td>
+                    <td>
+                        <div class="input_del">
+                            <label for="label08"></label><input type="text" id="label08" class="textField_input txt_n_m  active" placeholder="본문텍스트 노멀 미디엄 txt_n_m"/>
+                            <button type="button" class="input_del_btn"></button>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="textLength">
+                            <label for="label09"></label><input type="text" id="label09" class="textField_input txt_n_m active" placeholder="본문텍스트 노멀 미디엄 txt_n_m" maxlength="15"/>
+                            <p class="txt_s_m"><span>00</span>/15</p>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="showPw">
+                            <label for="label10"></label><input type="password" id="label10" class="textField_input txt_n_m active" placeholder="패스워드를 입력하세요."/>
+                            <button type="button"></button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>disabled</th>
+                    <td><label for="label11"></label><input type="text" id="label11" class="textField_input txt_n_m disabled" placeholder="본문텍스트 노멀 미디엄 txt_n_m"/></td>
+                    <td><label for="label12"></label><input type="text" id="label12" class="textField_input txt_n_m disabled" placeholder="ABCD - ABCD - ABCD"/></td>
+                    <td>
+                        <div class="input_del disabled">
+                            <label for="label13"></label><input type="text" id="label13" class="textField_input txt_n_m disabled" placeholder="본문텍스트 노멀 미디엄 txt_n_m"/>
+                            <button type="button" class="input_del_btn"></button>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="textLength disabled">
+                            <label for="label14"></label><input type="text" id="label14" class="textField_input txt_n_m disabled" placeholder="본문텍스트 노멀 미디엄 txt_n_m" maxlength="15"/>
+                            <p class="txt_s_m"><span>00</span>/15</p>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="showPw disabled">
+                            <label for="label15"></label><input type="password" id="label15" class="textField_input txt_n_m disabled" placeholder="패스워드를 입력하세요."/>
+                            <button type="button"></button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>error</th>
+                    <td><label for="label16"></label><input type="text" id="label16" class="textField_input txt_n_m error" placeholder="본문텍스트 노멀 미디엄 txt_n_m"/></td>
+                    <td><label for="label17"></label><input type="text" id="label17" class="textField_input txt_n_m error" placeholder="ABCD - ABCD - ABCD"/></td>
+                    <td>
+                        <div class="input_del">
+                            <label for="label18"></label><input type="text" id="label18" class="textField_input txt_n_m  error" placeholder="본문텍스트 노멀 미디엄 txt_n_m"/>
+                            <button type="button" class="input_del_btn"></button>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="textLength">
+                            <label for="label19"></label><input type="text" id="label19" class="textField_input txt_n_m error" placeholder="본문텍스트 노멀 미디엄 txt_n_m" maxlength="15"/>
+                            <p class="txt_s_m"><span>00</span>/15</p>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="showPw">
+                            <label for="label20"></label><input type="password" id="label20" class="textField_input txt_n_m error" placeholder="패스워드를 입력하세요."/>
+                            <button type="button"></button>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+
+        </section>
+
+        <section class="typoBox on_page mb120">
+            <div class="title">
+                <p>Input / TextAreaField</p>
+                <span class="dpl_b mt20">장문의 글을 입력할 수 있는 큰영역의 필드입니다.</span>
+            </div>
+
+            <table class="form_table">
+                <colgroup>
+                    <col width="10%"/>
+                    <col width=""/>
+                </colgroup>
+                <tr>
+                    <th>default</th>
+                    <td>
+                        <div class="textAreaBox">
+                            <textarea cols="" rows="" class="txt_n_m" maxlength="500" placeholder="텍스트 입력란" title=""></textarea>
+                            <p class="txt_s_m"><span>000</span>/500</p>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>active</th>
+                    <td>
+                        <div class="textAreaBox active">
+                            <textarea cols="" rows="" class="txt_n_m" maxlength="500" placeholder="텍스트 입력란" title=""></textarea>
+                            <p class="txt_s_m"><span>000</span>/500</p>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>disabled</th>
+                    <td>
+                        <div class="textAreaBox disabled">
+                            <textarea cols="" rows="" class="txt_n_m" maxlength="500" placeholder="텍스트 입력란" title=""></textarea>
+                            <p class="txt_s_m"><span>000</span>/500</p>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>error</th>
+                    <td>
+                        <div class="textAreaBox error">
+                            <textarea cols="" rows="" class="txt_n_m" maxlength="500" placeholder="텍스트 입력란" title=""></textarea>
+                            <p class="txt_s_m"><span>000</span>/500</p>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </section>
+    </div>
+</div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+

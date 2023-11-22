@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GRIDS</title>
+
+    <link rel="stylesheet" href="./css/common.css"/>
+    <link rel="stylesheet" href="./css/style.css"/>
+    <link rel="stylesheet" href="./css/typo.css"/>
+    <link rel="stylesheet" href="./css/color.css"/>
+
+    <link rel="stylesheet" href="./css/grids.css"/>
+</head>
+<body>
+<div class="wrap">
+    <div class="cont">
+        <!--레이아웃-->
+        <section class="typoBox on_page mb120">
+            <div class="title">
+                <p>GRIDS</p>
+                <span class="dpl_b mt20">영역만 생성</span>
+            </div>
+            <div class="mb40 g_box">
+                <p class="gridTitle">PC</p>
+                <p>
+                    <span class="dpl_ib hd2 mr20 mb10">pc_side_l</span> 사이드 탭이 있는경우의 PC 레이아웃<br/>
+                    <span class="dpl_b">가로해상도 1920~1551</span><br/>
+                    * 동일 레이아웃에서 content_warp 영역의 여백을 줄여 레이아웃 변형, 가운데 그리드 1280px 고정<br/><br/>
+                    * 내부의 마진 모든 페이지 동일
+
+                </p>
+                <button type="button" class="pc_side_btn" onclick="window.open('/grids_page/pc_side_l.html')">grids 확인</button>
+            </div>
+
+            <div class="mb40 g_box">
+                <p class="gridTitle">LOGIN</p>
+                <p>
+                    <span class="dpl_ib hd2 mr20 mb10">login_ui</span> 사이드 탭이 있는경우의 PC 레이아웃<br/>
+                    <span class="dpl_b">가로해상도 1920~1551</span><br/>
+                    * 동일 레이아웃에서 content_warp 영역의 여백을 줄여 레이아웃 변형, 가운데 그리드 1280px 고정<br/><br/>
+                    * 다른 종류의 UI 컴포넌트 끼리는 'margin-bottom:40px' / 동일한 종류의 UI 컴포넌트 끼리는 'margin-bottom:20px'
+                </p>
+                <button type="button" class="pc_side_btn" onclick="window.open('/grids_page/login_ui.html')">grids 확인</button>
+            </div>
+
+            <div class="mb40 g_box">
+                <p class="gridTitle">pop_large</p>
+                <p>
+                    <span class="dpl_ib hd2 mr20 mb10">pop_large</span> 큰사이즈 팝업<br/>
+                    <span class="dpl_b">가로해상도 1920~1551</span><br/>
+                    * width 920px 고정, 가운데 위치<br/><br/>
+                    * 다른 종류의 UI 컴포넌트 끼리는 'margin-bottom:30px' / 동일한 종류의 UI 컴포넌트 끼리는 'margin-bottom:20px'
+
+                </p>
+                <button type="button" class="pc_side_btn" onclick="window.open('/grids_page/pop_large.html')">grids 확인</button>
+            </div>
+
+            <div class="mb40 g_box">
+                <p class="gridTitle">pop_full</p>
+                <p>
+                    <span class="dpl_ib hd2 mr20 mb10">pop_full</span> 풀페이지 팝업<br/>
+                    <span class="dpl_b">가로해상도 1920~1551</span><br/>
+                    * 풀페이지로 팝업/혹은 새창에서 열림
+                </p>
+                <button type="button" class="pc_side_btn" onclick="window.open('/grids_page/pop_full.html')">grids 확인</button>
+            </div>
+        </section>
+
+
+    </div>
+</div>
+</body>
+</html>
