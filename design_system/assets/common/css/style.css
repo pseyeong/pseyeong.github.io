@@ -62,3 +62,16 @@
 .shadowBox div.flex div{width:142px;height:142px;border-radius:14px;margin-right:40px;}
 .shadowBox div.flex p {font-size:18px;font-weight:400;color:var(--mono_bk)}
 .shadowBox div.flex p span {display:block;font-size:18px;font-weight:400;margin-top:10px;color:var(--gray_300)}
+
+/*blur*/
+.blur_ex_img{margin:0 auto;width:80%;border-radius:40px;background:url('/design_system/assets/images/map_img.png') no-repeat center center / cover;padding:80px}
+.blur_ex_img > div {padding:32px;text-align:center;margin-bottom:40px;border-radius:8px;background:rgba(255, 255, 255, 0.6)}
+.blur_tit01{font-size:24px;font-weight:500;color:#040022;margin-bottom:10px;}
+.blur_tit02{font-size:18px;font-weight:400;color:var(--mono_bk);margin-bottom:4px;}
+.blur_tit03{font-size:16px;font-weight:400;color:var(--gray_300)}
+
+/*radius*/
+.radius_box > div{display:flex;justify-content: start;align-items: center;padding:33px 0;border-bottom:1px solid var(--gray_100)}
+.radius_box > div > div:first-child{width:48px;height:48px;margin-right:24px;}
+.radius_box > div > div:last-child{margin-left:auto;}
+.radius_box span{display:inline-block;margin-left:20px;}
