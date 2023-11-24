@@ -28,6 +28,19 @@
     --pri_800:#172D71;
     --pri_900:#12245A;
 
+    /*Secondary*/
+    --sec_30:#F1FBFF;
+    --sec_50:#D8F5FF;
+    --sec_100:#A8E9FF;
+    --sec_200:#65D8FF;
+    --sec_300:#2EB7E5;
+    --sec_400:#2698BD;
+    --sec_500:#1F7D9D;
+    --sec_600:#19647D;
+    --sec_700:#124A5C;
+    --sec_800:#0E3744;
+    --sec_900:#0B2B36;
+
     /*red*/
     --red_30:#FEF8F8;
     --red_50:#FDECEC;
@@ -108,17 +121,17 @@
     --lime_900:#242A12;
 
     /*light blue*/
-    --light_blue_30:#F6FAFD;
-    --light_blue_50:#E7F2FB;
-    --light_blue_100:#CDE4F6;
-    --light_blue_200:#A7CFF0;
-    --light_blue_300:#6CB0E6;
-    --light_blue_400:#3592DC;
-    --light_blue_500:#0175D1;
-    --light_blue_600:#015DA7;
-    --light_blue_700:#01447A;
-    --light_blue_800:#00335C;
-    --light_blue_900:#00294A;
+    --light_blue_30:#F1FBFF;
+    --light_blue_50:#D8F5FF;
+    --light_blue_100:#A8E9FF;
+    --light_blue_200:#65D8FF;
+    --light_blue_300:#2EB7E5;
+    --light_blue_400:#2698BD;
+    --light_blue_500:#1F7D9D;
+    --light_blue_600:#19647D;
+    --light_blue_700:#124A5C;
+    --light_blue_800:#0E3744;
+    --light_blue_900:#0B2B36;
 
     /*cyan*/
     --cyan_30:#EDFEFF;
@@ -158,6 +171,19 @@
     --purple_700:#4723B1;
     --purple_800:#351B85;
     --purple_900:#2B156B;
+
+    /*cool gray*/
+    --cool_gray_30:#FAFAFB;
+    --cool_gray_50:#F1F1F3;
+    --cool_gray_100:#DDDFE3;
+    --cool_gray_200:#C7CAD1;
+    --cool_gray_300:#A5A9B8;
+    --cool_gray_400:#878CA0;
+    --cool_gray_500:#6E7387;
+    --cool_gray_600:#595C69;
+    --cool_gray_700:#42444A;
+    --cool_gray_800:#313236;
+    --cool_gray_900:#27282A;
 }
 
 /*텍스트*/
@@ -187,6 +213,20 @@
 .pri_700{color:var(--pri_700) !important}
 .pri_800{color:var(--pri_800) !important}
 .pri_900{color:var(--pri_900) !important}
+
+/*참고 - light blue랑 색상 동일*/
+.sec_30{color:var(--sec_30) !important}
+.sec_50{color:var(--sec_50) !important}
+.sec_100{color:var(--sec_100) !important}
+.sec_200{color:var(--sec_200) !important}
+.sec_300{color:var(--sec_300) !important}
+.sec_400{color:var(--sec_400) !important}
+.sec_500{color:var(--sec_500) !important}
+.sec_600{color:var(--sec_600) !important}
+.sec_700{color:var(--sec_700) !important}
+.sec_800{color:var(--sec_800) !important}
+.sec_900{color:var(--sec_900) !important}
+
 
 .red_30{color:var(--red_30) !important}
 .red_50{color:var(--red_50) !important}
@@ -308,6 +348,17 @@
 .purple_800{color:var(--purple_800) !important}
 .purple_900{color:var(--purple_900) !important}
 
+.cool_gray_30{color:var(--cool_gray_30) !important}
+.cool_gray_50{color:var(--cool_gray_50) !important}
+.cool_gray_100{color:var(--cool_gray_100) !important}
+.cool_gray_200{color:var(--cool_gray_200) !important}
+.cool_gray_300{color:var(--cool_gray_300) !important}
+.cool_gray_400{color:var(--cool_gray_400) !important}
+.cool_gray_500{color:var(--cool_gray_500) !important}
+.cool_gray_600{color:var(--cool_gray_600) !important}
+.cool_gray_700{color:var(--cool_gray_700) !important}
+.cool_gray_800{color:var(--cool_gray_800) !important}
+.cool_gray_900{color:var(--cool_gray_900) !important}
 
 
 /*배경*/
@@ -337,6 +388,20 @@
 .pri_bg_700{background:var(--pri_700) !important}
 .pri_bg_800{background:var(--pri_800) !important}
 .pri_bg_900{background:var(--pri_900) !important}
+
+/*참고 * light blue랑 색상 동일*/
+.sec_bg_30{background:var(--sec_30) !important}
+.sec_bg_50{background:var(--sec_50) !important}
+.sec_bg_100{background:var(--sec_100) !important}
+.sec_bg_200{background:var(--sec_200) !important}
+.sec_bg_300{background:var(--sec_300) !important}
+.sec_bg_400{background:var(--sec_400) !important}
+.sec_bg_500{background:var(--sec_500) !important}
+.sec_bg_600{background:var(--sec_600) !important}
+.sec_bg_700{background:var(--sec_700) !important}
+.sec_bg_800{background:var(--sec_800) !important}
+.sec_bg_900{background:var(--sec_900) !important}
+
 
 .red_bg_30{background:var(--red_30) !important}
 .red_bg_50{background:var(--red_50) !important}
@@ -457,3 +522,35 @@
 .purple_bg_700{background:var(--purple_700) !important}
 .purple_bg_800{background:var(--purple_800) !important}
 .purple_bg_900{background:var(--purple_900) !important}
+
+.cool_gray_bg_30{background:var(--cool_gray_30) !important}
+.cool_gray_bg_50{background:var(--cool_gray_50) !important}
+.cool_gray_bg_100{background:var(--cool_gray_100) !important}
+.cool_gray_bg_200{background:var(--cool_gray_200) !important}
+.cool_gray_bg_300{background:var(--cool_gray_300) !important}
+.cool_gray_bg_400{background:var(--cool_gray_400) !important}
+.cool_gray_bg_500{background:var(--cool_gray_500) !important}
+.cool_gray_bg_600{background:var(--cool_gray_600) !important}
+.cool_gray_bg_700{background:var(--cool_gray_700) !important}
+.cool_gray_bg_800{background:var(--cool_gray_800) !important}
+.cool_gray_bg_900{background:var(--cool_gray_900) !important}
+
+
+/*border*/
+.line1{border:1px solid var(--gray_50) !important;}
+.line1:hover{border:1px solid var(--pri_300) !important;}
+.line2{border:1px solid var(--gray_100) !important;}
+.line2:hover{border:1px solid var(--pri_300) !important;}
+.line_pri_300{border:1px solid var(--pri_300) !important;}
+
+/*contents*/
+.contents1{background:var(--pri_500)}
+.contents2{background:var(--pri_700)}
+.contents3{background:var(--green_300)}
+.contents4{background:#0BC9D7}
+.contents5{background:var(--sec_300)}
+.contents6{background:var(--blue_400)}
+.contents7{background:var(--purple_300)}
+.contents8{background:var(--pink_300)}
+.contents9{background:var(--yellow_200)}
+.contents10{background:var(--lime_200)}
