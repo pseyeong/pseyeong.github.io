@@ -508,12 +508,12 @@ select, button {cursor:pointer;}
 .blur_l{backdrop-filter: blur(12px);}
 .blur_xl{backdrop-filter: blur(20px);}
 
-    /*radius*/
-.radius_xxs{border-radius:2px}
-.radius_xs{border-radius:4px}
-.radius_sm{border-radius:6px}
-.radius_md{border-radius:8px}
-.radius_lg{border-radius:16px}
-.radius_xl{border-radius:24px}
-.radius_xxl{border-radius:32px}
-.radius_pill{border-radius:100%}
+/*radius*/
+.radius_2{border-radius:2px}
+.radius_4{border-radius:4px}
+.radius_6{border-radius:6px}
+.radius_8{border-radius:8px}
+.radius_16{border-radius:16px}
+.radius_24{border-radius:24px}
+.radius_32{border-radius:32px}
+.radius_100p{border-radius:100%}
