@@ -1,3 +1,5 @@
+/* 프로젝트 진행 시 필요x */
+
 .common_top{background:var(--mono_bk);clear:both;}
 .common_top{width:100%;margin:0 auto;padding:40px 360px}
 .common_top p{color:var(--mono_wh);font-size:36px;clear:both;font-weight:600;text-transform: uppercase}
@@ -86,3 +88,18 @@
 .layout_code {width:calc(25% - 10px);margin-left:10px;}
 .layout_code button {display:block;width:100%;padding:8px 0;text-align:center;background:var(--blue_300);border:0;color:var(--mono_wh);margin-bottom:10px;}
 .layout_code textarea{border:1px solid var(--gray_50);height:calc(100% - 45px);width:100%}
+
+/*button*/
+.buttonOv_list{border-top:1px solid var(--gray_100);border-left:1px solid var(--gray_100);height:auto;overflow:hidden;}
+.buttonOv_list li{border-right:1px solid var(--gray_100);border-bottom:1px solid var(--gray_100);padding:20px;float:left;width:calc(100% / 4);cursor:pointer;}
+.buttonOv_list li:nth-child(4n+1){clear:both;}
+.buttonOv_list li .flex {justify-content: space-between;margin:20px 0;height:45px;align-items: center;}
+.buttonOv_list li .flex p:first-child{font-size:18px;font-weight:500;}
+.buttonOv_list li .flex p:last-child{font-size:13px;font-weight:500;color:var(--pri_500);display:flex;align-items: center;}
+.buttonOv_list li .flex p:last-child img {margin-left:-2px;}
+.buttonOv_list li > div:first-child{height:260px;}
+.buttonOv_list li > p{height:70px;line-height:140%;font-size:14px;font-weight:400;color:var(--gray_600)}
+
+.section_tit {font-size:32px;font-weight:700;color:var(--gray_900);margin-bottom:16px;}
+.section_txt {font-size:18px;font-weight:400;color:#666;margin-bottom:8px;}
+.section_txt02 {font-size:16px;font-weight:500;color:var(--blue_300)}
