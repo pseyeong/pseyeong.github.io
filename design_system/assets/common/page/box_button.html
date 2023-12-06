@@ -18,94 +18,639 @@
         </p>
     </div>
     <div class="guide_box">
+        <p class="font17 mb40 font_w500">* <span class="red_500 font_w700">활성화 : active / 비활성화 : disabled</span> 클래스 추가</p>
         <p class="color_tit">CTA Button</p>
         <span class="dpl_b mb40">사용자 상호 작용을 유도하기 위한 클릭 가능한 요소로, 화면 내 링크 및 기능, 사용자 액션이 필요한 부분에 사용합니다.</span>
 
-        <section>
+        <section class="mb80">
             <p class="section_tit">Primary</p>
             <p class="section_txt">가장 중요하거나 사용자의 눈에 띄어야 하는 경우에 사용하며, 한 페이지에 한 번만 사용하는 것을 권장합니다.</p>
-            <p class="section_txt02">서비스 특성에 맞춰 Rainbow Color 내에서 색상을 지정하여 사용할 수 있습니다.</p>
-            <div class="flex jcsb_flex">
-                <table class="w23p">
-                    <colgroup>
-                        <col width="25%"/>
-                        <col width="25%"/>
-                        <col width="25%"/>
-                        <col width="25%"/>
-                    </colgroup>
-                    <tr>
-                        <th>Default</th>
-                        <th>Hover</th>
-                        <th>Pressed</th>
-                        <th>Disabled</th>
-                    </tr>
-                    <tr>
-                        <td><button type="button" name="" title="버튼">버튼</button></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                </table>
-                <table class="w23p">
-                    <colgroup>
-                        <col width="25%"/>
-                        <col width="25%"/>
-                        <col width="25%"/>
-                        <col width="25%"/>
-                    </colgroup>
-                    <tr>
-                        <th>Default</th>
-                        <th>Hover</th>
-                        <th>Pressed</th>
-                        <th>Disabled</th>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                </table>
-                <table class="w23p">
-                    <colgroup>
-                        <col width="25%"/>
-                        <col width="25%"/>
-                        <col width="25%"/>
-                        <col width="25%"/>
-                    </colgroup>
-                    <tr>
-                        <th>Default</th>
-                        <th>Hover</th>
-                        <th>Pressed</th>
-                        <th>Disabled</th>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                </table>
-                <table class="w23p">
-                    <colgroup>
-                        <col width="25%"/>
-                        <col width="25%"/>
-                        <col width="25%"/>
-                        <col width="25%"/>
-                    </colgroup>
-                    <tr>
-                        <th>Default</th>
-                        <th>Hover</th>
-                        <th>Pressed</th>
-                        <th>Disabled</th>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                </table>
+<!--            <p class="section_txt02">서비스 특성에 맞춰 Rainbow Color 내에서 색상을 지정하여 사용할 수 있습니다.</p>-->
+
+
+            <div class="flex ">
+                <div class="w50p mt20 mr10">
+                    <p class="font16 font_w600">XL</p>
+                    <table class="table_common">
+                        <colgroup>
+                            <col width="25%"/>
+                            <col width="25%"/>
+                            <col width="25%"/>
+                            <col width="25%"/>
+                        </colgroup>
+                        <tr>
+                            <th>Default</th>
+                            <th>Hover</th>
+                            <th>Pressed</th>
+                            <th>Disabled</th>
+                        </tr>
+                        <tr>
+                            <td><button type="button" name="" class="btn xl_btn blue_btn font18" title="버튼" tabindex="">버튼</button></td>
+                            <td><button type="button" name="" class="btn xl_btn blue_btn font18" title="버튼" tabindex="">버튼</button></td>
+                            <td><button type="button" name="" class="btn xl_btn blue_btn font18 active" title="버튼" tabindex="">버튼</button></td>
+                            <td><button type="button" name="" class="btn xl_btn blue_btn font18 disabled" title="버튼" tabindex="">버튼</button></td>
+                        </tr>
+                        <tr>
+                            <td><button type="button" name="" class="btn xl_btn blue_btn font18 btn_lp" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                            <td><button type="button" name="" class="btn xl_btn blue_btn font18 btn_lp" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                            <td><button type="button" name="" class="btn xl_btn blue_btn font18 btn_lp active" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                            <td><button type="button" name="" class="btn xl_btn blue_btn font18 btn_lp disabled" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                        </tr>
+                        <tr>
+                            <td><button type="button" name="" class="btn xl_btn blue_btn font18 btn_rp" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                            <td><button type="button" name="" class="btn xl_btn blue_btn font18 btn_rp" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                            <td><button type="button" name="" class="btn xl_btn blue_btn font18 btn_rp active" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                            <td><button type="button" name="" class="btn xl_btn blue_btn font18 btn_rp disabled" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                        </tr>
+                    </table>
+                </div>
+
+
+                <div class="w50p mt20">
+                    <p class="font16 font_w600">L</p>
+                    <table class="table_common">
+                        <colgroup>
+                            <col width="25%"/>
+                            <col width="25%"/>
+                            <col width="25%"/>
+                            <col width="25%"/>
+                        </colgroup>
+                        <tr>
+                            <th>Default</th>
+                            <th>Hover</th>
+                            <th>Pressed</th>
+                            <th>Disabled</th>
+                        </tr>
+                        <tr>
+                            <td><button type="button" name="" class="btn l_btn blue_btn font16" title="버튼" tabindex="">버튼</button></td>
+                            <td><button type="button" name="" class="btn l_btn blue_btn font16" title="버튼" tabindex="">버튼</button></td>
+                            <td><button type="button" name="" class="btn l_btn blue_btn font16 active" title="버튼" tabindex="">버튼</button></td>
+                            <td><button type="button" name="" class="btn l_btn blue_btn font16 disabled" title="버튼" tabindex="">버튼</button></td>
+                        </tr>
+                        <tr>
+                            <td><button type="button" name="" class="btn l_btn blue_btn font16 btn_lp" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                            <td><button type="button" name="" class="btn l_btn blue_btn font16 btn_lp" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                            <td><button type="button" name="" class="btn l_btn blue_btn font16 btn_lp active" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                            <td><button type="button" name="" class="btn l_btn blue_btn font16 btn_lp disabled" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                        </tr>
+                        <tr>
+                            <td><button type="button" name="" class="btn l_btn blue_btn font16 btn_rp" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                            <td><button type="button" name="" class="btn l_btn blue_btn font16 btn_rp" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                            <td><button type="button" name="" class="btn l_btn blue_btn font16 btn_rp active" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                            <td><button type="button" name="" class="btn l_btn blue_btn font16 btn_rp disabled" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+
+            <div class="flex ">
+                <div class="w50p mt20 mr10">
+                    <p class="font14 font_w600">M</p>
+                    <table class="table_common">
+                        <colgroup>
+                            <col width="25%"/>
+                            <col width="25%"/>
+                            <col width="25%"/>
+                            <col width="25%"/>
+                        </colgroup>
+                        <tr>
+                            <th>Default</th>
+                            <th>Hover</th>
+                            <th>Pressed</th>
+                            <th>Disabled</th>
+                        </tr>
+                        <tr>
+                            <td><button type="button" name="" class="btn m_btn blue_btn font14" title="버튼" tabindex="">버튼</button></td>
+                            <td><button type="button" name="" class="btn m_btn blue_btn font14" title="버튼" tabindex="">버튼</button></td>
+                            <td><button type="button" name="" class="btn m_btn blue_btn font14 active" title="버튼" tabindex="">버튼</button></td>
+                            <td><button type="button" name="" class="btn m_btn blue_btn font14 disabled" title="버튼" tabindex="">버튼</button></td>
+                        </tr>
+                        <tr>
+                            <td><button type="button" name="" class="btn m_btn blue_btn font14 btn_lp" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                            <td><button type="button" name="" class="btn m_btn blue_btn font14 btn_lp" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                            <td><button type="button" name="" class="btn m_btn blue_btn font14 btn_lp active" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                            <td><button type="button" name="" class="btn m_btn blue_btn font14 btn_lp disabled" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                        </tr>
+                        <tr>
+                            <td><button type="button" name="" class="btn m_btn blue_btn font14 btn_rp" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                            <td><button type="button" name="" class="btn m_btn blue_btn font14 btn_rp" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                            <td><button type="button" name="" class="btn m_btn blue_btn font14 btn_rp active" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                            <td><button type="button" name="" class="btn m_btn blue_btn font14 btn_rp disabled" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                        </tr>
+                    </table>
+                </div>
+
+
+                <div class="w50p mt20">
+                    <p class="font12 font_w600">S</p>
+                    <table class="table_common">
+                        <colgroup>
+                            <col width="25%"/>
+                            <col width="25%"/>
+                            <col width="25%"/>
+                            <col width="25%"/>
+                        </colgroup>
+                        <tr>
+                            <th>Default</th>
+                            <th>Hover</th>
+                            <th>Pressed</th>
+                            <th>Disabled</th>
+                        </tr>
+                        <tr>
+                            <td><button type="button" name="" class="btn s_btn blue_btn font12" title="버튼" tabindex="">버튼</button></td>
+                            <td><button type="button" name="" class="btn s_btn blue_btn font12" title="버튼" tabindex="">버튼</button></td>
+                            <td><button type="button" name="" class="btn s_btn blue_btn font12 active" title="버튼" tabindex="">버튼</button></td>
+                            <td><button type="button" name="" class="btn s_btn blue_btn font12 disabled" title="버튼" tabindex="">버튼</button></td>
+                        </tr>
+                        <tr>
+                            <td><button type="button" name="" class="btn s_btn blue_btn font12 btn_lp" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                            <td><button type="button" name="" class="btn s_btn blue_btn font12 btn_lp" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                            <td><button type="button" name="" class="btn s_btn blue_btn font12 btn_lp active" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                            <td><button type="button" name="" class="btn s_btn blue_btn font12 btn_lp disabled" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                        </tr>
+                        <tr>
+                            <td><button type="button" name="" class="btn s_btn blue_btn font12 btn_rp" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                            <td><button type="button" name="" class="btn s_btn blue_btn font12 btn_rp" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                            <td><button type="button" name="" class="btn s_btn blue_btn font12 btn_rp active" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                            <td><button type="button" name="" class="btn s_btn blue_btn font12 btn_rp disabled" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb80">
+            <p class="section_tit">Secondary</p>
+            <p class="section_txt">중요하거나 사용자의 눈에 띄어야 하지만, 페이지 내에 기본 버튼이 이미 존재하는 경우에 사용합니다.</p>
+<!--            <p class="section_txt02">서비스 특성에 맞춰 Rainbow Color 내에서 색상을 지정하여 사용할 수 있습니다.</p>-->
+
+
+            <div class="flex ">
+                <div class="w50p mt20 mr10">
+                    <p class="font16 font_w600">XL</p>
+                    <table class="table_common">
+                        <colgroup>
+                            <col width="25%"/>
+                            <col width="25%"/>
+                            <col width="25%"/>
+                            <col width="25%"/>
+                        </colgroup>
+                        <tr>
+                            <th>Default</th>
+                            <th>Hover</th>
+                            <th>Pressed</th>
+                            <th>Disabled</th>
+                        </tr>
+                        <tr>
+                            <td><button type="button" name="" class="btn xl_btn wh_btn font18" title="버튼" tabindex="">버튼</button></td>
+                            <td><button type="button" name="" class="btn xl_btn wh_btn font18" title="버튼" tabindex="">버튼</button></td>
+                            <td><button type="button" name="" class="btn xl_btn wh_btn font18 active" title="버튼" tabindex="">버튼</button></td>
+                            <td><button type="button" name="" class="btn xl_btn wh_btn font18 disabled" title="버튼" tabindex="">버튼</button></td>
+                        </tr>
+                        <tr>
+                            <td><button type="button" name="" class="btn xl_btn wh_btn font18 btn_lp" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                            <td><button type="button" name="" class="btn xl_btn wh_btn font18 btn_lp" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                            <td><button type="button" name="" class="btn xl_btn wh_btn font18 btn_lp active" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                            <td><button type="button" name="" class="btn xl_btn wh_btn font18 btn_lp disabled" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                        </tr>
+                        <tr>
+                            <td><button type="button" name="" class="btn xl_btn wh_btn font18 btn_rp" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                            <td><button type="button" name="" class="btn xl_btn wh_btn font18 btn_rp" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                            <td><button type="button" name="" class="btn xl_btn wh_btn font18 btn_rp active" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                            <td><button type="button" name="" class="btn xl_btn wh_btn font18 btn_rp disabled" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                        </tr>
+                    </table>
+                </div>
+
+
+                <div class="w50p mt20">
+                    <p class="font16 font_w600">L</p>
+                    <table class="table_common">
+                        <colgroup>
+                            <col width="25%"/>
+                            <col width="25%"/>
+                            <col width="25%"/>
+                            <col width="25%"/>
+                        </colgroup>
+                        <tr>
+                            <th>Default</th>
+                            <th>Hover</th>
+                            <th>Pressed</th>
+                            <th>Disabled</th>
+                        </tr>
+                        <tr>
+                            <td><button type="button" name="" class="btn l_btn wh_btn font16" title="버튼" tabindex="">버튼</button></td>
+                            <td><button type="button" name="" class="btn l_btn wh_btn font16" title="버튼" tabindex="">버튼</button></td>
+                            <td><button type="button" name="" class="btn l_btn wh_btn font16 active" title="버튼" tabindex="">버튼</button></td>
+                            <td><button type="button" name="" class="btn l_btn wh_btn font16 disabled" title="버튼" tabindex="">버튼</button></td>
+                        </tr>
+                        <tr>
+                            <td><button type="button" name="" class="btn l_btn wh_btn font16 btn_lp" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                            <td><button type="button" name="" class="btn l_btn wh_btn font16 btn_lp" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                            <td><button type="button" name="" class="btn l_btn wh_btn font16 btn_lp active" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                            <td><button type="button" name="" class="btn l_btn wh_btn font16 btn_lp disabled" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                        </tr>
+                        <tr>
+                            <td><button type="button" name="" class="btn l_btn wh_btn font16 btn_rp" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                            <td><button type="button" name="" class="btn l_btn wh_btn font16 btn_rp" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                            <td><button type="button" name="" class="btn l_btn wh_btn font16 btn_rp active" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                            <td><button type="button" name="" class="btn l_btn wh_btn font16 btn_rp disabled" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+
+            <div class="flex ">
+                <div class="w50p mt20 mr10">
+                    <p class="font14 font_w600">M</p>
+                    <table class="table_common">
+                        <colgroup>
+                            <col width="25%"/>
+                            <col width="25%"/>
+                            <col width="25%"/>
+                            <col width="25%"/>
+                        </colgroup>
+                        <tr>
+                            <th>Default</th>
+                            <th>Hover</th>
+                            <th>Pressed</th>
+                            <th>Disabled</th>
+                        </tr>
+                        <tr>
+                            <td><button type="button" name="" class="btn m_btn wh_btn font14" title="버튼" tabindex="">버튼</button></td>
+                            <td><button type="button" name="" class="btn m_btn wh_btn font14" title="버튼" tabindex="">버튼</button></td>
+                            <td><button type="button" name="" class="btn m_btn wh_btn font14 active" title="버튼" tabindex="">버튼</button></td>
+                            <td><button type="button" name="" class="btn m_btn wh_btn font14 disabled" title="버튼" tabindex="">버튼</button></td>
+                        </tr>
+                        <tr>
+                            <td><button type="button" name="" class="btn m_btn wh_btn font14 btn_lp" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                            <td><button type="button" name="" class="btn m_btn wh_btn font14 btn_lp" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                            <td><button type="button" name="" class="btn m_btn wh_btn font14 btn_lp active" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                            <td><button type="button" name="" class="btn m_btn wh_btn font14 btn_lp disabled" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                        </tr>
+                        <tr>
+                            <td><button type="button" name="" class="btn m_btn wh_btn font14 btn_rp" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                            <td><button type="button" name="" class="btn m_btn wh_btn font14 btn_rp" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                            <td><button type="button" name="" class="btn m_btn wh_btn font14 btn_rp active" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                            <td><button type="button" name="" class="btn m_btn wh_btn font14 btn_rp disabled" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                        </tr>
+                    </table>
+                </div>
+
+
+                <div class="w50p mt20">
+                    <p class="font12 font_w600">S</p>
+                    <table class="table_common">
+                        <colgroup>
+                            <col width="25%"/>
+                            <col width="25%"/>
+                            <col width="25%"/>
+                            <col width="25%"/>
+                        </colgroup>
+                        <tr>
+                            <th>Default</th>
+                            <th>Hover</th>
+                            <th>Pressed</th>
+                            <th>Disabled</th>
+                        </tr>
+                        <tr>
+                            <td><button type="button" name="" class="btn s_btn wh_btn font12" title="버튼" tabindex="">버튼</button></td>
+                            <td><button type="button" name="" class="btn s_btn wh_btn font12" title="버튼" tabindex="">버튼</button></td>
+                            <td><button type="button" name="" class="btn s_btn wh_btn font12 active" title="버튼" tabindex="">버튼</button></td>
+                            <td><button type="button" name="" class="btn s_btn wh_btn font12 disabled" title="버튼" tabindex="">버튼</button></td>
+                        </tr>
+                        <tr>
+                            <td><button type="button" name="" class="btn s_btn wh_btn font12 btn_lp" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                            <td><button type="button" name="" class="btn s_btn wh_btn font12 btn_lp" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                            <td><button type="button" name="" class="btn s_btn wh_btn font12 btn_lp active" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                            <td><button type="button" name="" class="btn s_btn wh_btn font12 btn_lp disabled" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                        </tr>
+                        <tr>
+                            <td><button type="button" name="" class="btn s_btn wh_btn font12 btn_rp" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                            <td><button type="button" name="" class="btn s_btn wh_btn font12 btn_rp" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                            <td><button type="button" name="" class="btn s_btn wh_btn font12 btn_rp active" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                            <td><button type="button" name="" class="btn s_btn wh_btn font12 btn_rp disabled" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb80">
+            <p class="section_tit">Tertiary</p>
+            <p class="section_txt">눈에 덜 띄어야 하는 경우에 사용하며, 독립적인 행동을 위한 경우에도 사용됩니다.</p>
+<!--            <p class="section_txt02">서비스 특성에 맞춰 Rainbow Color 내에서 색상을 지정하여 사용할 수 있습니다.</p>-->
+
+
+            <div class="flex ">
+                <div class="w50p mt20 mr10">
+                    <p class="font16 font_w600">XL</p>
+                    <table class="table_common">
+                        <colgroup>
+                            <col width="25%"/>
+                            <col width="25%"/>
+                            <col width="25%"/>
+                            <col width="25%"/>
+                        </colgroup>
+                        <tr>
+                            <th>Default</th>
+                            <th>Hover</th>
+                            <th>Pressed</th>
+                            <th>Disabled</th>
+                        </tr>
+                        <tr>
+                            <td><button type="button" name="" class="btn xl_btn skyBlue_btn font18" title="버튼" tabindex="">버튼</button></td>
+                            <td><button type="button" name="" class="btn xl_btn skyBlue_btn font18" title="버튼" tabindex="">버튼</button></td>
+                            <td><button type="button" name="" class="btn xl_btn skyBlue_btn font18 active" title="버튼" tabindex="">버튼</button></td>
+                            <td><button type="button" name="" class="btn xl_btn skyBlue_btn font18 disabled" title="버튼" tabindex="">버튼</button></td>
+                        </tr>
+                        <tr>
+                            <td><button type="button" name="" class="btn xl_btn skyBlue_btn font18 btn_lp" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                            <td><button type="button" name="" class="btn xl_btn skyBlue_btn font18 btn_lp" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                            <td><button type="button" name="" class="btn xl_btn skyBlue_btn font18 btn_lp active" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                            <td><button type="button" name="" class="btn xl_btn skyBlue_btn font18 btn_lp disabled" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                        </tr>
+                        <tr>
+                            <td><button type="button" name="" class="btn xl_btn skyBlue_btn font18 btn_rp" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                            <td><button type="button" name="" class="btn xl_btn skyBlue_btn font18 btn_rp" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                            <td><button type="button" name="" class="btn xl_btn skyBlue_btn font18 btn_rp active" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                            <td><button type="button" name="" class="btn xl_btn skyBlue_btn font18 btn_rp disabled" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                        </tr>
+                    </table>
+                </div>
+
+
+                <div class="w50p mt20">
+                    <p class="font16 font_w600">L</p>
+                    <table class="table_common">
+                        <colgroup>
+                            <col width="25%"/>
+                            <col width="25%"/>
+                            <col width="25%"/>
+                            <col width="25%"/>
+                        </colgroup>
+                        <tr>
+                            <th>Default</th>
+                            <th>Hover</th>
+                            <th>Pressed</th>
+                            <th>Disabled</th>
+                        </tr>
+                        <tr>
+                            <td><button type="button" name="" class="btn l_btn skyBlue_btn font16" title="버튼" tabindex="">버튼</button></td>
+                            <td><button type="button" name="" class="btn l_btn skyBlue_btn font16" title="버튼" tabindex="">버튼</button></td>
+                            <td><button type="button" name="" class="btn l_btn skyBlue_btn font16 active" title="버튼" tabindex="">버튼</button></td>
+                            <td><button type="button" name="" class="btn l_btn skyBlue_btn font16 disabled" title="버튼" tabindex="">버튼</button></td>
+                        </tr>
+                        <tr>
+                            <td><button type="button" name="" class="btn l_btn skyBlue_btn font16 btn_lp" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                            <td><button type="button" name="" class="btn l_btn skyBlue_btn font16 btn_lp" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                            <td><button type="button" name="" class="btn l_btn skyBlue_btn font16 btn_lp active" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                            <td><button type="button" name="" class="btn l_btn skyBlue_btn font16 btn_lp disabled" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                        </tr>
+                        <tr>
+                            <td><button type="button" name="" class="btn l_btn skyBlue_btn font16 btn_rp" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                            <td><button type="button" name="" class="btn l_btn skyBlue_btn font16 btn_rp" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                            <td><button type="button" name="" class="btn l_btn skyBlue_btn font16 btn_rp active" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                            <td><button type="button" name="" class="btn l_btn skyBlue_btn font16 btn_rp disabled" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+
+            <div class="flex ">
+                <div class="w50p mt20 mr10">
+                    <p class="font14 font_w600">M</p>
+                    <table class="table_common">
+                        <colgroup>
+                            <col width="25%"/>
+                            <col width="25%"/>
+                            <col width="25%"/>
+                            <col width="25%"/>
+                        </colgroup>
+                        <tr>
+                            <th>Default</th>
+                            <th>Hover</th>
+                            <th>Pressed</th>
+                            <th>Disabled</th>
+                        </tr>
+                        <tr>
+                            <td><button type="button" name="" class="btn m_btn skyBlue_btn font14" title="버튼" tabindex="">버튼</button></td>
+                            <td><button type="button" name="" class="btn m_btn skyBlue_btn font14" title="버튼" tabindex="">버튼</button></td>
+                            <td><button type="button" name="" class="btn m_btn skyBlue_btn font14 active" title="버튼" tabindex="">버튼</button></td>
+                            <td><button type="button" name="" class="btn m_btn skyBlue_btn font14 disabled" title="버튼" tabindex="">버튼</button></td>
+                        </tr>
+                        <tr>
+                            <td><button type="button" name="" class="btn m_btn skyBlue_btn font14 btn_lp" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                            <td><button type="button" name="" class="btn m_btn skyBlue_btn font14 btn_lp" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                            <td><button type="button" name="" class="btn m_btn skyBlue_btn font14 btn_lp active" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                            <td><button type="button" name="" class="btn m_btn skyBlue_btn font14 btn_lp disabled" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                        </tr>
+                        <tr>
+                            <td><button type="button" name="" class="btn m_btn skyBlue_btn font14 btn_rp" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                            <td><button type="button" name="" class="btn m_btn skyBlue_btn font14 btn_rp" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                            <td><button type="button" name="" class="btn m_btn skyBlue_btn font14 btn_rp active" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                            <td><button type="button" name="" class="btn m_btn skyBlue_btn font14 btn_rp disabled" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                        </tr>
+                    </table>
+                </div>
+
+
+                <div class="w50p mt20">
+                    <p class="font12 font_w600">S</p>
+                    <table class="table_common">
+                        <colgroup>
+                            <col width="25%"/>
+                            <col width="25%"/>
+                            <col width="25%"/>
+                            <col width="25%"/>
+                        </colgroup>
+                        <tr>
+                            <th>Default</th>
+                            <th>Hover</th>
+                            <th>Pressed</th>
+                            <th>Disabled</th>
+                        </tr>
+                        <tr>
+                            <td><button type="button" name="" class="btn s_btn skyBlue_btn font12" title="버튼" tabindex="">버튼</button></td>
+                            <td><button type="button" name="" class="btn s_btn skyBlue_btn font12" title="버튼" tabindex="">버튼</button></td>
+                            <td><button type="button" name="" class="btn s_btn skyBlue_btn font12 active" title="버튼" tabindex="">버튼</button></td>
+                            <td><button type="button" name="" class="btn s_btn skyBlue_btn font12 disabled" title="버튼" tabindex="">버튼</button></td>
+                        </tr>
+                        <tr>
+                            <td><button type="button" name="" class="btn s_btn skyBlue_btn font12 btn_lp" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                            <td><button type="button" name="" class="btn s_btn skyBlue_btn font12 btn_lp" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                            <td><button type="button" name="" class="btn s_btn skyBlue_btn font12 btn_lp active" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                            <td><button type="button" name="" class="btn s_btn skyBlue_btn font12 btn_lp disabled" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                        </tr>
+                        <tr>
+                            <td><button type="button" name="" class="btn s_btn skyBlue_btn font12 btn_rp" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                            <td><button type="button" name="" class="btn s_btn skyBlue_btn font12 btn_rp" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                            <td><button type="button" name="" class="btn s_btn skyBlue_btn font12 btn_rp active" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                            <td><button type="button" name="" class="btn s_btn skyBlue_btn font12 btn_rp disabled" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb80">
+            <p class="section_tit">Outlined</p>
+            <p class="section_txt">화면 내 기능을 컨트롤 할 때 사용합니다. 기본 버튼이 있는 페이지의 보조 작업에도 사용할 수 있습니다. (취소, 닫기 등)<br/>
+                Outlined 버튼은 Solid (Primary / Secondary / Tertiary) 버튼보다 우선순위가 낮은 작업 버튼으로 사용됩니다.</p>
+
+
+            <div class="flex ">
+                <div class="w50p mt20 mr10">
+                    <p class="font16 font_w600">XL</p>
+                    <table class="table_common">
+                        <colgroup>
+                            <col width="25%"/>
+                            <col width="25%"/>
+                            <col width="25%"/>
+                            <col width="25%"/>
+                        </colgroup>
+                        <tr>
+                            <th>Default</th>
+                            <th>Hover</th>
+                            <th>Pressed</th>
+                            <th>Disabled</th>
+                        </tr>
+                        <tr>
+                            <td><button type="button" name="" class="btn xl_btn g_btn font18" title="버튼" tabindex="">버튼</button></td>
+                            <td><button type="button" name="" class="btn xl_btn g_btn font18" title="버튼" tabindex="">버튼</button></td>
+                            <td><button type="button" name="" class="btn xl_btn g_btn font18 active" title="버튼" tabindex="">버튼</button></td>
+                            <td><button type="button" name="" class="btn xl_btn g_btn font18 disabled" title="버튼" tabindex="">버튼</button></td>
+                        </tr>
+                        <tr>
+                            <td><button type="button" name="" class="btn xl_btn g_btn font18 btn_lp" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                            <td><button type="button" name="" class="btn xl_btn g_btn font18 btn_lp" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                            <td><button type="button" name="" class="btn xl_btn g_btn font18 btn_lp active" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                            <td><button type="button" name="" class="btn xl_btn g_btn font18 btn_lp disabled" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                        </tr>
+                        <tr>
+                            <td><button type="button" name="" class="btn xl_btn g_btn font18 btn_rp" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                            <td><button type="button" name="" class="btn xl_btn g_btn font18 btn_rp" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                            <td><button type="button" name="" class="btn xl_btn g_btn font18 btn_rp active" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                            <td><button type="button" name="" class="btn xl_btn g_btn font18 btn_rp disabled" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                        </tr>
+                    </table>
+                </div>
+
+
+                <div class="w50p mt20">
+                    <p class="font16 font_w600">L</p>
+                    <table class="table_common">
+                        <colgroup>
+                            <col width="25%"/>
+                            <col width="25%"/>
+                            <col width="25%"/>
+                            <col width="25%"/>
+                        </colgroup>
+                        <tr>
+                            <th>Default</th>
+                            <th>Hover</th>
+                            <th>Pressed</th>
+                            <th>Disabled</th>
+                        </tr>
+                        <tr>
+                            <td><button type="button" name="" class="btn l_btn g_btn font16" title="버튼" tabindex="">버튼</button></td>
+                            <td><button type="button" name="" class="btn l_btn g_btn font16" title="버튼" tabindex="">버튼</button></td>
+                            <td><button type="button" name="" class="btn l_btn g_btn font16 active" title="버튼" tabindex="">버튼</button></td>
+                            <td><button type="button" name="" class="btn l_btn g_btn font16 disabled" title="버튼" tabindex="">버튼</button></td>
+                        </tr>
+                        <tr>
+                            <td><button type="button" name="" class="btn l_btn g_btn font16 btn_lp" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                            <td><button type="button" name="" class="btn l_btn g_btn font16 btn_lp" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                            <td><button type="button" name="" class="btn l_btn g_btn font16 btn_lp active" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                            <td><button type="button" name="" class="btn l_btn g_btn font16 btn_lp disabled" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                        </tr>
+                        <tr>
+                            <td><button type="button" name="" class="btn l_btn g_btn font16 btn_rp" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                            <td><button type="button" name="" class="btn l_btn g_btn font16 btn_rp" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                            <td><button type="button" name="" class="btn l_btn g_btn font16 btn_rp active" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                            <td><button type="button" name="" class="btn l_btn g_btn font16 btn_rp disabled" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+
+            <div class="flex ">
+                <div class="w50p mt20 mr10">
+                    <p class="font14 font_w600">M</p>
+                    <table class="table_common">
+                        <colgroup>
+                            <col width="25%"/>
+                            <col width="25%"/>
+                            <col width="25%"/>
+                            <col width="25%"/>
+                        </colgroup>
+                        <tr>
+                            <th>Default</th>
+                            <th>Hover</th>
+                            <th>Pressed</th>
+                            <th>Disabled</th>
+                        </tr>
+                        <tr>
+                            <td><button type="button" name="" class="btn m_btn g_btn font14" title="버튼" tabindex="">버튼</button></td>
+                            <td><button type="button" name="" class="btn m_btn g_btn font14" title="버튼" tabindex="">버튼</button></td>
+                            <td><button type="button" name="" class="btn m_btn g_btn font14 active" title="버튼" tabindex="">버튼</button></td>
+                            <td><button type="button" name="" class="btn m_btn g_btn font14 disabled" title="버튼" tabindex="">버튼</button></td>
+                        </tr>
+                        <tr>
+                            <td><button type="button" name="" class="btn m_btn g_btn font14 btn_lp" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                            <td><button type="button" name="" class="btn m_btn g_btn font14 btn_lp" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                            <td><button type="button" name="" class="btn m_btn g_btn font14 btn_lp active" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                            <td><button type="button" name="" class="btn m_btn g_btn font14 btn_lp disabled" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                        </tr>
+                        <tr>
+                            <td><button type="button" name="" class="btn m_btn g_btn font14 btn_rp" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                            <td><button type="button" name="" class="btn m_btn g_btn font14 btn_rp" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                            <td><button type="button" name="" class="btn m_btn g_btn font14 btn_rp active" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                            <td><button type="button" name="" class="btn m_btn g_btn font14 btn_rp disabled" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                        </tr>
+                    </table>
+                </div>
+
+
+                <div class="w50p mt20">
+                    <p class="font12 font_w600">S</p>
+                    <table class="table_common">
+                        <colgroup>
+                            <col width="25%"/>
+                            <col width="25%"/>
+                            <col width="25%"/>
+                            <col width="25%"/>
+                        </colgroup>
+                        <tr>
+                            <th>Default</th>
+                            <th>Hover</th>
+                            <th>Pressed</th>
+                            <th>Disabled</th>
+                        </tr>
+                        <tr>
+                            <td><button type="button" name="" class="btn s_btn g_btn font12" title="버튼" tabindex="">버튼</button></td>
+                            <td><button type="button" name="" class="btn s_btn g_btn font12" title="버튼" tabindex="">버튼</button></td>
+                            <td><button type="button" name="" class="btn s_btn g_btn font12 active" title="버튼" tabindex="">버튼</button></td>
+                            <td><button type="button" name="" class="btn s_btn g_btn font12 disabled" title="버튼" tabindex="">버튼</button></td>
+                        </tr>
+                        <tr>
+                            <td><button type="button" name="" class="btn s_btn g_btn font12 btn_lp" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                            <td><button type="button" name="" class="btn s_btn g_btn font12 btn_lp" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                            <td><button type="button" name="" class="btn s_btn g_btn font12 btn_lp active" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                            <td><button type="button" name="" class="btn s_btn g_btn font12 btn_lp disabled" title="버튼" tabindex=""><span class="mr4"></span> 버튼</button></td>
+                        </tr>
+                        <tr>
+                            <td><button type="button" name="" class="btn s_btn g_btn font12 btn_rp" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                            <td><button type="button" name="" class="btn s_btn g_btn font12 btn_rp" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                            <td><button type="button" name="" class="btn s_btn g_btn font12 btn_rp active" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                            <td><button type="button" name="" class="btn s_btn g_btn font12 btn_rp disabled" title="버튼" tabindex="">버튼 <span class="ml4"></span></button></td>
+                        </tr>
+                    </table>
+                </div>
             </div>
         </section>
 

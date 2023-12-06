@@ -103,3 +103,6 @@
 .section_tit {font-size:32px;font-weight:700;color:var(--gray_900);margin-bottom:16px;}
 .section_txt {font-size:18px;font-weight:400;color:#666;margin-bottom:8px;}
 .section_txt02 {font-size:16px;font-weight:500;color:var(--blue_300)}
+.table_common {}
+.table_common th{padding:8px 0;border-bottom:1px solid var(--gray_50);font-size:13px;font-weight:500}
+.table_common td{padding:16px 0;text-align:center;}
