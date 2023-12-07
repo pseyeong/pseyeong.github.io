@@ -1,0 +1,2 @@
+*remote
+run 오류시 터미널에 mvn clean install 입력
