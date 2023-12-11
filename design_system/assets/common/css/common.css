@@ -1327,7 +1327,7 @@ button.btn span{position:relative !important;display:inline-block;}
 .list_tab.w4 li{width:calc(100% / 4)}
 .list_tab.w3 li{width:calc(100% / 3)}
 .list_tab.w2 li{width:calc(100% / 2)}
-.list_tab li {height:100%;padding:8px;font-weight:500;font-size:14px;display:flex;align-items: center;justify-content: center;color:var(--gray_600)}
+.list_tab li {height:100%;padding:8px;font-weight:500;font-size:14px;display:flex;align-items: center;justify-content: center;color:var(--gray_600);}
 .list_tab li.active {background:var(--mono_wh);border-radius:6px;color:var(--pri_500);box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.07), 0 0 2px 0 rgba(0, 0, 0, 0.07);}
 .star {width:24px;height:24px;margin-right:4px;display:inline-block;background:url('../images/icons/star_off.svg') no-repeat center center / 24px 24px;}
 .list_tab.h44p li .star{width:24px;height:24px;background-size:24px 24px}

@@ -109,3 +109,4 @@
 
 /*탭*/
 .sgb_box div.flex > div{width:calc(100% / 3)}
+.buttonOv_list .list_tab li{border:0 !important;}
