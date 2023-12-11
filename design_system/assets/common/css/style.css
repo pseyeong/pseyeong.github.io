@@ -106,3 +106,6 @@
 .table_common {}
 .table_common th{padding:8px 0;border-bottom:1px solid var(--gray_50);font-size:13px;font-weight:500}
 .table_common td{padding:16px 0;text-align:center;}
+
+/*탭*/
+.sgb_box div.flex > div{width:calc(100% / 3)}
