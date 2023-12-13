@@ -1138,7 +1138,7 @@ button.btn span{position:relative !important;display:inline-block;}
 .btn.l_btn {padding:13px 14px !important;}
 .btn.m_btn {padding:6px 12px !important;}
 .btn.s_btn {padding:4px 8px !important;}
-/*.btn.disabled{opacity:.5}*/
+.btn.disabled{cursor:auto !important;}
 
 
 /*blue button*/
