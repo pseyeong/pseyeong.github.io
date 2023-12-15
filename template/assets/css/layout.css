@@ -1,0 +1,36 @@
+/* pc 반응형*/
+@media (min-width: 1025px) and (max-width: 1600px) {
+    .login_inner{max-height:calc(100vh - 140px)}
+    .login_top .logo.pt40{padding:20px 0 !important;}
+}
+
+
+@media all and (max-width: 1024px) {
+    .login_inner {width:70%;max-height:calc(100vh - 100px)}
+    .login_top .logo.pt40{padding:20px 0 !important;}
+    .login_content.pA60{padding:40px !important;}
+    .login_bottom {bottom:10px;}
+}
+
+
+@media all and (max-width: 768px) {
+    p.txt_m_r, input.txt_m_r {font-size:13px !important;}
+    p.txt_m_m {font-size:12px !important;}
+    .login_inner {width:100%;max-height:100vh;height:100vh;}
+    .login_top .logo.pt40{padding:15px 0 !important;}
+    .login_top .logo img {height:20px;}
+    .login_bottom {width:100%;text-align:center;}
+    .login_content.pA60{padding:20px !important;}
+    .login_tit.tit_l_b {font-size:22px !important;}
+    .login_txt.txt_l_m{font-size:14px !important;}
+    .login_find_box li{font-size:13px !important;}
+    .login_formIn.pb40{padding-bottom:20px !important;}
+    .textField_input, input, button{height:40px}
+    .login_formIn.tac button.mb40{margin-bottom:20px !important;}
+    .login_find_box.mb40{margin-bottom:30px !important;}
+    .login_formIn div.flex{display:block !important;}
+    .login_formIn div.flex input, .login_formIn div.flex button {width:100% !important;margin:5px 0 !important;}
+}
+
+@media all and (max-width: 360px){
+}

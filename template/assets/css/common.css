@@ -221,6 +221,11 @@ textarea::-ms-input-placeholder { font-weight: 400; color: #a2a2a2; }
 textarea::-webkit-input-placeholder { font-weight: 400; color: #a2a2a2; }
 textarea::-moz-placeholder { font-weight: 400; color: #a2a2a2; }
 
+input[type="checkbox"] {display: none;}
+input[type="radio"] {display: none;}
+
+input:focus, button:focus {border:1px solid var(--mono_bk)}
+
 /*드래그*/
 ::selection { background: #004ba5; color: #fff; }
 ::-moz-selection { background: #004ba5; color: #fff; }
@@ -408,6 +413,25 @@ body::-webkit-scrollbar-thumb{background:#dfdfdf;border-radius:999px;width:4px;}
 
 /* padding */
 .p0 {padding:0 !important;}
+.pA2{padding:2px !important;}
+.pA4{padding:4px !important;}
+.pA6{padding:6px !important;}
+.pA8{padding:8px !important;}
+.pA10{padding:10px !important;}
+.pA12{padding:12px !important;}
+.pA14{padding:14px !important;}
+.pA16{padding:16px !important;}
+.pA18{padding:18px !important;}
+.pA20{padding:20px !important;}
+.pA22{padding:22px !important;}
+.pA24{padding:24px !important;}
+.pA26{padding:26px !important;}
+.pA28{padding:28px !important;}
+.pA30{padding:30px !important;}
+.pA32{padding:32px !important;}
+.pA36{padding:36px !important;}
+.pA40{padding:40px !important;}
+.pA60{padding:60px !important;}
 
 /*padding top*/
 .pt0 {padding-top:0 !important;}
