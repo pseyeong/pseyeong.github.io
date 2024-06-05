@@ -5,13 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2cf62fa5-808a-4d59-b3e2-ce09fb143c2b" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/include/css/common.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/include/css/layout.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/include/css/style.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/include/js/script.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/design_system/assets/common/css/color.css" beforeDir="false" afterPath="$PROJECT_DIR$/design_system/assets/common/css/color.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/design_system/assets/common/css/typography.css" beforeDir="false" afterPath="$PROJECT_DIR$/design_system/assets/common/css/typography.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/design_system/assets/common/page/typography.html" beforeDir="false" afterPath="$PROJECT_DIR$/design_system/assets/common/page/typography.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/design_system/assets/css/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/design_system/assets/css/index.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/design_system/assets/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/design_system/assets/js/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/design_system/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/design_system/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javascript.html" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,6 +30,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitToolBoxStore">
+    <option name="projectConfigVersion" value="5" />
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -45,21 +48,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/NICE_source/pseyeong.github.io&quot;,
-    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "JavaScript Debug.select_field.html.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/NICE_source/pseyeong.github.io",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\NICE_source\pseyeong.github.io\design_system\common\js" />
@@ -77,6 +84,7 @@
       <workItem from="1697430416245" duration="5000" />
       <workItem from="1697432888490" duration="5000" />
       <workItem from="1699315820551" duration="7105000" />
+      <workItem from="1717474387806" duration="9397000" />
     </task>
     <servers />
   </component>
