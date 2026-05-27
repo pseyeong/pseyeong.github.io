@@ -38,6 +38,31 @@
             <section id="css" class="site-section" aria-labelledby="css-title">
                 <h2 id="css-title" class="section-title">tailwind</h2>
                 <ul class="study-list">
+                    <li class="card study-item">
+                        <h3 class="card-title"><a href="#" class="link-brand">tailwind설치</a></h3>
+                        <p class="card-meta"></p>
+                        <p class="card-desc">1. 프로젝트 폴더 생성</p>
+                        <p class="card-desc">2. [ Bash - Terminal ] npm init -y</p>
+                        <p class="card-desc">3. [ Bash - Terminal ] npm install -D tailwindcss @tailwindcss/cli</p>
+                        <p class="card-desc">4. css 파일 생성 후 @import "tailwindcss"; 추가</p>
+                        <p class="card-desc">5. [ Bash - Terminal ] npx @tailwindcss/cli -i ./src/input.css -o ./dist/output.css --watch</p>
+                        <p class="card-meta">** 폴더 경로 맞추기 **</p>
+                        <p class="card-desc">6. 공통으로 사용되는 html 파일에 <link rel="stylesheet" href="dist/output.css"> 추가</p>
+                    </li>
+                    <li class="card study-item">
+                        <h3 class="card-title"><a href="#" class="link-brand">터미널에서 npm run watch로 실시간 적용 방법</a></h3>
+                        <p class="card-meta"></p>
+                        <p class="card-desc">package.json에 scripts 추가</p>
+                        <p class="codeBox tailwind-code"></p>
+                        <p class="card-desc">[ Bash - Terminal ]<br/> 개발용 자동 감시 : npm run watch<br/>배포용 빌드 : npm run build</p>
+                    </li>
+                    <li class="card study-item">
+                        <h3 class="card-title"><a href="#" class="link-brand">github에 module 안올리기</a></h3>
+                        <p class="card-meta"></p>
+                        <p class="card-desc">프로젝트 루트에 파일 생성 -> .gitignore</p>
+                        <p class="card-desc">내용에 아래 내용 추가</p>
+                        <p class="codeBox">node_modules<br/>dist<br/>.env<br/>.DS_Store</p>
+                    </li>
                     <!--
                     <li class="card study-item">
                         <h3 class="card-title"><a href="#" class="link-brand">제목</a></h3>
@@ -108,6 +133,7 @@
     </nav>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="./js/index.js"></script>
     <script src="./js/script.js"></script>
 </body>
 </html>

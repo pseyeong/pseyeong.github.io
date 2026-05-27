@@ -100,7 +100,7 @@
   }
 
   .study-list {
-    @apply flex flex-col gap-4;
+    @apply flex flex-col gap-6;
   }
 
   .study-item {
@@ -121,6 +121,10 @@
 
   .card-desc {
     @apply text-sm leading-relaxed text-muted;
+  }
+
+  .codeBox {
+    @apply mt-2 mb-3 overflow-x-auto rounded-lg border border-border bg-slate-50 p-4 font-mono text-sm leading-relaxed whitespace-pre-wrap text-text;
   }
 
   .link-brand {
