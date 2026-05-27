@@ -3,11 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>blog</title>
+    <meta name="description" content="">
+    <title>study</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
     <link rel="stylesheet" href="../dist/output.css">
-    <script src="./js/script.js"></script>
 </head>
 <body>
-    <div class="bg-black h-[250px] w-[250px]"></div>
+    <header class="site-header" role="banner">
+        <div class="site-header__inner">
+            <a href="#home" class="site-logo" aria-label="홈" data-section="home">
+                pseyeong<span>.study</span>
+            </a>
+        </div>
+    </header>
+
+    <div class="site-main">
+        <aside class="site-sidebar" aria-label="섹션 네비게이션">
+            <div class="site-sidebar__inner">
+                <nav class="site-nav" role="navigation">
+                    <a href="#home" class="site-nav-link site-nav-link--active" data-section="home">홈</a>
+                    <a href="#css" class="site-nav-link" data-section="css">tailwind</a>
+                    <a href="#js" class="site-nav-link" data-section="js">JavaScript</a>
+                    <a href="#react" class="site-nav-link" data-section="react">React</a>
+                </nav>
+            </div>
+        </aside>
+
+        <main class="site-content" role="main">
+            <section id="home" class="site-section" aria-labelledby="home-title">
+                <h1 id="home-title" class="section-title">홈</h1>
+                <div class="content-body"></div>
+            </section>
+
+            <section id="css" class="site-section" aria-labelledby="css-title">
+                <h2 id="css-title" class="section-title">tailwind</h2>
+                <ul class="study-list">
+                    <!--
+                    <li class="card study-item">
+                        <h3 class="card-title"><a href="#" class="link-brand">제목</a></h3>
+                        <p class="card-meta"></p>
+                        <p class="card-desc"></p>
+                    </li>
+                    -->
+                </ul>
+            </section>
+
+            <section id="js" class="site-section" aria-labelledby="js-title">
+                <h2 id="js-title" class="section-title">JavaScript</h2>
+                <ul class="study-list">
+                    <!--
+                    <li class="card study-item">
+                        <h3 class="card-title"><a href="#" class="link-brand">제목</a></h3>
+                        <p class="card-meta"></p>
+                        <p class="card-desc"></p>
+                    </li>
+                    -->
+                </ul>
+            </section>
+
+            <section id="react" class="site-section" aria-labelledby="react-title">
+                <h2 id="react-title" class="section-title">React</h2>
+                <ul class="study-list">
+                    <!--
+                    <li class="card study-item">
+                        <h3 class="card-title"><a href="#" class="link-brand">제목</a></h3>
+                        <p class="card-meta"></p>
+                        <p class="card-desc"></p>
+                    </li>
+                    -->
+                </ul>
+            </section>
+
+            <footer class="site-footer"></footer>
+        </main>
+    </div>
+
+    <nav class="site-mobile-nav" aria-label="모바일 섹션 네비게이션">
+        <div class="site-mobile-nav__inner">
+            <a href="#home" class="site-mobile-nav-link site-mobile-nav-link--active" data-section="home">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                </svg>
+                홈
+            </a>
+            <a href="#css" class="site-mobile-nav-link" data-section="css">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5" />
+                </svg>
+                CSS
+            </a>
+            <a href="#js" class="site-mobile-nav-link" data-section="js">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25" />
+                </svg>
+                JS
+            </a>
+            <a href="#react" class="site-mobile-nav-link" data-section="react">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09Z" />
+                </svg>
+                React
+            </a>
+        </div>
+    </nav>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="./js/script.js"></script>
 </body>
 </html>
