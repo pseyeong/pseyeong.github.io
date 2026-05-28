@@ -23,7 +23,7 @@
         <aside class="site-sidebar" aria-label="섹션 네비게이션">
             <div class="site-sidebar__inner">
                 <nav class="site-nav" role="navigation">
-                    <a href="#home" class="site-nav-link site-nav-link--active" data-section="home">홈</a>
+                    <a href="#home" class="site-nav-link site-nav-link--active" data-section="home">명령어</a>
                     <a href="#css" class="site-nav-link" data-section="css">tailwind</a>
                     <a href="#js" class="site-nav-link" data-section="js">JavaScript</a>
                     <a href="#react" class="site-nav-link" data-section="react">React</a>
@@ -33,8 +33,23 @@
 
         <main class="site-content" role="main">
             <section id="home" class="site-section" aria-labelledby="home-title">
-                <h1 id="home-title" class="section-title">홈</h1>
-                <div class="content-body"></div>
+                <h1 id="home-title" class="section-title">명령어</h1>
+                <ul class="study-list">
+                    <li class="card study-item">
+                        <h3 class="card-title"><a href="#" class="link-brand">터미널 명령어</a></h3>
+                        <p class="card-desc">
+                            브랜치 이동 : git checkout staging<br/>
+                            브랜치 업데이트 : git pull origin staging<br/>
+                            브랜치 병합 : git merge develop<br/>
+                            저장 후 종료 : :wq<br/>
+                            브랜치 푸시 : git push origin staging</p>
+                        <p class="card-desc">
+                            폴더 만들기 : mkdir<br/>
+                            폴더 이동 : mv __폴더명__ __이동할폴더__<br/>
+                            폴더 복사 (상위 폴더 경로에서 작성해야함) : cp -r 원본폴더 복사폴더<br/>
+                        </p>
+                    </li>
+                </ul>
             </section>
 
             <section id="css" class="site-section" aria-labelledby="css-title">
@@ -92,6 +107,12 @@
             <section id="react" class="site-section" aria-labelledby="react-title">
                 <h2 id="react-title" class="section-title">React</h2>
                 <ul class="study-list">
+                    <li class="card study-item">
+                        <h3 class="card-title"><a href="#" class="link-brand">설치</a></h3>
+                        <p class="card-meta"></p>
+                        <p class="card-desc">초기 :  node, npm, yarn 설치</p>
+                        <p class="card-desc">모듈 설치 : yarn install</p>
+                    </li>
                     <!--
                     <li class="card study-item">
                         <h3 class="card-title"><a href="#" class="link-brand">제목</a></h3>
