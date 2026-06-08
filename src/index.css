@@ -1,5 +1,24 @@
 @import "tailwindcss";
 
+/*v4버전 ##v3버전은 tailwind.config.js 파일에서 커스텀*/
+@theme {
+  --text-2xs: 0.75rem;
+  --text-xs: 0.8125rem;
+  --text-sm: 0.875rem;
+  --text-base: 1.0rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+  --text-5xl: 3.0rem;
+  --text-6xl: 3.75rem;
+  --text-7xl: 4.5rem;
+  --text-8xl: 6.0rem;
+  --text-9xl: 8.0rem;
+  --text-md: 0.9375rem;
+}
+
 :root {
   --text: #6b6375;
   --text-h: #08060d;
