@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Blog</title>
+    <link rel="stylesheet" th:href="@{/css/output.css}">
+</head>
+<body class="min-h-screen flex items-center justify-center bg-slate-50">
+    <h1 class="text-3xl font-bold text-slate-800" th:text="${message} ?: 'Thymeleaf + Tailwind 연동 완료'"></h1>
+</body>
+</html>

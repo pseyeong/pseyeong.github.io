@@ -1,0 +1,11 @@
+# 이 파일을 복사해서 프로젝트 루트에 application-local.properties 로 저장하고
+# 실제 발급받은 값을 채워넣으세요. application-local.properties는 .gitignore 처리되어
+# 커밋되지 않습니다.
+#
+#   cp application-local.properties.example application-local.properties
+#
+# kakao.map.js-key       -> Kakao Developers 앱의 "JavaScript 키" (공개, 프론트엔드 지도 표시용)
+# kakao.map.rest-api-key -> Kakao Developers 앱의 "REST API 키" (비공개, 서버측 주소검색/좌표변환용)
+
+kakao.map.js-key=YOUR_KAKAO_JAVASCRIPT_KEY
+kakao.map.rest-api-key=YOUR_KAKAO_REST_API_KEY

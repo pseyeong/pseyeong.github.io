@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>지도</title>
+    <link rel="stylesheet" th:href="@{/css/output.css}">
+    <script type="text/javascript" th:src="@{https://dapi.kakao.com/v2/maps/sdk.js(appkey=${kakaoJsKey},libraries=services)}"></script>
+</head>
+<body class="min-h-screen bg-slate-50">
+    <div class="max-w-2xl mx-auto p-6">
+        <h1 class="text-2xl font-bold text-slate-800 mb-4">카카오 지도 테스트</h1>
+        <div class="flex gap-2 mb-4">
+            <input id="query" type="text" placeholder="주소 검색" class="border rounded px-3 py-2 flex-1" />
+            <button id="search" class="bg-slate-800 text-white px-4 py-2 rounded">검색</button>
+        </div>
+        <div id="map" class="w-full h-96 rounded border"></div>
+    </div>
+
+    <script>
+        var map = new kakao.maps.Map(document.getElementById('map'), {
+            center: new kakao.maps.LatLng(37.5665, 126.9780),
+            level: 4
+        });
+        var marker = new kakao.maps.Marker({ position: map.getCenter() });
+        marker.setMap(map);
+
+        document.getElementById('search').addEventListener('click', function () {
+            var query = document.getElementById('query').value;
+            fetch('/api/geocode?query=' + encodeURIComponent(query))
+                .then(function (res) { return res.json(); })
+                .then(function (data) {
+                    if (!data.documents || data.documents.length === 0) {
+                        alert('검색 결과가 없습니다.');
+                        return;
+                    }
+                    var doc = data.documents[0];
+                    var latlng = new kakao.maps.LatLng(doc.y, doc.x);
+                    map.setCenter(latlng);
+                    marker.setPosition(latlng);
+                });
+        });
+    </script>
+</body>
+</html>
