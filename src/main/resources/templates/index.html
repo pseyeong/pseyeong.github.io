@@ -1,11 +1,30 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <title>Blog</title>
-    <link rel="stylesheet" th:href="@{/css/output.css}">
+    <th:block th:replace="~{fragments/head :: head}" />    
 </head>
-<body class="min-h-screen flex items-center justify-center bg-slate-50">
-    <h1 class="text-3xl font-bold text-slate-800" th:text="${message} ?: 'Thymeleaf + Tailwind 연동 완료'"></h1>
+<body>
+    <div class="mapWrap">
+        <div id="map"></div>
+        <div class="mapLevelControl">
+            <button onclick="zoomIn()">-</button>
+            <button onclick="zoomOut()">+</button>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=342aad21a4409cd2a246954bff1fc9b3&autoload=false"></script>
+    <script src="/js/map.js"></script>
+    <script>
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const lat = position.coords.latitude;
+                const lng = position.coords.longitude;
+                console.log(lat, lng);
+            },
+            (error) => {
+                console.error("위치 가져오기 실패:", error);
+            }
+        );
+    </script>
 </body>
 </html>

@@ -3,3 +3,8 @@
 @source "../../templates/**/*.html";
 @source "../../../../../index.html";
 
+@layer components { 
+    #map {@apply w-full h-[100dvh]}
+    .mapLevelControl {@apply absolute bottom-4 right-4 z-9}
+    .mapLevelControl button {@apply w-8 h-8 bg-white rounded-full flex items-center justify-center mt-2}
+}
