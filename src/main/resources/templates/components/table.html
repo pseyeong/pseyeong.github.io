@@ -1,0 +1,19 @@
+<div th:fragment="componentTable(tableId)">
+    <div class="tableDataDom tableScrollOn">
+      <table data-admin-table data-enhance-table th:attr="id=${tableId}">
+        <thead></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+</div>
+
+<!-- 테이블 데이터 없음 (Figma: table_empty) -->
+<div th:fragment="tableEmpty(emptyId, line1, line2)" class="tableEmpty hidden" th:id="${emptyId}">
+    <div class="tableEmptyIcon">
+        <img src="/assets/images/icons/img_empty.svg" alt="" width="40" height="48">
+    </div>
+    <p class="tableEmptyText">
+        <span th:text="${line1}">등록된 데이터가 없습니다.</span><br>
+        <span th:text="${line2}"></span>
+    </p>
+</div>

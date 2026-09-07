@@ -1,0 +1,13 @@
+<!-- 알림 -->
+<div th:fragment="alert">
+    <div class="alertModal">
+        <div class="alertIcon"></div>
+        <p class="alertText">안내 문구가 들어갑니다.</p>
+    </div>
+</div>
+
+
+<!-- @deprecated components/modal :: contents 사용 권장 -->
+<div th:fragment="modal(showButton2, button1Text, button1Class, button2Text, button2Class)"
+     th:replace="~{components/modal :: contents(null, 'Title', '전달할 내용을 기재합니다.', '', ${showButton2}, ${button1Text}, ${button1Class}, ${button2Text}, ${button2Class})}">
+</div>

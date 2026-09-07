@@ -1,0 +1,104 @@
+<!--
+  Dialog/Confirm Modal — 아이콘 없는 확인 모달
+  사용 예:
+    th:replace="~{components/modal :: confirm('saveConfirmModal', '변경사항을 저장할까요?', '저장하면 변경된 내용으로 업데이트됩니다.', '취소', '저장하기', 'primary')}"
+
+  confirmVariant: primary | warning
+-->
+<div th:fragment="confirm(modalId, title, message, cancelText, confirmText, confirmVariant)">
+    <div class="modalLayout" th:id="${modalId}" th:attr="data-modal-id=${modalId != null ? modalId : ''}">
+        <div class="modalInner modalInner--confirm">
+            <div class="modalContent modalContent--confirm">
+                <p class="modalTitle" th:text="${title}">Title</p>
+                <p class="modalMessage" th:utext="${message}">Message</p>
+            </div>
+            <div class="modalFooter modalFooter--end">
+                <button type="button" class="bgBtn gray close h-9 min-w-16 px-2" th:text="${cancelText ?: '취소'}">취소</button>
+                <button type="button"
+                        class="bgBtn h-9 min-w-16 px-2"
+                        th:classappend="${confirmVariant == 'warning'} ? ' warning' : ' primary'"
+                        th:attr="data-modal-confirm=${modalId}"
+                        th:text="${confirmText ?: '확인'}">확인</button>
+            </div>
+        </div>
+        <div class="modalBg"></div>
+    </div>
+</div>
+
+<!--
+  Dialog/Icon Modal — 상태/피드백 모달
+  사용 예:
+    th:replace="~{components/modal :: icon('errorModal', 'error', '처리 중 오류가 발생했습니다.', '잠시 후 다시 시도해 주세요.', '닫기', 'bgBtn gray close', '다시 시도', 'lineBtn gray', true)}"
+
+  iconType: success | error | warning | info | loading
+-->
+<div th:fragment="icon(modalId, iconType, title, message, btn1Text, btn1Class, btn2Text, btn2Class, showBtn2)">
+    <div class="modalLayout" th:id="${modalId}" th:attr="data-modal-id=${modalId != null ? modalId : ''}">
+        <div class="modalInner modalInner--icon">
+            <div class="modalContent modalContent--icon">
+                <div class="modalIcon" th:classappend="${' modalIcon--' + (iconType ?: 'info')}">
+                    <img th:if="${iconType == 'success'}" src="/assets/images/icons/success_icon_green.svg" alt="" class="modalIconImg">
+                    <img th:if="${iconType == 'error'}" src="/assets/images/icons/error_icon_red.svg" alt="" class="modalIconImg">
+                    <img th:if="${iconType == 'warning'}" src="/assets/images/icons/error_icon.svg" alt="" class="modalIconImg">
+                    <img th:if="${iconType == 'info'}" src="/assets/images/icons/help_icon.svg" alt="" class="modalIconImg">
+                    <span th:if="${iconType == 'loading'}" class="modalIconSpinner" aria-hidden="true"></span>
+                </div>
+                <div class="modalTextGroup">
+                    <p class="modalTitle" th:text="${title}">Title</p>
+                    <p class="modalMessage" th:utext="${message}">Message</p>
+                </div>
+            </div>
+            <div class="modalFooter modalFooter--end">
+                <button type="button"
+                        th:class="${btn1Class ?: 'bgBtn gray close h-9 min-w-16 px-2'}"
+                        th:text="${btn1Text ?: '닫기'}">닫기</button>
+                <button type="button"
+                        th:if="${showBtn2 != null and showBtn2}"
+                        th:class="${btn2Class ?: 'lineBtn gray h-9 min-w-16 px-2'}"
+                        th:attr="data-modal-confirm=${modalId}"
+                        th:text="${btn2Text ?: '확인'}">확인</button>
+            </div>
+        </div>
+        <div class="modalBg"></div>
+    </div>
+</div>
+
+<!--
+  Dialog/Contents Modal — 본문 영역이 긴 모달 (닫기 버튼 + 스크롤)
+  사용 예:
+    th:replace="~{components/modal :: contents('privacyModal', 'Title', '부제목', '본문 HTML', true, '취소', 'bgBtn gray close', '확인', 'bgBtn primary')}"
+-->
+<div th:fragment="contents(modalId, title, subtitle, bodyHtml, showButton2, button1Text, button1Class, button2Text, button2Class)">
+    <div class="modalLayout" th:id="${modalId}" th:attr="data-modal-id=${modalId != null ? modalId : ''}">
+        <div class="modalInner modalInner--contents">
+            <button class="modalClose close" type="button" aria-label="닫기">
+                <img src="/assets/images/icons/remove_dark_icon.svg" class="size-5" alt="">
+            </button>
+            <div class="modalContent modalContent--contents">
+                <p class="modalTitle" th:text="${title}">Title</p>
+                <p class="modalSubTitle" th:if="${subtitle != null and !#strings.isEmpty(subtitle)}" th:text="${subtitle}">Subtitle</p>
+                <div class="modalContText" th:if="${bodyHtml != null and !#strings.isEmpty(bodyHtml)}" th:utext="${bodyHtml}"></div>
+                <div class="modalContText" th:unless="${bodyHtml != null and !#strings.isEmpty(bodyHtml)}">
+                    <p>전달할 내용을 기재합니다.</p>
+                </div>
+            </div>
+            <div class="modalFooter modalFooter--fill">
+                <button type="button" th:class="${button1Class ?: 'bgBtn gray close h-9'}" th:text="${button1Text ?: '버튼'}">버튼</button>
+                <button type="button"
+                        th:if="${showButton2 != null and showButton2}"
+                        th:class="${button2Class ?: 'bgBtn primary h-9'}"
+                        th:attr="data-modal-confirm=${modalId}"
+                        th:text="${button2Text ?: '버튼'}">버튼</button>
+            </div>
+        </div>
+        <div class="modalBg"></div>
+    </div>
+</div>
+
+
+<!--
+모달창 활성화
+modalShow('saveConfirmModal');
+$('body').addClass('modalOpen');
+
+-->

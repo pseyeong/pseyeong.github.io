@@ -1,0 +1,35 @@
+<!-- 지도 사이드 패널 리스트 (Figma: Side Pannel List - search 제외) -->
+<div th:fragment="mapSidePanelWrap" class="mapSidePanelWrap" data-map-side-panel-wrap aria-label="지도 검색 결과">
+    <aside class="mapSidePanel" data-map-side-panel>
+        <div class="mapSidePanelBody">
+            <div class="mapListNull" data-map-list-null>
+                <img src="/assets/images/icons/request_null.svg" class="size-6 mb-2-5 m-auto" alt="">
+                <p class="text-sm/5 text-zinc-400 text-center">이 주변에 등록된 결과가 없습니다.<br/>지도를 이동해 다른 지역을 둘러보세요.</p>
+            </div>
+            <div class="mapList" id="mapListBox" data-map-list></div>
+        </div>
+    </aside>
+    <button type="button" class="mapSidePanelToggleBtn" data-map-side-panel-toggle aria-expanded="true" aria-label="검색 결과 패널 접기">
+        <img src="/assets/images/icons/side_toggle_btn_icon.svg" class="size-5" alt="">
+    </button>
+</div>
+
+<!-- 지도 리스트 아이템 (Figma: Map List/List Item) -->
+<div th:fragment="mapListItem(category, title, address, households, year, unregistered)" class="mapListItem">
+    <div class="mapListItemInner">
+        <div class="mapListItemTop">
+            <p class="mapListCategory" th:text="${category}">아파트</p>
+            <div class="mapListItemHead">
+                <p class="mapListTitle" th:text="${title}">건물명</p>
+                <span class="mapListStatusBadge" th:if="${unregistered}">영역 미등록</span>
+            </div>
+        </div>
+        <p class="mapListAddress" th:text="${address}">도로명 주소</p>
+        <div class="mapListMeta">
+            <p class="mapListMetaText">세대수 <strong th:text="${households}">1234세대</strong></p>
+            <span class="mapListMetaDivider" aria-hidden="true"></span>
+            <p class="mapListMetaText">입주년도 <strong th:text="${year}">2021년</strong></p>
+        </div>
+    </div>
+    <div class="mapListDivider" aria-hidden="true"></div>
+</div>

@@ -1,0 +1,91 @@
+<div th:fragment="side">
+    <div class="c-side">
+        <div class="c-sideContent">
+            <p class="sideTitle">관리자 메뉴</p>
+            <ul class="sideMenuList">
+                <li class="sideMenuItem active">
+                    <div class="sideMenuItemIcon">
+                        <img src="/assets/images/icons/side_menu_icon01_off.svg" alt="">
+                    </div>
+                    <a href="/admin/admin">메뉴 1</a>
+                </li>
+                <li class="sideMenuItem">
+                    <div class="sideMenuItemIcon">
+                        <img src="/assets/images/icons/side_menu_icon02_off.svg" alt="">
+                    </div>
+                    <a href="/admin/admin">메뉴 2</a>
+                </li>
+                <li class="sideMenuItem">
+                    <div class="sideMenuItemIcon">
+                        <img src="/assets/images/icons/side_menu_icon01_off.svg" alt="">
+                    </div>
+                    <a href="/admin/admin">메뉴 3</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- header없이 사이드 토글-->
+<div th:fragment="sideToggle">
+    <div class="c-sideToggle">
+        <div class="c-sideToggleLogo">
+            <a href="/">
+                <img src="/assets/images/logo/nice_logo.svg" class="headerLogo" alt="logo">
+                <img src="/assets/images/logo/logo_symbol.svg" class="headerSymbol" alt="logo">
+            </a>
+        </div>
+        <div class="c-sideToggleMenu">
+            <div class="c-sideToggleMenuList">
+                <div class="c-sideToggleMenuItem">
+                    <div class="c-sideToggleMenuItemIcon"></div>
+                    <p class="c-sideToggleMenuItemText"><my-icon name="search" size="24" color="gray"></my-icon>메뉴 1</p>
+                </div>
+                <div class="c-sideSubMenu">
+                    <div class="c-sideToggleMenuItem">
+                        <div class="c-sideToggleMenuItemIcon"></div>
+                        <p class="c-sideToggleMenuItemText">메뉴 2</p>
+                    </div>
+                    <ul class="c-sideToggleSubMenuList">
+                        <li class="c-sideToggleMenuItem">
+                            <div class="c-sideToggleMenuItemIcon opacity-0"></div>
+                            <p class="c-sideToggleMenuItemText">sub-메뉴 2</p>
+                        </li>
+                        <li class="c-sideToggleMenuItem">
+                            <div class="c-sideToggleMenuItemIcon opacity-0"></div>
+                            <p class="c-sideToggleMenuItemText">sub-메뉴 2</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="c-sideSubMenu">
+                    <div class="c-sideToggleMenuItem">
+                        <div class="c-sideToggleMenuItemIcon"></div>
+                        <p class="c-sideToggleMenuItemText">메뉴 3</p>
+                    </div>
+                    <ul class="c-sideToggleSubMenuList">
+                        <li class="c-sideToggleMenuItem">
+                            <div class="c-sideToggleMenuItemIcon opacity-0"></div>
+                            <p class="c-sideToggleMenuItemText">sub-메뉴 3</p>
+                        </li>
+                        <li class="c-sideToggleMenuItem">
+                            <div class="c-sideToggleMenuItemIcon opacity-0"></div>
+                            <p class="c-sideToggleMenuItemText">sub-메뉴 3</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="c-sideToggleMenuItem">
+                    <div class="c-sideToggleMenuItemIcon"></div>
+                    <p class="c-sideToggleMenuItemText">메뉴 4</p>
+                </div>
+                <div class="c-sideToggleMenuItem">
+                    <div class="c-sideToggleMenuItemIcon"></div>
+                    <p class="c-sideToggleMenuItemText">메뉴 5</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="c-sideToggleBtn">
+            <div class="c-sideToggleBtnIcon"></div>
+        </div>
+    </div>
+</div>

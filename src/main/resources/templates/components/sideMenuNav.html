@@ -1,0 +1,24 @@
+<!--########################################################-->
+<!--## Side Menu Nav (Figma: 870-9558, 870-10026) ##-->
+<!--## position: 'left' | 'right' — 목차 패널 위치 ##-->
+<!--## sideMenuNavContent fragment: reportCont 등 본문 영역 ##-->
+<!--########################################################-->
+
+<div th:fragment="sideMenuNavWrap(position)" class="reportContPageLayout" th:classappend="${position == 'right'} ? 'reportContPageLayoutRight' : 'reportContPageLayoutLeft'" data-side-menu-nav>
+
+    <aside th:if="${position != 'right'}" class="sideMenuNav" aria-label="섹션 목차">
+        <nav class="sideMenuNavInner">
+            <ul class="sideMenuNavList"></ul>
+        </nav>
+    </aside>
+
+    <div class="reportContPageBody">
+        <div th:insert="~{::sideMenuNavContent}"></div>
+    </div>
+
+    <aside th:if="${position == 'right'}" class="sideMenuNav" aria-label="섹션 목차">
+        <nav class="sideMenuNavInner">
+            <ul class="sideMenuNavList"></ul>
+        </nav>
+    </aside>
+</div>

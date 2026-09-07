@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout(~{::#signupContent}, ~{::#pageCss}, ~{::#pageScripts})}">
+<head>
+  <th:block id="pageCss"></th:block>
+</head>
+<body>
+  <section id="signupContent">
+        <main class="bg-white flex flex-col items-center justify-center min-h-[100dvh] py-20 px-4">
+            <div class="bg-white flex flex-col items-center justify-center w-full max-w-[578px] px-6 sm:px-24 py-16 rounded-4xl">
+                <form class="bg-white flex flex-col items-start w-full" action="/signup" method="post">
+                    <!-- 페이지 헤더 -->
+                    <div class="flex flex-col gap-8 items-start w-full">
+                        <h1 class="text-xl/7 font-bold text-zinc-900">회원가입</h1>
+                    </div>
+
+                    <!-- 본인인증 -->
+                    <div class="flex flex-col gap-8 items-center justify-center w-full py-5">
+                        <div class="flex flex-col gap-6 items-start w-full">
+                            <h2 class="text-base/6 font-semibold text-zinc-900 min-h-8 flex items-center">본인인증</h2>
+                        </div>
+
+                        <div class="flex flex-col gap-2 items-start w-full">
+                            <label for="phone" class="text-sm/5 font-medium text-zinc-800">휴대폰번호</label>
+                            <input type="tel" id="phone" name="phone" class="inputCustom !h-10 !rounded-md !text-md/6 !shadow-default placeholder:text-zinc-800/40" placeholder="휴대폰 번호 입력" autocomplete="tel">
+                        </div>
+
+                        <div class="flex flex-col gap-2 items-start w-full">
+                            <div class="flex flex-col gap-2 items-start w-full">
+                                <label for="verifyCode" class="text-sm/5 font-medium text-zinc-800">인증번호</label>
+                                <input type="text" id="verifyCode" name="verifyCode" class="inputCustom !h-10 !rounded-md !text-md/6 !shadow-default placeholder:text-zinc-800/40" placeholder="인증번호 입력" inputmode="numeric" autocomplete="one-time-code">
+                            </div>
+                            <button type="button" class="w-full min-h-10 px-3-5 py-2 rounded-md bg-blue-100/90 text-blue-600 text-md/6 font-medium backdrop-blur-sm hover:bg-blue-100">
+                                인증 완료
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 구분선 -->
+                    <div class="flex items-center justify-center w-full py-5">
+                        <div class="h-px w-full bg-zinc-800/6" role="separator"></div>
+                    </div>
+
+                    <!-- 회원 정보 입력 -->
+                    <div class="flex flex-col gap-8 items-center justify-center w-full py-5">
+                        <div class="flex flex-col gap-6 items-start w-full">
+                            <h2 class="text-base/6 font-semibold text-zinc-900 min-h-8 flex items-center">회원 정보 입력</h2>
+                        </div>
+
+                        <div class="flex flex-col gap-2 items-start w-full">
+                            <label for="userId" class="text-sm/5 font-medium text-zinc-800">아이디</label>
+                            <input type="text" id="userId" name="userId" class="inputCustom !h-10 !rounded-md !text-md/6 !shadow-default placeholder:text-zinc-800/40" placeholder="플레이스 홀더" autocomplete="username">
+                        </div>
+
+                        <div class="flex flex-col gap-1-5 items-start w-full">
+                            <label for="password" class="sr-only">비밀번호</label>
+                            <input type="password" id="password" name="password" class="inputCustom !h-12 !rounded-[14px] !text-md/6 !shadow-default placeholder:text-zinc-800/40" placeholder="비밀번호 입력" autocomplete="new-password">
+                        </div>
+
+                        <div class="flex flex-col gap-2 items-start w-full">
+                            <label for="passwordConfirm" class="text-sm/5 font-medium text-zinc-800">비밀번호 확인</label>
+                            <input type="password" id="passwordConfirm" name="passwordConfirm" class="inputCustom !h-10 !rounded-md !text-md/6 !shadow-default placeholder:text-zinc-800/40" placeholder="플레이스 홀더" autocomplete="new-password">
+                        </div>
+
+                        <div class="flex flex-col gap-2 items-start w-full">
+                            <label for="name" class="text-sm/5 font-medium text-zinc-800">이름</label>
+                            <input type="text" id="name" name="name" class="inputCustom !h-10 !rounded-md !text-md/6 !shadow-default placeholder:text-zinc-800/40" placeholder="플레이스 홀더" autocomplete="name">
+                        </div>
+
+                        <div class="flex flex-col gap-2 items-start w-full">
+                            <label for="email" class="text-sm/5 font-medium text-zinc-800">이메일</label>
+                            <input type="email" id="email" name="email" class="inputCustom !h-10 !rounded-md !text-md/6 !shadow-default placeholder:text-zinc-800/40" placeholder="플레이스 홀더" autocomplete="email">
+                        </div>
+                    </div>
+
+                    <!-- 약관 동의 -->
+                    <div class="flex flex-col gap-4 items-center justify-center w-full py-5">
+                        <div class="bg-white border border-solid border-zinc-800/15 rounded-xl shadow-default p-5 flex flex-col gap-5 items-start w-full">
+                            <div class="flex gap-1-5 items-center">
+                                <input type="checkbox" id="agreeAll" name="agreeAll" class="checkboxCustomArrow">
+                                <label for="agreeAll" class="!pl-7 !text-base/6 !font-medium !text-zinc-950">모든 약관에 동의합니다</label>
+                            </div>
+
+                            <div class="h-px w-full bg-zinc-800/6" role="separator"></div>
+
+                            <div class="flex flex-col gap-4 items-start w-full">
+                                <div class="flex gap-2-5 items-start w-full">
+                                    <div class="flex flex-1 gap-3 items-start min-w-0">
+                                        <input type="checkbox" id="agreePrivacy1" name="agreePrivacy1" class="checkboxCustomArrow" required>
+                                        <label for="agreePrivacy1" class="!pl-7 !text-sm/5 !font-medium !text-zinc-950">[필수] 개인정보 수집 이용 동의</label>
+                                    </div>
+                                    <button type="button" class="inline-flex items-center gap-1 shrink-0 text-sm/5 font-medium text-zinc-500 hover:text-zinc-700">
+                                        약관 보기
+                                        <span class="relative shrink-0 size-4 overflow-hidden">
+                                            <img src="https://www.figma.com/api/mcp/asset/599518dc-4037-4707-8048-dd7d96a21387" alt="" class="absolute inset-0 size-full max-w-none" width="16" height="16">
+                                        </span>
+                                    </button>
+                                </div>
+
+                                <div class="flex gap-2-5 items-start w-full">
+                                    <div class="flex flex-1 gap-3 items-start min-w-0">
+                                        <input type="checkbox" id="agreePrivacy2" name="agreePrivacy2" class="checkboxCustomArrow" required>
+                                        <label for="agreePrivacy2" class="!pl-7 !text-sm/5 !font-medium !text-zinc-950">[필수] 개인정보 수집 이용 동의</label>
+                                    </div>
+                                    <button type="button" class="inline-flex items-center gap-1 shrink-0 text-sm/5 font-medium text-zinc-500 hover:text-zinc-700">
+                                        약관 보기
+                                        <span class="relative shrink-0 size-4 overflow-hidden">
+                                            <img src="https://www.figma.com/api/mcp/asset/599518dc-4037-4707-8048-dd7d96a21387" alt="" class="absolute inset-0 size-full max-w-none" width="16" height="16">
+                                        </span>
+                                    </button>
+                                </div>
+
+                                <div class="flex gap-3 items-start w-full">
+                                    <div class="shrink-0">
+                                        <input type="checkbox" id="agreeNewsletter" name="agreeNewsletter" class="checkboxCustomArrow">
+                                        <label for="agreeNewsletter" class="!pl-7 !h-5 !block !text-[0] before:!top-0 before:!translate-y-0" aria-hidden="true"></label>
+                                    </div>
+                                    <div class="flex flex-col gap-0-5 items-start">
+                                        <label for="agreeNewsletter" class="text-sm/5 font-medium text-zinc-950 cursor-pointer px-0-5">[선택] 뉴스레터 구독 신청</label>
+                                        <p class="text-sm/5 font-normal text-zinc-500 px-0-5">새로운 소식을 받아보실 수 있습니다.</p>
+                                    </div>
+                                </div>
+
+                                <div class="flex gap-3 items-start w-full">
+                                    <div class="shrink-0">
+                                        <input type="checkbox" id="agreeMarketing" name="agreeMarketing" class="checkboxCustomArrow">
+                                        <label for="agreeMarketing" class="!pl-7 !h-5 !block !text-[0] before:!top-0 before:!translate-y-0" aria-hidden="true"></label>
+                                    </div>
+                                    <div class="flex flex-col gap-0-5 items-start">
+                                        <label for="agreeMarketing" class="text-sm/5 font-medium text-zinc-950 cursor-pointer px-0-5">[선택] 마케팅 수신 동의</label>
+                                        <p class="text-sm/5 font-normal text-zinc-500 px-0-5">이벤트, 혜택 소식을 받아보실 수 있습니다.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 하단 액션 -->
+                    <div class="flex flex-col gap-8 items-center justify-center w-full py-5">
+                        <button type="submit" class="w-full min-h-12 px-4 py-3 rounded-[14px] bg-blue-600 border border-solid border-zinc-800/10 text-white text-base/6 font-medium hover:bg-blue-500">
+                            버튼 레이블
+                        </button>
+                        <button type="button" class="text-base/6 font-medium text-zinc-500 hover:text-zinc-700 px-1">
+                            이전
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </main>
+  </section>
+
+  <!-- ============================== 스크립트 설정 ============================== -->
+  <th:block id="pageScripts">
+    <script>
+      (function () {
+        var agreeAll = document.getElementById('agreeAll');
+        if (!agreeAll) return;
+        var termIds = ['agreePrivacy1', 'agreePrivacy2', 'agreeNewsletter', 'agreeMarketing'];
+        agreeAll.addEventListener('change', function () {
+          termIds.forEach(function (id) {
+            var el = document.getElementById(id);
+            if (el) el.checked = agreeAll.checked;
+          });
+        });
+      })();
+    </script>
+  </th:block>
+</body>
+</html>

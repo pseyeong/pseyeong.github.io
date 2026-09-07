@@ -1,0 +1,11 @@
+<div th:fragment="pagination(paginationId)">
+    <div class="paginationWrap" data-pagination th:attr="id=${paginationId}">
+        <ul>
+            <li class="prevAll " data-page-btn="first"></li>
+            <li class="prev " data-page-btn="prev"></li>
+            <!-- <li data-page="1" class="active">1</li> -->
+            <li class="next " data-page-btn="next"></li>
+            <li class="nextAll " data-page-btn="last"></li>
+        </ul>
+    </div>
+</div>

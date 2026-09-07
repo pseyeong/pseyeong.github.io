@@ -1,0 +1,35 @@
+<!-- air-datepicker CSS는 fragments/head에서 output.css 앞에 로드함. 기존 replace 호환용 빈 프래그먼트 -->
+<th:block th:fragment="airDatepickerCss"></th:block>
+
+<th:block th:fragment="airDatepickerJs">
+    <script src="https://cdn.jsdelivr.net/npm/air-datepicker@3.5.3/air-datepicker.js"></script>
+</th:block>
+
+<!--
+  단일 날짜 입력 (팝업). 페이지마다 uid를 다르게 넘겨야 함 (한 화면에 여러 개일 때 id 중복 방지).
+  사용 예: th:replace="~{components/calendar :: calendarDay('joinFrom')}"
+-->
+<div th:fragment="calendarDay(uid)" class="calendarWrap">
+    <input type="text" th:id="|calendarIn_${uid}|" class="calendarInput" data-calendar autocomplete="off" readonly />
+</div>
+
+<!--
+  시작일·종료일 인풋 2개 + absolute 패널에 인라인 캘린더 2개(포커스 시 열림).
+  기간 하이라이트 클래스(셀에 부여): calendarDual-rangeBetween, calendarDual-rangeEdge, --from/--to/--single
+  스타일은 common.css .calendarDualDropdown 및 .air-datepicker-cell.calendarDual-* 참고.
+-->
+<div th:fragment="calendarDayRange(uid)" class="calendarDual">
+    <div class="calendarDualInputs flex flex-wrap gap-2 items-center">
+        <div class="calendarWrap">
+            <input type="text" th:id="|calendarIn_${uid}_from|" class="calendarInput" data-calendar-dual-start autocomplete="off" readonly />
+        </div>
+        <span class="filterGubunText">~</span>
+        <div class="calendarWrap">
+            <input type="text" th:id="|calendarIn_${uid}_to|" class="calendarInput" data-calendar-dual-end autocomplete="off" readonly />
+        </div>
+    </div>
+    <div class="calendarDualPanels calendarDualDropdown flex gap-2 items-start" data-calendar-dual-dropdown hidden>
+        <div class="calendarDualInlineHost" data-calendar-dual-inline-start></div>
+        <div class="calendarDualInlineHost" data-calendar-dual-inline-end></div>
+    </div>
+</div>

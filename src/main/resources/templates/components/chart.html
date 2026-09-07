@@ -1,0 +1,25 @@
+<!-- 차트만 (테이블/범례 없음) -->
+<div th:fragment="chartOnly(id, type, unit, decimals)">
+    <div class="chartBox" th:id="${id}"
+         th:attr="data-zd-chart=${type},data-zd-unit=${unit},data-zd-decimals=${decimals}">
+    </div>
+</div>
+
+<!-- 차트 + 테이블(범례) -->
+<div th:fragment="chart(id, type, unit, decimals, tableId)">
+    <div class="chartBox" th:id="${id}" th:attr="data-zd-chart=${type},data-zd-unit=${unit},data-zd-decimals=${decimals},data-zd-legend-target=${'#' + tableId}">
+    </div>
+    <div class="reportTable">
+        <div class="tableDataDom tableScrollOn" th:id="${tableId}"></div>
+    </div>
+</div>
+
+<!-- 
+bar-x => basicBarChartOptionX();
+bar-y => basicBarChartOptionY();
+bar-center => basicBarChartOptionCenter();
+bar-total-x => basicBarChartOptionTotalMaxX();
+bar-total-y => basicBarChartOptionTotalMaxY();
+pie => pieChartOption();
+
+ -->

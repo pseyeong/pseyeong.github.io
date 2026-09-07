@@ -31,11 +31,20 @@ build/
 
 ### VS Code ###
 .vscode/
-
-### Tailwind (npm) ###
 node_modules/
-src/main/resources/static/css/output.css
+*.log
+logs/
+logs/**/*.log
+# src/main/resources/static/assets/css/output.css
 
-### Secrets ###
-application-local.properties
-.env
+### Webapp Delete Files ###
+src/main/xxx.delete.webapp
+docs.bak.20250804/
+docs.bak.20250901/
+
+### Log 설정 파일 ###
+#src/main/resources/logback-spring.xml
+#src/main/resources/application-develop.yml
+
+zinidataLog
+.memo

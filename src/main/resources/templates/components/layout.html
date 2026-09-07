@@ -1,0 +1,277 @@
+<!--########################################################-->
+<!--## 레이아웃 컴포넌트 (Figma: 상단에 네비게이션이 있는 경우) ##-->
+<!--## widthType: fixed(1280px) | full(100%) ##-->
+<!--## activeMenu: home | sales | customer ##-->
+<!--## showFooter: 'true' | 'false' ##-->
+<!--########################################################-->
+
+<div th:fragment="navLayout(widthType, activeMenu, showFooter)" class="c-layout" th:classappend="${widthType == 'full'} ? 'c-layout--full' : 'c-layout--fixed'">
+    <!-- Global Navigation -->
+    <header class="cLayoutNav">
+        <div class="cLayoutNavInner">
+            <!-- Left Slot -->
+            <div class="cLayoutNavLeft">
+                <a href="/" class="cLayoutLogo">
+                    <img src="/assets/images/logo/c-layout_nice_logo.svg" class="headerLogo" alt="NICE ZINIDATA">
+                </a>
+                <ul th:if="${widthType == 'full'}" class="cLayoutNavMenu">
+                    <li th:classappend="${activeMenu == 'home'} ? 'active'"><a href="/">홈</a></li>
+                    <li th:classappend="${activeMenu == 'sales'} ? 'active'"><a href="#">매출분석</a></li>
+                    <li th:classappend="${activeMenu == 'customer'} ? 'active'"><a href="#">고객분석</a></li>
+                </ul>
+            </div>
+
+            <!-- Center Slot (fixed only) -->
+            <nav th:if="${widthType != 'full'}" class="cLayoutNavCenter" aria-label="주 메뉴">
+                <ul class="cLayoutNavMenu">
+                    <li th:classappend="${activeMenu == 'home'} ? 'active'"><a href="/">홈</a></li>
+                    <li th:classappend="${activeMenu == 'sales'} ? 'active'"><a href="#">매출분석</a></li>
+                    <li th:classappend="${activeMenu == 'customer'} ? 'active'"><a href="#">고객분석</a></li>
+                </ul>
+            </nav>
+
+            <!-- Right Slot -->
+            <div class="cLayoutNavRight">
+                <div th:if="${widthType == 'full'}" class="cLayoutCtaGroup">
+                    <button type="button" class="lineBtn gray px-2 py-1-5 h-9 shadow-default text-sm/5">버튼 레이블</button>
+                    <button type="button" class="lineBtn primary px-2 py-1-5 h-9 shadow-default text-sm/5" onclick="window.location.href='/admin/admin'">관리자</button>
+                </div>
+                <div class="userWrap">
+                    <div class="userBtn">
+                        <img src="/assets/images/icons/c-nav_user_img.svg" class="userImg" alt="사용자 이미지 아이콘">
+                        <p class="userName">김지니</p>
+                        <img src="/assets/images/icons/c-nav_arrow_gray.svg" class="userArrow" alt="화살표 아이콘">
+                    </div>
+                    <div class="userMenu hidden">
+                        <ul class="userMenuList">
+                            <li>
+                                <div class="userMenuIcon">
+                                    <img src="/assets/images/icons/c-nav_admin.svg" alt="">
+                                </div>
+                                메뉴
+                            </li>
+                            <li>
+                                <div class="userMenuIcon">
+                                    <img src="/assets/images/icons/c-nav_user.svg" alt="">
+                                </div>
+                                메뉴
+                            </li>
+                            <li class="logout">
+                                <div class="userMenuIcon">
+                                    <img src="/assets/images/icons/c-nav_logout.svg" alt="">
+                                </div>
+                                로그아웃
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Content -->
+    <main class="cLayoutBody">
+        <div class="cLayoutContent" th:insert="~{::content}"></div>
+    </main>
+
+    <!-- Footer (Optional) -->
+    <footer th:if="${showFooter == 'true'}" class="cLayoutFooter">
+        <p class="cLayoutFooterText">© NICEZINIDATA, Co., Ltd.. All Rights Reserved</p>
+    </footer>
+</div>
+
+<!--########################################################-->
+<!--## 레이아웃 컴포넌트 (Figma: 네비게이션이 없는 경우) ##-->
+<!--## widthType: fixed(1280px) | full(100%) ##-->
+<!--## showBreadcrumb: 'true' | 'false' ##-->
+<!--## showFooter: 'true' | 'false' ##-->
+<!--########################################################-->
+
+<div th:fragment="simpleLayout(widthType, showBreadcrumb, showFooter)" class="c-layout c-layout--simple" th:classappend="${widthType == 'full'} ? 'c-layout--full' : 'c-layout--fixed'">
+     <!-- Breadcrumbs (Optional) -->
+    <div th:if="${showBreadcrumb == 'true'}" class="cLayoutBreadcrumbBar">
+        <div th:insert="~{::breadcrumb}"></div>
+    </div>
+
+    <!-- Content -->
+    <main class="cLayoutBody">
+        <div class="cLayoutContent" th:insert="~{::content}"></div>
+    </main>
+
+    <!-- Footer (Optional) -->
+    <footer th:if="${showFooter == 'true'}" class="cLayoutFooter">
+        <p class="cLayoutFooterText">© NICEZINIDATA, Co., Ltd.. All Rights Reserved</p>
+    </footer>
+</div>
+
+<!--########################################################-->
+<!--## Breadcrumb 컴포넌트 ##-->
+<!--## items: [{ label, href }] — href 빈 문자열이면 현재 페이지 ##-->
+<!--## 컨트롤러에서 breadcrumbItems 속성을 통해 관리 ##-->
+<!--########################################################-->
+
+<!--########################################################-->
+<!--## 레이아웃 컴포넌트 (Figma: 좌측에 네비게이션이 있는 경우) ##-->
+<!--## widthType: fixed(1280px) | full(100%) ##-->
+<!--## showBreadcrumb: 'true' | 'false' ##-->
+<!--## showFooter: 'true' | 'false' ##-->
+<!--## activeMenu: icon → menu1~menu8, bottom1, bottom2 | wide → home, dashboard, map, member ##-->
+<!--## sideNavType: 'icon' | 'wide' ##-->
+<!--########################################################-->
+
+<div th:fragment="sideNavLayout(widthType, showBreadcrumb, showFooter, activeMenu, sideNavType)"
+     class="c-layout c-layout--sideNav"
+     th:classappend="${widthType == 'full'} ? 'c-layout--full' : 'c-layout--fixed'">
+
+    <div class="cLayoutSideNavWrap">
+        <aside th:replace="${sideNavType == 'wide'} ? ~{components/layout :: sideNavWide(${activeMenu})} : ~{components/layout :: sideNav(${activeMenu})}"></aside>
+
+        <div class="cLayoutSideMain">
+            <div th:if="${showBreadcrumb == 'true'}" class="cLayoutBreadcrumbBar">
+                <div th:insert="~{::breadcrumb}"></div>
+            </div>
+
+            <main class="cLayoutBody">
+                <div class="cLayoutContent" th:insert="~{::content}"></div>
+            </main>
+
+            <footer th:if="${showFooter == 'true'}" class="cLayoutFooter">
+                <p class="cLayoutFooterText">© NICEZINIDATA, Co., Ltd.. All Rights Reserved</p>
+            </footer>
+        </div>
+    </div>
+</div>
+
+<!--########################################################-->
+<!--## Side Navigation (아이콘 레일) ##-->
+<!--########################################################-->
+
+<aside th:fragment="sideNav(activeMenu)" class="cLayoutSideNav" aria-label="사이드 메뉴">
+    <div class="cLayoutSideNavLogo">
+        <a href="/" aria-label="홈">
+            <img src="/assets/images/logo/c-layout_symbol.svg" width="32" height="32" alt="">
+        </a>
+    </div>
+
+    <nav class="cLayoutSideNavMenu" aria-label="주 메뉴">
+        <a href="#" class="cLayoutSideNavItem" th:classappend="${activeMenu == 'menu1'} ? 'active'" th:aria-current="${activeMenu == 'menu1'} ? 'page' : null">
+            <span class="cLayoutSideNavItemIcon">
+                <img src="/assets/images/icons/c-side_nav_icon01.svg" alt="">
+            </span>
+            <span class="cLayoutSideNavLabel">메뉴1</span>
+        </a>
+        <a href="#" class="cLayoutSideNavItem" th:classappend="${activeMenu == 'menu2'} ? 'active'" th:aria-current="${activeMenu == 'menu2'} ? 'page' : null">
+            <span class="cLayoutSideNavItemIcon">
+                <img src="/assets/images/icons/c-side_nav_icon02.svg" alt="">
+            </span>
+            <span class="cLayoutSideNavLabel">메뉴2</span>
+        </a>
+        <a href="#" class="cLayoutSideNavItem" th:classappend="${activeMenu == 'menu3'} ? 'active'" th:aria-current="${activeMenu == 'menu3'} ? 'page' : null">
+            <span class="cLayoutSideNavItemIcon">
+                <img src="/assets/images/icons/c-side_nav_icon01.svg" alt="">
+            </span>
+            <span class="cLayoutSideNavLabel">메뉴3</span>
+        </a>
+        <a href="#" class="cLayoutSideNavItem" th:classappend="${activeMenu == 'menu4'} ? 'active'" th:aria-current="${activeMenu == 'menu4'} ? 'page' : null">
+            <span class="cLayoutSideNavItemIcon">
+                <img src="/assets/images/icons/c-side_nav_icon02.svg" alt="">
+            </span>
+            <span class="cLayoutSideNavLabel">메뉴4</span>
+        </a>
+        <a href="#" class="cLayoutSideNavItem" th:classappend="${activeMenu == 'menu5'} ? 'active'" th:aria-current="${activeMenu == 'menu5'} ? 'page' : null">
+            <span class="cLayoutSideNavItemIcon">
+                <img src="/assets/images/icons/c-side_nav_icon01.svg" alt="">
+            </span>
+            <span class="cLayoutSideNavLabel">메뉴5</span>
+        </a>
+        <a href="#" class="cLayoutSideNavItem" th:classappend="${activeMenu == 'menu6'} ? 'active'" th:aria-current="${activeMenu == 'menu6'} ? 'page' : null">
+            <span class="cLayoutSideNavItemIcon">
+                <img src="/assets/images/icons/c-side_nav_icon02.svg" alt="">
+            </span>
+            <span class="cLayoutSideNavLabel">메뉴6</span>
+        </a>
+        <a href="#" class="cLayoutSideNavItem" th:classappend="${activeMenu == 'menu7'} ? 'active'" th:aria-current="${activeMenu == 'menu7'} ? 'page' : null">
+            <span class="cLayoutSideNavItemIcon">
+                <img src="/assets/images/icons/c-side_nav_icon01.svg" alt="">
+            </span>
+            <span class="cLayoutSideNavLabel">메뉴7</span>
+        </a>
+        <a href="#" class="cLayoutSideNavItem" th:classappend="${activeMenu == 'menu8'} ? 'active'" th:aria-current="${activeMenu == 'menu8'} ? 'page' : null">
+            <span class="cLayoutSideNavItemIcon">
+                <img src="/assets/images/icons/c-side_nav_icon02.svg" alt="">
+            </span>
+            <span class="cLayoutSideNavLabel">메뉴8</span>
+        </a>
+    </nav>
+
+    <div class="cLayoutSideNavBottom">
+        <a href="#" class="cLayoutSideNavItem" th:classappend="${activeMenu == 'bottom1'} ? 'active'" th:aria-current="${activeMenu == 'bottom1'} ? 'page' : null">
+            <span class="cLayoutSideNavItemIcon">
+                <img src="/assets/images/icons/c-nav_admin.svg" alt="">
+            </span>
+            <span class="cLayoutSideNavLabel">하단메뉴1</span>
+        </a>
+        <a href="#" class="cLayoutSideNavItem" th:classappend="${activeMenu == 'bottom2'} ? 'active'" th:aria-current="${activeMenu == 'bottom2'} ? 'page' : null">
+            <span class="cLayoutSideNavItemIcon">
+                <img src="/assets/images/icons/c-nav_user.svg" alt="">
+            </span>
+            <span class="cLayoutSideNavLabel">하단메뉴2</span>
+        </a>
+    </div>
+</aside>
+
+<!--########################################################-->
+<!--## Side Navigation (와이드 280px) ##-->
+<!--########################################################-->
+
+<aside th:fragment="sideNavWide(activeMenu)"
+       class="cLayoutSideNavWide"
+       aria-label="사이드 메뉴">
+    <div class="cLayoutSideNavWideLogo">
+        <a href="/" aria-label="홈">
+            <img src="/assets/images/logo/c-layout_nice_logo.svg" class="headerLogo" alt="NICE ZINIDATA">
+        </a>
+    </div>
+
+    <nav class="cLayoutSideNavWideMenu" aria-label="주 메뉴">
+        <a href="/" class="cLayoutSideNavWideItem" th:classappend="${activeMenu == 'home'} ? 'active'" th:aria-current="${activeMenu == 'home'} ? 'page' : null">
+            <span class="cLayoutSideNavWideItemIcon">
+                <img src="/assets/images/icons/c-breadcrumb_home.svg" alt="">
+            </span>
+            <span class="cLayoutSideNavWideItemLabel">홈</span>
+        </a>
+        <a href="#" class="cLayoutSideNavWideItem" th:classappend="${activeMenu == 'dashboard'} ? 'active'" th:aria-current="${activeMenu == 'dashboard'} ? 'page' : null">
+            <span class="cLayoutSideNavWideItemIcon">
+                <img src="/assets/images/icons/c-side_nav_dashboard.svg" alt="">
+            </span>
+            <span class="cLayoutSideNavWideItemLabel">대시보드</span>
+        </a>
+        <a href="/map" class="cLayoutSideNavWideItem" th:classappend="${activeMenu == 'map'} ? 'active'" th:aria-current="${activeMenu == 'map'} ? 'page' : null">
+            <span class="cLayoutSideNavWideItemIcon">
+                <img src="/assets/images/icons/c-side_nav_map.svg" alt="">
+            </span>
+            <span class="cLayoutSideNavWideItemLabel">지도</span>
+        </a>
+        <a href="/admin/admin" class="cLayoutSideNavWideItem" th:classappend="${activeMenu == 'admin'} ? 'active'" th:aria-current="${activeMenu == 'admin'} ? 'page' : null">
+            <span class="cLayoutSideNavWideItemIcon">
+                <img src="/assets/images/icons/c-nav_user.svg" alt="">
+            </span>
+            <span class="cLayoutSideNavWideItemLabel">회원관리</span>
+        </a>
+    </nav>
+</aside>
+
+<nav th:fragment="breadcrumbNav(items)" class="c-breadcrumb" aria-label="현재 위치">
+    <ol class="cBreadcrumbList">
+        <li class="cBreadcrumbItem">
+            <a href="/" class="cBreadcrumbHome" aria-label="홈">
+                <img src="/assets/images/icons/c-breadcrumb_home.svg" width="14" height="14" alt="">
+            </a>
+        </li>
+        <li th:each="item : ${items}" class="cBreadcrumbItem flex items-center gap-1-5">
+            <span class="cBreadcrumbDivider" aria-hidden="true">/</span>
+            <a th:if="${!#strings.isEmpty(item['href'])}" th:href="${item['href']}" th:text="${item['label']}" class="cBreadcrumbLink"></a>
+            <span th:if="${#strings.isEmpty(item['href'])}" th:text="${item['label']}" class="cBreadcrumbCurrent" aria-current="page"></span>
+        </li>
+    </ol>
+</nav>

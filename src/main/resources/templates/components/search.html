@@ -1,0 +1,162 @@
+<!-- 타이핑 검색 -->
+<div th:fragment="typingSearch(placeholder, id)">
+    <div class="c-searchbox">
+        <div class="searchInput" data-search="typing"
+             th:attr="data-hide-search-list=${id == 'complexSearchInput'} ? 'true'">
+            <div class="searchIcon">
+                <img src="/assets/images/icons/search_gray.svg" alt="검색">
+                 <!-- <img src="/assets/images/logo/logo_symbol.svg" alt="검색"> -->
+            </div>
+            <input type="text" data-search-input class="inputCustom" th:placeholder="${placeholder}" th:id="${id}">
+            <button type="button" data-search-clear class="searchBtn hidden">
+                <img src="/assets/images/icons/remove_icon.svg" alt="지우기">
+            </button>
+        </div>
+        <div class="searchList hidden" data-search-list th:unless="${id == 'complexSearchInput'}">
+            <ul>
+                <li data-search-item>
+                    <p>서울 영등포구 <span class="keyword">은행로</span>30</p>
+                    <p>서울 영등포구 여의도동</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- 클릭 검색 -->
+<div th:fragment="clickSearch">
+    <div class="c-clickSearchbox">
+        
+    </div>
+</div>
+
+
+<div th:fragment="areaSearch(placeholder, id, cssClass)">
+    <div class="c-searchbox">
+        <div class="searchInput" data-search="typing"
+             th:attr="data-hide-search-list=${id == 'complexSearchInput'} ? 'true'">
+            <div class="searchIcon">
+                <img src="/assets/images/icons/search_gray.svg" alt="검색">
+            </div>
+            <input type="text" data-search-input th:class="|inputCustom ${cssClass}|" th:placeholder="${placeholder}" th:id="${#strings.isEmpty(id) ? _ : id}">
+            <button type="button" data-search-clear class="searchBtn hidden">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M7.2002 16.8L16.8002 7.19995" stroke="#99A1AF" stroke-width="1.5"/>
+                    <path d="M7.1998 7.19995L16.7998 16.8" stroke="#99A1AF" stroke-width="1.5"/>
+                </svg>
+            </button>
+        </div>
+        <div class="searchList hidden" data-search-list th:unless="${id == 'complexSearchInput'}">
+            <div class="areaSearchList">
+                <!--db-->
+                <ul class="complexResults">
+                    <li data-search-item>
+                        <div class="areaSearchItemTit">
+                            <p>서울 영등포구 <span class="keyword">은행로</span>30</p>
+                            <p>아파트</p>
+                        </div>
+                        <p>서울 영등포구 여의도동</p>
+                    </li>
+                    <li data-search-item>
+                        <div class="areaSearchItemTit">
+                            <p>서울 영등포구 영등포구 영등포구 영등포구 <span class="keyword">은행로</span>30</p>
+                            <p>오피스텔</p>
+                        </div>
+                        <p>서울 영등포구 여의도동</p>
+                    </li>
+                </ul>
+                <!--db-->
+                <!--kakao-->
+                <ul class="keywordResult">
+                    <li data-search-item>
+                        <p>홍대걷고싶은거리</p>
+                        <p>서울 마포구 서교동 348-40</p>
+                    </li>
+                    <li data-search-item>
+                        <p>서울둘레길 15코스 복원된 자연길</p>
+                        <p>서울 마포구 상암동 482-49</p>
+                    </li>
+                </ul>
+                <!--kakao-->
+                <!--지역 (시, 도 / 시, 군, 구 / 읍, 면, 동)-->
+                <ul class="addressResult">
+                    <li data-search-item>
+                        <p>서울 <span class="keyword">마포구</span></p>
+                    </li>
+                </ul>
+                <!--지역 (시, 도 / 시, 군, 구 / 읍, 면, 동)-->
+                <!--검색 결과 없을 때-->
+                <div class="areaSearchEmpty hidden">
+                    <p class="areaSearchEmptyTitle">검색 결과가 없습니다</p>
+                    <div class="areaSearchEmptyDesc">
+                        <p>행정동, 단지명, 건물명으로 검색해 보세요.</p>
+                        <div class="areaSearchEmptyList">
+                            <p>건물 이름은 공백 없이 작성해주세요.</p>
+                            <p>시 · 동 사이는 띄어 써주세요.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--데이터 다운로드 페이지 용-->
+<div th:fragment="downloadSearch(placeholder, id)">
+    <div class="c-searchbox">
+        <div class="searchInput" data-search="typing">
+            <div class="searchIcon">
+                <img src="/assets/images/icons/search_gray.svg" alt="검색">
+            </div>
+            <input type="text" data-search-input class="inputCustom" th:placeholder="${placeholder}" th:id="${id}">
+            <button type="button" data-search-clear class="searchBtn hidden">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M7.2002 16.8L16.8002 7.19995" stroke="#99A1AF" stroke-width="1.5"/>
+                    <path d="M7.1998 7.19995L16.7998 16.8" stroke="#99A1AF" stroke-width="1.5"/>
+                </svg>
+            </button>
+        </div>
+        <div class="searchList hidden" data-search-list>
+            <ul class="">
+                <li data-search-item>
+                    <div class="areaSearchItemTit">
+                        <p>서울 <span class="keyword"> 마포</span>구 상암동</p>
+                        <p class="searchGubun">행정동</p>
+                    </div>
+                </li>
+                <li data-search-item>
+                    <div class="areaSearchItemTit">
+                        <p>서울 <span class="keyword"> 마포</span>구 성산1동</p>
+                        <p class="searchGubun">행정동</p>
+                    </div>
+                </li>
+                <li data-search-item>
+                    <div class="areaSearchItemTit">
+                        <p>서울 <span class="keyword"> 마포</span>구 성산1동</p>
+                        <p class="searchGubun">법정동</p>
+                    </div>
+                </li>
+                <li data-search-item>
+                    <div class="areaSearchItemTit">
+                        <p>서울 <span class="keyword"> 마포</span>구 성산2동</p>
+                        <p class="searchGubun">법정동</p>
+                    </div>
+                </li>
+            </ul>
+            <div class="areaSearchEmpty hidden">
+                <p class="areaSearchEmptyTitle">검색 결과가 없습니다</p>
+                <div class="areaSearchEmptyDesc">
+                    <p>행정동, 단지명, 건물명으로 검색해 보세요.</p>
+                    <div class="areaSearchEmptyList">
+                        <p>건물 이름은 공백 없이 작성해주세요.</p>
+                        <p>시 · 동 사이는 띄어 써주세요.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="downloadSearchLimitTip hidden">
+                <p class="downloadSearchLimitTipTitle"></p>
+                <p class="downloadSearchLimitTipDesc hidden"></p>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,10 +1,922 @@
-@import "tailwindcss";
+/*
+  @layer components → 재사용 가능한 "UI 패턴" (의미 있음)
+  @layer utilities → 단순한 속성 단위 (의미 없음)
+*/
 
-@source "../../templates/**/*.html";
-@source "../../../../../index.html";
+/*반응형 max-__:__ */
 
-@layer components { 
-    #map {@apply w-full h-[100dvh]}
-    .mapLevelControl {@apply absolute bottom-4 right-4 z-9}
-    .mapLevelControl button {@apply w-8 h-8 bg-white rounded-full flex items-center justify-center mt-2}
+/*공통 사용*/
+@layer components {
+  p, span, a {@apply px-0-5}
+  input {@apply outline-none}
+  ::-webkit-scrollbar{@apply w-2-5}
+  ::-webkit-scrollbar-track{@apply bg-transparent}
+  ::-webkit-scrollbar-thumb{@apply bg-zinc-800/30 rounded-full border-2 border-solid border-transparent bg-clip-padding}
+  li {@apply cursor-pointer}
+  .contentBox {@apply overflow-y-auto h-[calc(100vh-56px)]}
+
+  .skeleton-ui p, .skeleton-ui span, .skeleton-ui li, .skeleton-ui input, .skeleton-ui select, .skeleton-ui .chartBox, .skeleton-ui .reportTable {@apply h-auto bg-[#e2e8f0] rounded-lg w-full animate-[pulse_1.5s_ease-in-out_infinite];}
+  .skeletonLine {@apply !block !h-7 bg-zinc-800/8 rounded-lg !w-full animate-[pulse_1.5s_ease-in-out_infinite]}
+  .skeletonBox {@apply !block !h-[82px] bg-zinc-800/8 rounded-lg !w-full animate-[pulse_1.5s_ease-in-out_infinite]}
+  .skeletonImg {@apply !block !w-[7.5rem] !h-[7rem] bg-zinc-800/8 rounded-lg animate-[pulse_1.5s_ease-in-out_infinite]}
+  .skeletonText {@apply !block !h-7 bg-zinc-800/8 rounded-lg !w-[8.93rem] animate-[pulse_1.5s_ease-in-out_infinite]}
+  
+  .wrap {@apply mx-auto min-h-[100dvh] w-full relative}
+  .mobileWrap {@apply max-w-lg mx-auto min-h-[100dvh] w-full relative}
+}
+
+/* form */
+@layer components {
+  .inputLabel {@apply flex justify-start items-center text-zinc-500 text-sm/6 font-medium mb-2}
+  .inputLabel span {@apply text-zinc-400}
+  .inputCustom {@apply w-full rounded-lg border-solid border-1 text-zinc-950 text-sm/5 font-normal border-zinc-800/15 h-12 px-3 shadow-2xs placeholder:text-zinc-400}
+  .inputCustom:focus {@apply !border-primary-500 !outline-none}
+  .inputCustom:hover {@apply border-primary-500/30 outline-none}
+  .inputCustom.disabled {@apply border-zinc-800 border-opacity-10 bg-zinc-800/8 pointer-events-none}
+  input {@apply outline-none}
+  input[type="checkbox"], input[type="radio"] {@apply hidden}
+  input[type="file"]{@apply hidden}  
+  .checkboxCustom[type='checkbox'] + label{@apply text-sm/5 font-medium text-zinc-600 pl-8 relative block}
+  .checkboxCustom[type='checkbox'] + label:hover{@apply cursor-pointer}
+  .checkboxCustom[type='checkbox'] + label:before {@apply content-[''] absolute left-2 top-1/2 w-4 h-4 border-solid border-1 border-zinc-500/15 rounded-xs bg-white -translate-y-1/2}
+  .checkboxCustom[type='checkbox'] + label:hover:before {@apply border-zinc-800/25}
+  .checkboxCustom[type='checkbox']:checked + label:before {@apply bg-[var(--main-color)] bg-[url('/assets/images/icons/checkbox_white_check.svg')] bg-no-repeat bg-center bg-[length:14px_14px]}
+  .checkboxCustom[type='checkbox']:checked + label:hover:before {@apply bg-[var(--secondary-color)] bg-[url('/assets/images/icons/checkbox_white_check.svg')] bg-no-repeat bg-center bg-[length:14px_14px]}
+  .checkboxCustomArrow[type='checkbox'] + label{@apply text-sm/5 font-medium text-zinc-600 pl-8 relative}
+  .checkboxCustomArrow[type='checkbox'] + label:hover{@apply cursor-pointer}
+  .checkboxCustomArrow[type='checkbox'] + label:before {@apply content-[''] absolute left-0-5 top-1/2 w-4 h-4 rounded-xs -translate-y-1/2 bg-transparent bg-[url('/assets/images/icons/check_gray.svg')] bg-no-repeat bg-center bg-[length:14px_14px]}
+  .checkboxCustomArrow[type='checkbox'] + label:hover:before {@apply bg-[rgba(39,39,42,0.04)] bg-[url('/assets/images/icons/check_gray.svg')] bg-no-repeat bg-center bg-[length:14px_14px]}
+  .checkboxCustomArrow[type='checkbox']:checked + label:before {@apply bg-transparent bg-[url('/assets/images/icons/check_primary.svg')] bg-no-repeat bg-center bg-[length:14px_14px]}
+  .checkboxCustomArrow[type='checkbox']:checked + label:hover:before {@apply bg-[rgba(39,39,42,0.04)] bg-[url('/assets/images/icons/check_primary.svg')] bg-no-repeat bg-center bg-[length:14px_14px]}
+  .formCheck .inputLabel{@apply relative inline-block}
+  .formCheck .inputLabel:after{@apply content-['*'] absolute -right-[12px] top-1/2 -translate-y-1/2 text-primary-600}
+  .certTime {@apply text-sm/5 text-primary-600 font-normal absolute right-3 top-1/2 -translate-y-1/2}
+  .passwordInfoBox {@apply absolute left-0 top-11 !p-3 !rounded-md border border-solid border-zinc-800/15 w-full z-9 bg-white}
+  .passwordCheckList li{@apply flex justify-start items-center text-xs/4 text-red-700 pb-1-5}
+  .passwordCheckIcon {@apply w-[12px] h-[12px] mr-1 bg-[url('/assets/images/icons/close_red.svg')] bg-no-repeat bg-center bg-[length:12px_12px]}
+  .passwordCheckList li.success {@apply text-green-700}
+  .passwordCheckList li.success .passwordCheckIcon{@apply bg-[url('/assets/images/icons/check_success.svg')] bg-no-repeat bg-center bg-[length:12px_12px]}
+  .inputError input {@apply border-red-700}
+  .inputError input:hover, .inputError input:focus {@apply border-solid border-1 !border-red-700}
+  .errorText {@apply text-sm/4 text-red-700 font-medium pt-2 hidden}
+  .inputError .errorText {@apply block}
+  .passwordToggle {@apply w-5 h-5 absolute top-1/2 right-2 -translate-y-1/2 bg-no-repeat bg-contain cursor-pointer bg-[url('/assets/images/icons/password_on_gray.svg')] hover:bg-[url('/assets/images/icons/password_on_dark.svg')]}
+  .passwordToggle.active {@apply bg-[url('/assets/images/icons/password_off_gray.svg')] hover:bg-[url('/assets/images/icons/password_off_dark.svg')]}
+  .dotList li {@apply relative text-xs/4 text-zinc-600 pl-3 mb-2}
+  .dotList li:last-child{@apply mb-0}
+  .dotList li:after {@apply absolute top-2 left-0-5 w-0-5 h-0-5 rounded-full bg-zinc-600}
+  .bannerDotList li:after {@apply bg-white}
+  .bannerDotList li {@apply !text-xs/5 !text-white !mb-1}
+  .orderHistoryBtn {@apply justify-end w-full underline underline-offset-[3px]}
+  .no-underline {@apply no-underline pointer-events-none}
+  .no-underline:hover {@apply cursor-default}   
+  .fileBtn {@apply ml-2 w-[85px] h-10 border border-solid border-zinc-800/15 !inline-flex justify-center items-center rounded-md whitespace-nowrap text-md/6 font-medium cursor-pointer shadow-default hover:bg-zinc-500/8}
+  .fileBtn:after {@apply !hidden}
+}
+
+/* button */
+@layer components {
+  button {@apply outline-none flex items-center justify-center gap-1 cursor-pointer}
+  button.disabled {@apply !bg-zinc-800/8 !text-zinc-950/30 pointer-events-none}
+  .bgBtn {@apply rounded-md text-white text-md/6 font-medium min-h-7 px-2}
+  .bgBtn.primary {@apply bg-primary-600 hover:bg-primary-500}
+  .bgBtn.secondary {@apply bg-primary-500/10 text-primary-600 hover:bg-primary-500/15}
+  .bgBtn.warning {@apply bg-red-600 hover:bg-red-500}
+  .bgBtn.del {@apply bg-red-500/10 text-red-500 hover:bg-red-500/20}
+  .bgBtn.gray {@apply text-zinc-950 bg-zinc-800/4 hover:bg-zinc-500/8}
+  .bgBtn.black {@apply text-white bg-zinc-950 hover:bg-zinc-800}
+  .lineBtn {@apply rounded-md text-zinc-950 text-md/6 font-medium bg-white border border-solid min-h-7 px-2}
+  .lineBtn.primary {@apply border-primary-500/60 hover:bg-primary-50}
+  .lineBtn.secondary {@apply border-primary-500/60 hover:bg-primary-50}
+  .lineBtn.warning {@apply border-red-500/15 hover:bg-red-50}
+  .lineBtn.gray {@apply border-zinc-500/15 hover:bg-zinc-50}
+  .lineBtn.black {@apply border-zinc-950/15 hover:bg-zinc-50}
+  .toggleBtn {@apply w-[42px] h-6 rounded-full bg-zinc-200 relative m-auto}
+  .toggleBtn:after {@apply content-[''] block absolute top-[3px] left-[3px] size-4-5 rounded-full bg-white shadow-sm duration-300}
+  .toggleBtn.active {@apply bg-green-500}
+  .toggleBtn.active:after {@apply left-[21px] duration-300}
+}
+
+/* pagination, calendar, search */
+@layer components {
+  /*pagination*/
+  .paginationWrap {@apply m-auto;}
+  .paginationWrap ul{@apply flex justify-center items-center}
+  .paginationWrap ul li {@apply relative mx-1 w-[26px] h-[26px] rounded-xs border-none cursor-pointer text-xs/4 font-medium text-zinc-600 flex justify-center items-center hover:bg-zinc-800/4}
+  .paginationWrap ul li.active {@apply bg-zinc-800/4 text-zinc-950}
+  .paginationWrap ul li.disabled {@apply pointer-events-none opacity-20}
+  .paginationWrap .prevAll:after {@apply content-[''] absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 rotate-180 w-4 h-4;background:url('/assets/images/icons/pagination_arrow_all.svg') no-repeat center center / 16px 16px}
+  .paginationWrap .prev:after {@apply content-[''] absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 rotate-180 w-4 h-4;background:url('/assets/images/icons/pagination_arrow.svg') no-repeat center center / 16px 16px}
+  .paginationWrap .next:after {@apply content-[''] absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 w-4 h-4;background:url('/assets/images/icons/pagination_arrow.svg') no-repeat center center / 16px 16px}
+  .paginationWrap .nextAll:after {@apply content-[''] absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 w-4 h-4;background:url('/assets/images/icons/pagination_arrow_all.svg') no-repeat center center / 16px 16px}
+
+  /*search*/
+  .c-searchbox {@apply relative}
+  .searchInput {@apply relative}
+  .searchIcon {@apply size-6 absolute left-3 top-1/2 -translate-y-1/2 flex justify-center items-center}
+  .searchInput .inputCustom {@apply pl-[46px] pr-10}
+  .searchInput .searchBtn {@apply absolute right-3 top-1/2 -translate-y-1/2}
+  .searchList {@apply absolute left-0 top-[52px] w-full bg-white rounded-lg border border-solid border-zinc-800/25 py-2 z-[2] max-h-[316px] overflow-y-auto}
+  .searchList ul {@apply h-auto}
+  .searchList ul li {@apply px-4 py-2 text-sm/5 hover:bg-zinc-50}
+  .searchList ul li p:first-child {@apply text-zinc-950}
+  .searchList ul li p:last-child {@apply text-zinc-700}
+  .searchList ul li p span.keyword {@apply text-primary-600}
+  .areaSearchList {@apply flex flex-col gap-[9px]}
+  .areaSearchList ul {@apply relative}
+  .areaSearchList ul:after {@apply content-[''] block absolute -top-1 left-1/2 -translate-x-1/2 w-full h-[1px] bg-[#F3F4F5]}
+  .areaSearchList ul:first-child:after {@apply hidden}
+  .areaSearchItemTit {@apply flex justify-between items-start gap-2}
+  .areaSearchItemTit p:last-child{@apply whitespace-nowrap}
+  .areaSearchEmpty {@apply flex flex-col gap-1 px-4 py-5}
+  .areaSearchEmptyTitle {@apply text-md/6 font-bold text-zinc-950}
+  .areaSearchEmptyDesc {@apply flex flex-col text-sm/5 font-normal text-zinc-500}
+  .areaSearchEmptyList {@apply pl-5}
+  .areaSearchEmptyList p {@apply relative}
+  .areaSearchEmptyList p:after {@apply content-[''] block size-[3px] rounded-full bg-zinc-500 absolute top-1/2 -left-2-5 -translate-y-1/2}
+  .searchGubun {@apply h-5 inline-flex justify-center items-center px-1-5 rounded-xs bg-white/50 border-1 border-solid border-zinc-800/10 text-xs/4 font-semibold text-zinc-700}
+
+  /*calendar (air-datepicker 팝업 + 입력)*/
+  .calendarWrap {@apply relative shrink-0 min-w-[140px] max-w-[200px]}
+  .calendarDual {@apply relative flex flex-col gap-3 overflow-visible}
+  .calendarDualDropdown {@apply absolute left-0 top-full z-[100] mt-1 flex flex-nowrap gap-2 items-start rounded-md bg-white border-1 border-solid border-zinc-800/15 shadow-sm}
+  .calendarDualDropdown[hidden] {@apply !hidden}
+  .calendarDualInlineHost {@apply shrink-0 !border-none}
+  .calendarInput {@apply w-full h-10 rounded-md shadow-2xs border-1 border-solid border-zinc-800/15 pl-10 text-md/6 bg-[url('/assets/images/icons/calendar_icon_off.svg')] bg-no-repeat bg-[center_left_12px] bg-[length:16px_16px]}
+}
+
+/*
+  air-datepicker 오버라이드
+  - @layer 밖에 두어 CDN(레이어 없음)보다 우선 적용
+  - BEM `--` 는 Tailwind가 CSS 변수로 오인하므로 `\-` 로 이스케이프
+*/
+.calendarDualPanels .air-datepicker {@apply !static !shadow-sm}
+.calendarDual .air-datepicker {@apply !border-0 !shadow-none}
+.air-datepicker-cell.-day-.calendarDual-rangeBetween {@apply !bg-zinc-50 !rounded-none}
+.air-datepicker-cell.-day-.calendarDual-rangeEdge-\-single {@apply !rounded-xs}
+.air-datepicker-cell.-day-.calendarDual-rangeBetween.-selected-,
+.air-datepicker-cell.-day-.calendarDual-rangeEdge.-selected- {@apply !bg-zinc-600 !text-white}
+.air-datepicker {@apply !border-zinc-800/15 !shadow-sm !rounded-lg}
+.air-datepicker-cell {@apply !size-8 !mb-2 !text-sm/5 !font-medium !text-zinc-950 !rounded-xs}
+.air-datepicker-cell.-other-month- {@apply !opacity-30 !text-zinc-950}
+.air-datepicker-cell.-day-:nth-child(7n) {@apply !text-blue-600}
+.air-datepicker-cell.-day-:nth-child(7n+1) {@apply !text-red-500}
+.air-datepicker-\-content {@apply !px-3 !pb-2 !pt-0}
+.air-datepicker-body-\-cells.-days-,
+.air-datepicker-body-\-cells.-years-,
+.air-datepicker-body-\-cells.-months- {@apply !auto-rows-[unset]}
+.air-datepicker-cell.-current- {@apply !text-zinc-950 !bg-zinc-800/10}
+.air-datepicker-body-\-day-name {@apply !text-xs/4 !font-medium !text-zinc-600 !py-1}
+.air-datepicker-body-\-day-names {@apply !mb-2 !mt-3}
+.air-datepicker-nav {@apply !border-b-0 !px-3 !pt-4 !pb-0 !min-h-[unset]}
+.air-datepicker-\-pointer:after {@apply !hidden}
+.air-datepicker-nav-\-title,
+.air-datepicker-nav-\-title i {@apply !text-md/6 !font-semibold !text-zinc-950}
+.air-datepicker-cell.-selected-,
+.air-datepicker-cell.-selected-.-weekend-,
+.air-datepicker-cell.-selected-.-month- {@apply !bg-zinc-600 !text-white}
+.air-datepicker-cell.-month- {@apply !w-full !text-zinc-950}
+.air-datepicker-cell.-year- {@apply !w-full}
+.air-datepicker-nav-\-action path {@apply !stroke-0 !fill-[#4A5565]}
+.air-datepicker-nav-\-action {@apply !relative !size-8}
+.air-datepicker-nav-\-action svg {@apply !hidden}
+.air-datepicker-nav-\-action:after {@apply content-[''] !block !absolute !top-1/2 !left-1/2 !-translate-x-1/2 !-translate-y-1/2 !size-4 !bg-[length:16px_16px] !bg-center}
+.air-datepicker-nav-\-action:first-child:after {@apply !bg-[url('/assets/images/icons/air_arrow.svg')]}
+.air-datepicker-nav-\-action:last-child:after {@apply !bg-[url('/assets/images/icons/air_arrow.svg')] !rotate-180}
+.air-datepicker-cell.-day-.-range-to-{@apply !bg-transparent hover:bg-transparent}
+/*table, chart*/
+@layer components {
+  .tableDataDom {@apply overflow-auto pb-1-5;}
+  .tableDataDom table {@apply w-full text-sm/5 text-center table-auto whitespace-nowrap}
+  .tableDataDom tr {@apply border-b-1 border-solid border-zinc-800/8}
+  .tableDataDom tr:last-child {@apply border-b-0}
+  .tableDataDom thead tr:hover{@apply bg-transparent}
+  .tableDataDom th {@apply bg-zinc-50}
+  .tableDataDom table th {@apply text-sm/5 text-zinc-500 py-2 px-3 font-medium}
+  .tableDataDom table th p {@apply inline-flex justify-center items-center gap-1 cursor-pointer px-0}
+  .tableDataDom table td {@apply text-sm/5 font-normal text-zinc-700 py-2 px-3 cursor-pointer tabular-nums}
+  .tableDataDom table td.sticky {@apply bg-white}
+  .tableDataDom table td .iconBox {@apply rounded-xs mr-2}
+  .tableDataDom table td button {@apply m-auto text-sm/4 h-7}
+  .tableScrollOn th.fixText {@apply bg-zinc-50}
+  .tableScrollOn .fixText {@apply sticky left-0 z-1 bg-white}
+  .tableScrollOn .fixText:after{@apply content-[''] absolute top-0 -right-3 w-3 h-full block bg-[linear-gradient(270deg,transparent,rgba(0,0,0,0.06)_100%)]}
+  .sortIcon {@apply inline-flex size-4 ml-2 justify-center items-center}
+  .sortIcon.default {@apply bg-[url('/assets/images/icons/sort_flow_default.svg')] bg-no-repeat bg-center bg-[length:16px_16px]}
+  .sortIcon.asc {@apply bg-[url('/assets/images/icons/sort_flow_asc.svg')] bg-no-repeat bg-center bg-[length:16px_16px]}
+  .sortIcon.desc {@apply bg-[url('/assets/images/icons/sort_flow_desc.svg')] bg-no-repeat bg-center bg-[length:16px_16px]}
+  .tableMore {@apply gap-1 px-3 py-1-5 text-md/6 font-medium rounded-full shadow-default mx-auto}
+  .tableMore svg {@apply size-4}
+  .sortBtn {@apply size-4 inline-flex justify-center items-center bg-[url('/assets/images/icons/sort_flow_default.svg')] bg-no-repeat bg-center bg-[length:16px_16px]}
+  th:hover .sortBtn {@apply bg-[url('/assets/images/icons/sort_flow_default_hover.svg')]}
+  .up .sortBtn {@apply bg-[url('/assets/images/icons/sort_up.svg')] bg-no-repeat bg-center bg-[length:16px_16px]}
+  .up:hover .sortBtn {@apply bg-[url('/assets/images/icons/sort_up.svg')]}
+  .down .sortBtn {@apply bg-[url('/assets/images/icons/sort_down.svg')] bg-no-repeat bg-center bg-[length:16px_16px]}
+  .down:hover .sortBtn {@apply bg-[url('/assets/images/icons/sort_down.svg')]}
+  
+  /*chart*/
+  .minChartBox .chartBox {@apply h-[250px]}/*임시*/ gap-2
+  .maxChartBox .chartBox {@apply h-[450px]}/*임시*/
+  .pieChartBox .chartBox {@apply h-[260px] max-md:h-[450px]}/*임시*/
+  .tableDataDom  #complexTable th, .tableDataDom #complexTable td {@apply !text-left}
+  .tableDataDom  #complexTable th:last-child, .tableDataDom  #complexTable td:last-child {@apply !text-center}
+  .tableDataDom  #complexTable button {@apply h-7 px-2 text-xs/4 font-medium rounded-xs}
+  .tableDataDom  #complexTable tr:not(.tableEmptyRow) td:last-child div {@apply flex justify-center items-center gap-2}
+  .tableCountText {@apply text-md/6 text-zinc-500 inline-flex justify-start items-center gap-1 mb-[14px]}
+  .tableCountText span {@apply text-primary-600 font-semibold}
+  .tableEmptyRow td {@apply !cursor-default}
+  .tableEmptyCell {@apply !p-0}
+  .tableEmpty {@apply flex flex-col items-center justify-center gap-4 p-2-5 w-full min-h-[400px]}
+  .tableEmptyIcon {@apply w-10 h-12 shrink-0 overflow-clip}
+  .tableEmptyIcon img {@apply block size-full}
+  .tableEmptyText {@apply text-md/6 text-gray-500 text-center font-normal}
+  .memoText {@apply whitespace-normal min-w-[200px]}
+  .chartBoxY .chartBox {@apply h-full w-full min-h-[220px]}
+}
+
+/* map */
+@layer components {
+  /* 지도 마커(네이버 커스텀 마커 content용) */
+  .selectionMarkerWrapper {@apply relative -translate-x-1/2 -translate-y-full}
+  .mapMarkerOnMap {@apply static top-auto left-auto}
+  .map {@apply h-full}
+  .mapBox {@apply relative w-full h-full}
+  /* Figma cursor (107:27158) — 핫스팟은 십자선 중심 */
+  #mapContainer.is-register-cursor,
+  #mapContainer.is-register-cursor * {
+    cursor: url("/assets/images/icons/cursor.svg") 7 25, crosshair !important;
+  }
+  /* 영역 그리기 — 핫스팟은 좌측 상단 */
+  #mapContainer.is-radius-cursor,
+  #mapContainer.is-radius-cursor * {
+    cursor: url("/assets/images/icons/radius_cursor.svg") 0 0, crosshair !important;
+  }
+  #mapContainer.is-radius-cursor .mapMarker,
+  #mapContainer.is-radius-cursor .mapMarkerInner {
+    pointer-events: none;
+  }
+  #mapContainer.is-radius-cursor .mapMarkerPinImg path {@apply [stroke-opacity:0.15];
+    fill: #99A1AF;
+  }
+  #mapContainer.is-radius-cursor .mapMarkerPinIcon path{@apply fill-white}
+
+  /* Figma: Map pin/default — 앵커(핀)만 레이아웃 크기, 라벨/팝오버는 absolute */
+  .mapMarker {@apply absolute z-[5] w-0 h-0 cursor-pointer}
+  .mapMarkerInner {@apply absolute left-0 top-0 w-[34px] h-[45px] -translate-x-1/2 -translate-y-full pointer-events-auto}
+  .mapMarkerPinWrap {@apply relative flex w-[34px] flex-col items-center}
+  .mapMarkerPinWrap.active svg.mapMarkerPinIcon path{@apply fill-zinc-700}
+  .mapMarkerPinWrap.active svg.mapMarkerPinImg path{@apply fill-white [stroke-opacity:1]}
+  .mapMarkerPin {@apply relative z-[1] block h-[42px] w-[34px] shrink-0}
+  .mapMarkerPinImg {@apply absolute inset-0 size-full}
+  .mapMarkerPinIcon {@apply absolute left-1/2 top-[10px] size-4-5 -translate-x-1/2 object-contain}
+  .mapMarkerShadow {@apply relative z-0 mt-[-1px] h-[3px] w-5 shrink-0}
+  .mapMarkerLabel {@apply absolute left-1/2 top-[calc(100%+2px)] max-w-[120px] -translate-x-1/2 overflow-hidden text-ellipsis whitespace-nowrap text-xs/4 font-semibold text-zinc-950 [-webkit-text-stroke:2px_white] [paint-order:stroke_fill]}
+  .mapMarkerPopover {@apply absolute bottom-[calc(100%+4px)] left-1/2 z-10 flex w-[200px] -translate-x-1/2 flex-col items-center opacity-0 invisible duration-150}
+  .mapMarker:hover {@apply z-[20]}
+  .mapMarker:hover .mapMarkerPopover {@apply opacity-100 visible}
+  .mapMarkerPopoverBody {@apply w-full rounded-[10px] bg-zinc-800/90 p-3 text-white shadow-md backdrop-blur-[6px]}
+  .mapMarkerPopoverHead {@apply flex flex-col gap-0-5}
+  .mapMarkerPopoverCategory {@apply text-xs/4 font-semibold text-orange-400}
+  .mapMarkerPopoverTitle {@apply text-md/6 font-semibold text-white}
+  .mapMarkerPopoverAddress {@apply text-xs/4 font-normal text-white}
+  .mapMarkerPopoverDivider {@apply my-3 h-px w-full bg-white/10}
+  .mapMarkerPopoverRows {@apply flex flex-col gap-1-5}
+  .mapMarkerPopoverRow {@apply flex items-center justify-between gap-2 text-xs/4}
+  .mapMarkerPopoverRowLabel {@apply font-medium text-white/80}
+  .mapMarkerPopoverRowValue {@apply font-semibold text-white}
+  .mapMarkerPopoverArrow {@apply block h-[6px] w-[9px]}
+  .mapMarkerPopoverList {@apply flex w-full flex-col gap-3}
+  .mapMarkerPopoverListItem {@apply flex w-full min-w-[176px] items-center justify-between cursor-pointer}
+  .mapMarkerPopoverListName {@apply text-md/6 font-semibold text-white whitespace-nowrap}
+  .mapMarkerPopoverListChevron {@apply flex size-3 shrink-0 items-center justify-center overflow-hidden}
+  .mapMarkerPopoverListChevron img {@apply block h-[11px] w-[6px]}
+  .mapMarkerPopoverListDivider {@apply h-px w-full bg-white/8}
+  .mapMarkerPopoverList ~ .mapMarkerContent {@apply hidden}
+  .mapMarkerPopoverList ~ .mapMarkerContent.active {@apply block}
+  .mapMarkerPopoverBody:has(.mapMarkerContent.active) .mapMarkerPopoverList {@apply hidden}
+
+  /* Figma: Map pin/default — 핀 끝이 찍는 점, 배지/단지명은 position으로 띄움 */
+  .areaMarker {@apply absolute z-[6] w-0 h-0 pointer-events-none}
+  .areaMarkerInner {@apply absolute left-0 top-0 w-[34px] h-[42px] -translate-x-1/2 -translate-y-full}
+  .areaMarkerPin {@apply relative z-[1] block h-[42px] w-[34px]}
+  .areaMarkerPinSvg {@apply absolute inset-0 size-full}
+  .areaMarkerHome {@apply absolute left-1/2 top-[8px] size-4-5 -translate-x-1/2}
+  .areaMarkerShadow {@apply absolute left-1/2 top-[40px] z-0 h-[3px] w-5 -translate-x-1/2 pointer-events-none}
+  .areaMarkerBadge {@apply absolute left-1/2 bottom-[calc(100%+4px)] z-10 flex -translate-x-1/2 flex-col items-center}
+  .areaMarkerBadgeText {@apply whitespace-nowrap rounded-full bg-zinc-800/90 px-1-5 py-0-5 text-sm/5 font-semibold text-white}
+  .areaMarkerBadgeArrow {@apply block h-[6px] w-[9px]}
+  .areaMarkerLabel {@apply absolute left-1/2 top-[calc(100%+8px)] max-w-[120px] -translate-x-1/2 overflow-hidden text-ellipsis whitespace-nowrap text-xs/4 font-semibold text-zinc-950 [-webkit-text-stroke:2px_white] [paint-order:stroke_fill]}
+  
+  .mapHeader {@apply fixed top-0 left-0 w-full z-10}
+  .menuHeader .headerMap {@apply pt-14}
+  .mapTopSearch {@apply fixed top-4 left-5 w-[335px] z-9}
+  .mapResearchBtn {@apply text-sm/5 font-medium z-9 absolute top-4 left-1/2 -translate-x-1/2 rounded-full py-2 px-3}
+  .mapReport {@apply fixed top-[68px] left-[387px] z-[10] duration-300}
+  .mapReportBox {@apply flex flex-col bg-white rounded-[14px] border border-solid border-zinc-800/10 shadow-lg w-[376px] h-[calc(100vh-80px)] overflow-hidden}/*top 값, bottom 여유값 빼기*/
+  .mapReportHead {@apply flex h-14 shrink-0 items-center justify-between pl-[18px] pr-2}
+  .mapReportHeadTitle {@apply px-0-5 text-lg/7 font-semibold text-zinc-900}
+  .mapReportClose {@apply flex size-9 shrink-0 items-center justify-center rounded-xl}
+  .mapReportClose img {@apply size-6}
+  .mapReportBody {@apply flex-1 min-h-0 overflow-y-auto}
+  .mapReportSection {@apply flex flex-col gap-6 px-5 py-6}
+  .mapReportSection:first-child {@apply gap-6 pt-3 pb-6}
+  .mapReportSection:last-child {@apply pb-12}
+  .mapReportTitleWrap {@apply flex w-full flex-col gap-4}
+  .mapReportTitleArea {@apply flex flex-col gap-0-5}
+  .mapReportCategory {@apply text-xs/4 font-semibold text-orange-400}
+  .mapReportTitle {@apply text-xl/7 font-semibold text-zinc-900}
+  .mapReportAddress {@apply text-sm/5 font-normal text-zinc-500}
+  .mapReportActions {@apply flex items-center justify-between}
+  .mapReportActions button {@apply !rounded-sm}
+  .mapReportDrawBtn {@apply inline-flex h-8 min-w-14 items-center justify-center rounded-sm border border-solid border-zinc-800/15 bg-primary-600 px-2-5 text-sm/5 font-semibold text-white hover:bg-primary-500}
+  .mapReportAreaBtns {@apply flex items-center justify-end gap-2}
+  .mapReportAreaEditBtn {@apply text-sm/5 font-medium text-zinc-950}
+  .mapReportAreaDelBtn {@apply text-sm/5 font-medium text-red-500}
+  .mapReportAreaBtnDivider {@apply my-1 w-px self-stretch bg-zinc-200 !px-0}
+  .mapReportStats {@apply flex w-full items-start gap-4}
+  .mapReportStat {@apply flex min-w-0 flex-1 flex-col gap-1}
+  .mapReportStatLabel {@apply text-xs/4 font-medium text-zinc-500}
+  .mapReportStatValue {@apply text-base/6 font-bold text-zinc-950}
+  .mapReportStatDivider {@apply w-px self-stretch shrink-0 bg-zinc-200 !px-0}
+  .mapReportSep {@apply h-2 w-full bg-zinc-200}
+  .mapReportRows {@apply flex w-full flex-col gap-2}
+  .mapReportRow {@apply flex w-full items-center justify-between text-sm/5 font-medium}
+  .mapReportRowLabel {@apply text-zinc-500}
+  .mapReportRowValue {@apply text-zinc-800}
+  .mapReportRowValue.is-empty {@apply text-zinc-800/30}
+  .mapReportNote {@apply flex w-full flex-col gap-2 pt-4 border-t-1 border-solid border-t-zinc-200}
+  .mapReportNoteLabel {@apply text-sm/5 font-medium text-zinc-500}
+  .mapReportNoteText {@apply text-sm/5 font-medium text-zinc-800 break-words}
+  .mapReportDataset {@apply flex w-full flex-col gap-2}
+  .mapReportDatasetLabel {@apply text-sm/5 font-medium text-zinc-500}
+  .mapReportSegment {@apply flex w-full items-center rounded-md bg-zinc-100 p-0-5 h-auto overflow-hidden}
+  .mapReportSegmentItem {@apply flex flex-1 items-center justify-center rounded-sm px-3 py-1 text-md/6 font-medium text-zinc-500}
+  .mapReportSegmentItem.active {@apply border border-solid border-zinc-800/10 bg-white text-zinc-950 shadow-xs}
+  .mapReportSegmentContent {@apply hidden mt-4}
+  .mapReportSegmentContent.active {@apply block}
+  .mapReportRankList {@apply mt-3 flex w-full flex-col gap-3}
+  .mapReportRankCard {@apply flex w-full items-start gap-3 rounded-lg border border-solid border-zinc-800/10 bg-white px-5 py-4}
+  .mapReportRankIcon {@apply relative size-6 shrink-0 overflow-hidden}
+  .mapReportRankIcon img {@apply size-6 max-w-none}
+  .mapReportRankBody {@apply flex min-w-0 flex-1 flex-col gap-2-5}
+  .mapReportRankName {@apply text-md/6 font-semibold text-zinc-950}
+  .mapReportRankStats {@apply flex w-full items-start gap-2-5}
+  .mapReportFinance {@apply mt-3 flex w-full flex-col gap-4}
+  .mapReportFinanceCard {@apply flex w-full items-center gap-6 rounded-lg border border-solid border-zinc-800/10 bg-white p-5}
+  .mapReportFinanceInfo {@apply flex min-w-0 flex-1 flex-col gap-1 pb-2}
+  .mapReportFinanceTitle {@apply text-xs/4 font-semibold text-zinc-950}
+  .mapReportFinanceDesc {@apply text-xs/4 font-normal text-zinc-800}
+  .mapReportFinanceDesc em {@apply not-italic font-normal text-primary-600}
+  .mapReportFinanceDonut {@apply relative size-[88px] shrink-0 overflow-hidden}
+  .mapReportFinanceDonut .chartBox {@apply !size-[88px] !min-h-0 !h-[88px]}
+  .mapReportFinanceMetrics {@apply flex w-full flex-col}
+  .mapReportFinanceMetric {@apply flex w-full flex-col py-3}
+  .mapReportFinanceMetricHead {@apply flex flex-col gap-1}
+  .mapReportFinanceMetricValue {@apply flex items-end gap-0-5}
+  .mapReportFinanceMetricNum {@apply text-base/6 font-bold text-zinc-950}
+  .mapReportFinanceMetricUnit {@apply pb-0-5 text-xs/4 font-normal text-zinc-700}
+  .mapReportFinanceBar {@apply flex h-5 w-full items-center rounded-xs bg-zinc-100 mt-2}
+  .mapReportFinanceBarFill {@apply block h-5 min-w-px rounded-xs bg-primary-400}
+  .mapReportFinanceBarFill.is-full {@apply w-full}
+  .mapReportChart {@apply flex w-full flex-col gap-2 py-2}
+  .mapReportChartHead {@apply flex items-center justify-between}
+  .mapReportChartTitle {@apply text-md/6 font-semibold text-zinc-800}
+  .mapReportChartMeta {@apply text-sm/5 font-medium text-zinc-500}
+  .mapReportBars {@apply flex h-[220px] flex-col}
+  .mapReportBarRow {@apply flex min-h-0 flex-1 items-center}
+  .mapReportBarLabel {@apply w-[68px] shrink-0 pr-3 text-2xs/3-5 font-medium text-zinc-600 whitespace-nowrap}
+  .mapReportBarTrack {@apply flex h-4 flex-1 items-center border-l border-solid border-zinc-200}
+  .mapReportBar {@apply block h-full min-w-px rounded-r-xs bg-blue-500}
+  .mapReportTable {@apply flex w-full flex-col}
+  .mapReportTableHead {@apply flex items-center justify-between py-1 text-xs/4 font-normal text-zinc-500}
+  .mapReportTableRow {@apply flex items-center justify-between py-2 text-sm/5 font-normal text-zinc-800}
+  #reportChart01Table th {@apply bg-transparent}
+  #reportChart01Table tr {@apply border-b-transparent}
+
+  /* Figma: Side Panel List (search 제외) */
+  .mapSidePanelWrap {@apply absolute left-0 top-0 pt-[64px] z-[8] h-[calc(100dvh)] bg-white border-r-1 border-solid border-zinc-800/10 duration-300}
+  .mapSidePanelWrap.is-collapsed {@apply -translate-x-[375px] duration-300}
+  .mapSidePanel {@apply relative flex h-full w-[375px] flex-col bg-white shadow-md}
+  .mapSidePanelBody {@apply flex-1 min-h-0 overflow-y-auto}
+  .mapList {@apply flex flex-1 min-h-0 flex-col overflow-y-auto}
+  .mapListNull {@apply flex flex-col items-center justify-center px-5 py-16}
+  .mapListHead {@apply flex shrink-0 items-center gap-1 px-5 pt-5 pb-2 text-lg/7 font-bold bg-white}
+  .mapListHeadTitle {@apply text-gray-950}
+  .mapListHeadCount {@apply text-primary-600}
+  .mapListItem {@apply bg-white cursor-pointer hover:bg-zinc-50}
+  .mapListItem.active {@apply bg-zinc-50}
+  .mapListItemInner {@apply flex flex-col gap-2 p-5}
+  .mapListItemTop {@apply flex flex-col gap-0-5}
+  .mapListCategory {@apply text-xs/4 font-semibold text-orange-400}
+  .mapListItemHead {@apply flex items-center gap-1-5}
+  .mapListThumb {@apply size-6 shrink-0 rounded-lg bg-zinc-200}
+  .mapListTitle {@apply text-base/6 font-bold text-gray-950}
+  .mapListStatusBadge {@apply inline-flex h-5 shrink-0 items-center rounded-xs border border-solid border-zinc-800/20 bg-zinc-100 px-1 text-xs/4 font-semibold text-gray-700}
+  .mapListAddress {@apply text-sm/5 text-gray-700 break-words}
+  .mapListMeta {@apply flex items-center gap-1-5}
+  .mapListMetaText {@apply text-sm/5 text-gray-500 whitespace-nowrap}
+  .mapListMetaText strong {@apply font-bold}
+  .mapListMetaDivider {@apply h-3 w-px shrink-0 bg-zinc-800/15 !px-0}
+  .mapListDivider {@apply h-px w-full bg-zinc-800/5}
+  .mapSidePanelToggleBtn {@apply absolute top-[calc(50%-64px)] -translate-y-1/2 -right-[33px] w-8 h-[60px] bg-white rounded-r-md shadow-lg cursor-pointer -z-[1]}
+  .mapSidePanelWrap.is-collapsed .mapSidePanelToggleBtn svg {@apply rotate-180}
+
+  /* Figma: Filter Area + Menu Area + Zoom (mapFloatingWrap) */
+  .mapFloatingWrap {@apply pointer-events-none absolute inset-0 z-[2] max-lg:hidden [--map-search-width:375px]}
+  .mapFloatingWrap > * {@apply pointer-events-auto}
+  .mapFilterArea {@apply absolute left-[var(--map-search-width)] right-[88px] top-0 flex h-20 flex-wrap items-center gap-3 px-6 py-5}
+  .mapFilterBtn {@apply inline-flex items-center gap-1 rounded-full border border-solid border-zinc-800/15 bg-white px-3-5 py-2 text-md/6 font-medium text-zinc-950 shadow-sm hover:bg-zinc-50}
+  .mapFilterBtn.active {@apply border-primary-500/60 bg-white text-primary-600}
+  .mapFilterBtn.active svg path{@apply fill-[#155DFC]}
+  .mapFilterBtnIcon {@apply size-[18px]}
+  .mapFloatingWrap .mapResearchBtn {@apply absolute top-[80px] z-[2] inline-flex min-w-[72px] -translate-x-1/2 items-center gap-1 rounded-full border-primary-500/70 px-2-5 py-2 text-md/6 font-medium text-primary-600 shadow-md left-[calc(50%+var(--map-search-width)/2)]}
+  .mapToolArea {@apply absolute right-5 top-4 flex flex-col gap-3}
+  .mapToolGroup {@apply flex flex-col overflow-hidden rounded-md border border-solid border-zinc-800/15 bg-white shadow-sm}
+  .mapToolBtn {@apply flex min-h-12 min-w-12 flex-col items-center justify-center border-b border-solid border-zinc-800/6 bg-white p-1-5 last:border-b-0 hover:bg-zinc-50}
+  .mapToolBtn.active {@apply bg-primary-600/10}
+  .mapToolBtnIcon {@apply size-[18px]}
+  .mapToolBtnLabel {@apply mt-0-5 text-center text-2xs/3-5 text-zinc-950}
+  .mapZoomArea {@apply absolute bottom-4 right-[26px] flex flex-col gap-2-5}
+  .mapToolGroupSm {@apply rounded-md}
+  .mapToolBtnSm {@apply min-h-9 min-w-9 p-1}
+  .mapToolBtnIconSm {@apply size-3-5}
+  .mapZoomSign {@apply text-base/6 font-medium leading-none text-zinc-950}
+  .mapCluster {@apply z-9 absolute rounded-lg inline-flex justify-center items-center flex-col px-4 py-3 bg-zinc-700 border-solid border-1 border-zinc-800/15 bottom-0}
+  .mapClusterArea {@apply text-xs/4 font-medium text-zinc-00/70 whitespace-nowrap}
+  .mapClusterCount {@apply text-lg/6 font-bold text-white}
+
+  /*모바일*/
+  #sheet {@apply hidden max-2xl:block absolute left-0 right-0 bottom-0 h-[calc(100dvh-80px)] rounded-t-2xl shadow-[0_-12px_30px_0_rgba(0,0,0,0.08)] touch-none max-w-5xl mx-auto}
+  #sheet .sheetHeader{@apply flex items-center justify-center cursor-pointer relative h-[72px] rounded-t-2xl bg-white}
+  #sheet .sheetHeader::before{@apply content-[''] block w-9 h-[5px] rounded-full bg-[#ccc]  absolute top-[5px] left-1/2 -translate-x-1/2}
+  .sheetTab {@apply py-3 px-5 border-b-1 border-solid border-b-zinc-800/6 w-full h-full pt-7}
+  .sheetTab ul {@apply flex justify-start items-center gap-2 h-auto overflow-hidden}
+  .sheetTab li {@apply py-1-5 px-2 rounded-full border-1 border-solid border-zinc-800/10 shadow-default text-sm/5 font-semibold text-zinc-700}
+  .sheetTab li.active {@apply text-primary-600 border-primary-600 bg-primary-600/10}
+  .subSheetTab {@apply !pt-[11px] !pb-0 !h-12 !bg-zinc-50 !border-b-0}
+  .subSheetTab li {@apply bg-white}
+  .subSheetTab li.active {@apply !bg-white}
+  .sheetContent {@apply !bg-zinc-50 h-[calc(100%-72px)]}
+  .sheetInner {@apply py-6 px-5}
+  .sheetList {@apply py-5}
+  .mapReSearch {@apply absolute -top-[68px] right-5 size-12 flex justify-center items-center rounded-full bg-white border-1 border-solid border-zinc-800/10 z-9}
+
+  .mapListWrap {@apply fixed top-14 left-0 z-[8] flex h-[calc(100dvh-56px)] w-[375px] flex-col bg-white border-r border-solid border-zinc-800/10 shadow-md duration-300}
+  .mapListWrap.is-collapsed {@apply -translate-x-[375px] duration-300}
+  .mapListWrap.is-collapsed + .mapReport {@apply left-[10px]}
+  .mapReport.is-collapsed {@apply -translate-x-[376px] duration-300}
+  .mapListWrap:not(.is-collapsed):has(+ .mapReport.is-collapsed) {@apply -translate-x-[763px] duration-300}
+  .mapListWrap:not(.is-collapsed) + .mapReport.is-collapsed {@apply -translate-x-[763px] duration-300}
+  .mapListSearch {@apply px-5 pt-4 shrink-0}
+  .mapListSearch input {@apply !bg-zinc-950/6 !rounded-lg !border-0}
+  .mapListContent {@apply flex flex-1 min-h-0 flex-col}
+  .mapListToggleBtn, .mapReportToggleBtn {@apply absolute top-1/2 -translate-y-1/2 -right-[32px] w-8 h-[60px] bg-white rounded-r-md border border-l-0 border-solid border-zinc-800/6 shadow-lg cursor-pointer flex items-center justify-center}
+  .mapListWrap.is-collapsed .mapListToggleBtn img {@apply rotate-180}
+  .mapReport.is-collapsed .mapReportToggleBtn img {@apply rotate-180}
+  .mapAreaBtn {@apply fixed top-[calc(56px+16px)] left-[calc(50%+187.5px)] z-[9] inline-flex -translate-x-1/2 items-center justify-center rounded-md border border-solid border-zinc-800/15 bg-white px-3-5 py-2 text-md/6 font-medium text-gray-800 shadow-md duration-300}
+  .mapAreaBtn.is-centered {@apply left-1/2}
+  .mapSearchBtn {@apply fixed bottom-4 left-[calc(50%+187.5px)] z-[9] inline-flex -translate-x-1/2 items-center justify-center rounded-md border border-solid border-zinc-800/15 bg-white px-3-5 py-2 text-md/6 font-medium text-gray-800 shadow-md duration-300}
+  .mapSearchBtn.is-centered {@apply left-1/2}
+  
+  .areaLocationGuide {@apply fixed top-[80px] left-1/2 z-[9] inline-flex -translate-x-1/2 items-center gap-10 overflow-hidden rounded-full border border-solid border-zinc-800/15 bg-white h-[64px] pl-5 pr-2 shadow-xl}
+  .areaLocationGuideAddr {@apply min-w-px flex-1 text-base/6 font-medium text-zinc-950 whitespace-nowrap}
+  .areaLocationGuideBtn {@apply min-w-20 rounded-full border border-solid border-zinc-800/15 px-4 h-12 text-base/6}
+  .areaClickBtm {@apply fixed bottom-6 left-1/2 z-[9] inline-flex -translate-x-1/2 items-center gap-2 min-h-14 px-5 py-3 rounded-lg border border-solid border-zinc-800/15 bg-white shadow-lg}
+  .radiusStep01 {@apply absolute z-[11] -translate-x-1/2 rounded-xl border border-solid border-zinc-800/25 bg-white px-5 py-3 shadow-xl}
+  .radiusStep01Text {@apply text-xs/4 font-medium text-zinc-700 whitespace-nowrap}
+  .radiusStep02 {@apply absolute z-[11] flex w-max min-w-[220px] -translate-x-1/2 flex-col rounded-md border border-solid border-zinc-800/15 bg-white p-3 shadow-lg}
+  .radiusStep02Title {@apply text-sm/5 font-bold text-zinc-950}
+  .radiusStep02Desc {@apply mt-2 text-sm/5 font-normal text-zinc-700}
+  .radiusStep02Btns {@apply mt-3 flex items-center justify-end gap-2}
+  .radiusStep02Redraw {@apply h-8 min-w-14 rounded-sm px-2 text-sm/5}
+  .radiusStep02Confirm {@apply h-8 min-w-14 rounded-sm border border-solid border-zinc-800/15 px-2-5 text-sm/5}
+  .locationShowIcon {@apply relative size-5 shrink-0 overflow-hidden !px-0}
+  .locationShowIcon img {@apply size-5 max-w-none object-contain}
+  .locationShowTitle {@apply px-1 text-sm/5 font-semibold text-zinc-950 whitespace-nowrap}
+  .locationShowDesc {@apply pr-3 text-sm/5 font-medium text-zinc-950 whitespace-nowrap}
+  .locationShowClose {@apply min-w-14 px-2 py-1-5 rounded-sm text-sm/5}
+  .mapAddBuildingBtn {@apply fixed bottom-6 right-6 z-[9] h-12 rounded-full border border-solid border-zinc-800/15 bg-primary-600 px-4 text-base/6 font-bold text-white hover:bg-primary-500}
+  .mapAddBuildingBtnIcon {@apply relative block size-4 shrink-0 overflow-hidden !px-0}
+  .mapAddBuildingBtnIcon img {@apply absolute inset-0 size-full}
+}
+
+/* layout (Figma: 상단에 네비게이션이 있는 경우) */
+@layer components {
+  .c-layout {@apply min-h-[100dvh] bg-gray-100 flex flex-col}
+  .c-layout--fixed {@apply mx-auto w-full bg-white min-h-[100dvh]}
+  .c-layout--full {@apply w-full bg-white min-h-[100dvh]}
+
+  .cLayoutNav {@apply h-14 px-6 bg-white border-b-1 border-solid border-zinc-800/10 shrink-0 relative z-10}
+  .cLayoutNavInner {@apply flex items-center justify-between h-full relative}
+  .cLayoutNavLeft {@apply flex items-center gap-[205px] h-12 shrink-0}
+  .cLayoutLogo {@apply flex items-center shrink-0}
+  .cLayoutNavCenter {@apply absolute left-1/2 -translate-x-1/2 top-0 bottom-0 flex items-center justify-center px-6}
+  .cLayoutNavMenu {@apply flex items-center gap-4}
+  .cLayoutNavMenu li {@apply px-1-5 py-3 text-[17px]/6 font-semibold text-zinc-600 hover:text-zinc-950}
+  .cLayoutNavMenu li.active {@apply !text-zinc-950}
+  .cLayoutNavMenu li a {@apply text-inherit hover:text-inherit}
+  .cLayoutNavRight {@apply flex items-center gap-4 h-14 shrink-0 relative}
+  .cLayoutNavRight .userWrap {@apply relative}
+  .cLayoutCtaGroup {@apply flex items-center gap-3}
+
+  .cLayoutBody {@apply flex-1 flex flex-col bg-white min-h-0}
+  .c-layout--fixed .cLayoutBody {@apply py-10}
+  /* .c-layout--full .cLayoutBody {@apply px-12 py-10} */
+  .cLayoutContent {@apply flex-1 min-h-0 w-full}
+
+  .cLayoutFooter {@apply flex items-center justify-center pt-20 pb-4 px-6 shrink-0 bg-white}
+  .cLayoutFooterText {@apply text-sm/5 font-normal text-zinc-400 whitespace-pre}
+
+  /* layout (Figma: 네비게이션이 없는 경우) */
+  .c-layout--simple {@apply min-h-[100dvh] bg-gray-100 flex flex-col}
+  .c-layout--simple.c-layout--fixed {@apply mx-auto w-full max-w-[1280px] bg-white min-h-[100dvh]}
+  .c-layout--simple.c-layout--full {@apply w-full bg-white min-h-[100dvh]}
+
+  .cLayoutBreadcrumbBar {@apply flex items-center px-10 py-4 bg-white border-b-1 border-solid border-zinc-800/10 shrink-0}
+  .c-layout--simple.c-layout--fixed .cLayoutBody {@apply py-10 px-10}
+  .c-layout--simple.c-layout--full .cLayoutBody {@apply py-10 px-12}
+
+  .cBreadcrumbList {@apply flex items-center gap-1-5 flex-wrap}
+  .cBreadcrumbHome {@apply flex items-center justify-center p-1 rounded shrink-0}
+  .cBreadcrumbDivider {@apply text-sm/5 font-medium text-zinc-800/30}
+  .cBreadcrumbLink {@apply text-sm/5 font-normal text-zinc-500 hover:text-zinc-950}
+  .cBreadcrumbCurrent {@apply text-sm/5 font-normal text-zinc-950}
+
+  .cLayoutPlaceholder {@apply flex flex-1 items-center justify-center p-5 min-h-[320px] w-full}
+  .cLayoutPlaceholderText {@apply text-4xl font-thin text-neutral-500 text-center}
+
+  /* layout (Figma: 좌측에 네비게이션이 있는 경우) */
+  .c-layout--sideNav {@apply min-h-[100dvh] bg-gray-100}
+  .c-layout--sideNav.c-layout--fixed {@apply mx-auto w-full max-w-[1280px] min-h-[100dvh] bg-white}
+  .c-layout--sideNav.c-layout--full {@apply w-full min-h-[100dvh] bg-white}
+
+  .cLayoutSideNavWrap {@apply flex min-h-[100dvh] w-full}
+  .cLayoutSideNav {@apply flex flex-col shrink-0 w-16 bg-white border-r-1 border-solid border-zinc-800/10}
+  .cLayoutSideNavLogo {@apply flex items-center justify-center h-14 p-2-5 shrink-0}
+  .cLayoutSideNavLogo a {@apply flex items-center justify-center}
+  .cLayoutSideNavMenu {@apply flex flex-1 flex-col items-center w-full min-h-0}
+  .cLayoutSideNavBottom {@apply flex flex-col items-center w-full shrink-0}
+  .cLayoutSideNavItem {@apply flex flex-col items-center justify-center gap-1 min-h-16 min-w-16 max-w-14 p-2 text-2xs/3-5 font-normal text-zinc-600 text-center shrink-0}
+  .cLayoutSideNavItem:hover {@apply text-zinc-950}
+  .cLayoutSideNavItem.active {@apply bg-primary-600 text-white}
+  .cLayoutSideNavItemIcon {@apply flex items-center justify-center size-5 shrink-0}
+  .cLayoutSideNavItemIcon img {@apply size-5}
+  .cLayoutSideNavItem.active .cLayoutSideNavItemIcon img {@apply brightness-0 invert}
+  .cLayoutSideNavLabel {@apply whitespace-nowrap}
+
+  .cLayoutSideMain {@apply flex flex-1 flex flex-col min-w-0 min-h-[100dvh] bg-white}
+  .c-layout--sideNav.c-layout--fixed .cLayoutBody {@apply py-10 px-10}
+  .c-layout--sideNav.c-layout--full .cLayoutBody {@apply py-10 px-12}
+
+  .cLayoutSideNavWide {@apply flex flex-col shrink-0 w-[280px] bg-white shadow-sm z-[2]}
+  .cLayoutSideNavWideLogo {@apply flex items-center px-6 py-3-5 shrink-0}
+  .cLayoutSideNavWideMenu {@apply flex flex-col gap-2 px-5 py-6 w-full}
+  .cLayoutSideNavWideItem {@apply flex items-center gap-2 w-full min-h-10 px-3 py-2 rounded-md text-md/6 font-medium text-zinc-600 hover:text-zinc-950}
+  .cLayoutSideNavWideItem.active {@apply bg-primary-600 text-white font-semibold hover:text-white}
+  .cLayoutSideNavWideItemIcon {@apply flex items-center justify-center size-5 shrink-0}
+  .cLayoutSideNavWideItemIcon img {@apply size-5}
+  .cLayoutSideNavWideItem.active .cLayoutSideNavWideItemIcon img {@apply brightness-0 invert}
+  .cLayoutSideNavWideItemLabel {@apply flex-1 min-w-0}
+}
+
+/* reportCont (Figma: 보고서 콘텐츠 레이아웃) */
+@layer components {
+  /* 보고서 페이지: 목차 고정 + 본문만 스크롤 (sticky 떨림 방지) */
+  .contentBox.contentBoxReport {@apply overflow-hidden flex flex-col h-[calc(100vh-56px)]}
+  .contentBoxReport .reportContPage {@apply flex-1 flex flex-col min-h-0 py-10 max-lg:py-0}
+  .contentBoxReport .reportContPageLayout {@apply flex-1 grid min-h-0 w-full max-w-[1280px] mx-auto items-stretch grid-rows-[minmax(0,1fr)] max-lg:flex max-lg:flex-col max-lg:items-stretch max-lg:max-w-full max-lg:grid-rows-none}
+  .contentBoxReport .reportContPageLayoutLeft {@apply grid-cols-[280px_minmax(0,1fr)]}
+  .contentBoxReport .reportContPageLayoutRight {@apply grid-cols-[minmax(0,1fr)_280px]}
+  .contentBoxReport .reportContPageBody {@apply min-h-0 h-full overflow-y-auto overflow-x-hidden overscroll-contain [overflow-anchor:none] [scrollbar-gutter:stable] max-lg:flex-1 max-lg:h-auto}
+
+  .reportContPage {@apply w-full py-10 max-lg:py-0}
+  .reportContPageLayout {@apply flex items-start justify-start w-full max-w-[1280px] mx-auto max-lg:flex-col max-lg:items-stretch max-lg:max-w-full}
+  .reportContPageLayoutLeft .sideMenuNav {@apply pl-8 pr-0 max-lg:px-4 max-lg:order-first}
+  .reportContPageLayoutRight .sideMenuNav {@apply pl-0 pr-6 max-lg:px-4 max-lg:order-first}
+  .reportContPageBody {@apply flex-1 min-w-0 max-w-[1000px] max-lg:max-w-full max-lg:w-full}
+  .reportContPageLayout .reportCont {@apply mx-0 max-lg:px-6}
+
+  .sideMenuNav {@apply shrink-0 w-[280px] self-start [contain:layout] max-lg:w-full max-lg:z-20 max-lg:bg-white max-lg:border-b max-lg:border-solid max-lg:border-zinc-800/10 max-lg:py-2 max-lg:self-stretch}
+  .sideMenuNavInner {@apply w-full}
+  .sideMenuNavList {@apply flex flex-col gap-1 w-full max-lg:flex-row max-lg:flex-nowrap max-lg:gap-2 max-lg:overflow-x-auto max-lg:py-1 max-lg:[scrollbar-width:none] max-lg:[-webkit-overflow-scrolling:touch]}
+  .sideMenuNavItem {@apply w-full max-lg:w-auto max-lg:shrink-0}
+  .sideMenuNavItemBtn {@apply w-full min-h-10 px-3 py-2 rounded-md text-left text-md/6 font-medium text-zinc-600 hover:text-zinc-950 max-lg:w-auto max-lg:whitespace-nowrap}
+  .sideMenuNavItem.active .sideMenuNavItemBtn {@apply bg-zinc-800/4 text-zinc-950}
+
+  .reportCont {@apply w-full max-w-[1000px] mx-auto bg-white px-10 max-lg:max-w-full}
+
+  .reportContSection {@apply w-full min-w-0}
+  .reportContSectionHead {@apply pb-8 min-w-[768px] max-md:min-w-0}
+  .reportContSectionTitle {@apply text-3xl/9 font-semibold text-zinc-950}
+  .reportContSectionBody {@apply flex flex-col w-full}
+
+  .reportBox {@apply flex flex-col w-full pt-20 first:pt-0}
+
+  .reportContContHeader {@apply pb-4 w-full}
+  .reportContContTitle {@apply text-xl/7 font-semibold text-zinc-900}
+  .reportContContDesc {@apply mt-1 text-sm/5 font-normal text-zinc-500}
+
+  .reportContData {@apply flex flex-col gap-6 pb-20 w-full last:pb-0}
+  .reportContDataHead {@apply flex flex-col gap-1 w-full}
+  .reportContDataTitle {@apply text-base/6 font-semibold text-zinc-900}
+  .reportContDataDesc {@apply text-md/6 font-normal text-zinc-600}
+  .reportContDataSlot {@apply w-full}
+  .reportContDataPlaceholder {@apply flex flex-col items-center justify-center gap-0 py-8 w-full bg-zinc-800/4 rounded-md}
+  .reportContDataPlaceholderText {@apply text-base/6 font-normal text-zinc-500 text-center}
+
+  .reportContDivider {@apply w-full h-px bg-zinc-800/6 my-20 shrink-0}
+}
+
+/* header */
+@layer components {
+  .header {@apply h-14 px-8 flex justify-between items-center w-full bg-white border-b border-solid border-zinc-800/10}
+  .headerLogo {@apply w-[146px] h-4 shrink-0 block}
+  .headerLogo img {@apply w-full h-full object-contain}
+  .headerNav {@apply flex justify-start items-center gap-6 flex-1 min-w-0}
+  .headerMenuList {@apply flex justify-start items-center gap-4}
+  .headerMenuList li {@apply px-1 text-[17px]/6 font-semibold text-gray-500 hover:text-zinc-950}
+  .headerMenuList li.active {@apply !text-zinc-950}
+  .headerUtils {@apply flex justify-end items-center gap-2 shrink-0}
+  .userBtn {@apply flex justify-start items-center gap-2}
+  .userImg {@apply size-8 rounded-full bg-zinc-200 border border-solid border-zinc-800/10 flex justify-center items-center overflow-hidden shrink-0}
+  .userImg img {@apply size-4}
+  .userName {@apply text-sm/5 font-semibold text-zinc-950 whitespace-nowrap}
+  .logoutBtn {@apply flex items-center justify-center gap-1 text-sm/5 font-medium text-[#F54A00] hover:opacity-80 whitespace-nowrap}
+}
+
+/* side */
+@layer components {
+  .sideContent {@apply flex justify-start items-start}  
+  .c-side {@apply min-w-[268px] w-[268px] h-full px-6 }
+  .c-sideContent {@apply w-full }
+  .sideTitle {@apply text-zinc-500 text-md/6 font-bold mb-6}
+  .sideMenuList {@apply h-auto overflow-hidden}
+  .sideMenuItem {@apply w-full px-3 py-2 rounded-md flex justify-start items-center gap-1.5 hover:bg-zinc-800/4}
+  .sideMenuItem.active {@apply !bg-zinc-800/4}
+  .sideMenuItemIcon {@apply size-4-5}
+  .sideMenuItem a {@apply text-md/6 font-medium text-zinc-600 hover:text-zinc-950}
+  .sideMenuItem.active a {@apply !text-zinc-950}
+
+  .c-sideToggle {@apply w-[280px] h-[100vh] border-r-1 border-solid border-zinc-800/10 bg-white fixed top-0 left-0 duration-300 z-9}
+  .c-sideToggle.hide {@apply w-[94px] duration-300}
+  .c-sideToggleMenu {@apply min-w-[280px]}
+  .c-sideToggle .headerSymbol {@apply hidden}
+  .c-sideToggle.hide .c-sideToggleLogo {@apply justify-center}
+  .c-sideToggle.hide .headerSymbol {@apply block size-9}
+  .c-sideToggle.hide .headerLogo {@apply !hidden}
+  .c-sideToggleLogo {@apply px-6 h-[68px] flex justify-start items-center}
+  .c-sideToggleLogo a {@apply px-0}
+  .c-sideToggleMenuList {@apply p-6}
+  .c-sideToggleMenuList > div {@apply mb-2}
+  .c-sideToggleMenuItem {@apply py-2 px-3 flex justify-start items-center gap-2 rounded-md hover:bg-zinc-800/4 cursor-pointer}
+  .c-sideToggleMenuItemIcon {@apply rounded-md size-5 inline-flex justify-center items-center bg-primary-600}
+  .c-sideToggleMenuItemIcon img {@apply size-full}
+  .c-sideToggleMenuItemText {@apply text-md/6 font-medium text-zinc-700 whitespace-nowrap}
+  .c-sideToggleMenuItem:hover .c-sideToggleMenuItemText {@apply text-zinc-950}
+  .c-sideToggle.hide .c-sideToggleMenuItem {@apply w-[44px] h-10}
+  .c-sideToggle.hide .c-sideSubMenu .c-sideToggleSubMenuList .c-sideToggleMenuItem {@apply w-auto}
+  .c-sideToggle.hide .c-sideToggleMenuItemText {@apply hidden}
+  .c-sideToggleSubMenuList {@apply mt-2}
+  .c-sideToggleSubMenuList li {@apply mb-1}
+  .c-sideToggleSubMenuList li:last-child {@apply mb-0}
+  .c-sideSubMenu {@apply relative }
+  .c-sideSubMenu.active > .c-sideToggleMenuItem, .c-sideToggleMenuItem.active {@apply bg-zinc-800 rounded-md}
+  .c-sideSubMenu.active > .c-sideToggleMenuItem .c-sideToggleMenuItemText, .c-sideToggleMenuItem.active .c-sideToggleMenuItemText {@apply text-white}
+  .c-sideSubMenu > .c-sideToggleMenuItem {@apply relative}
+  .c-sideSubMenu > .c-sideToggleMenuItem:after {@apply content-[''] block absolute top-1/2 -translate-y-1/2 right-3 size-5 bg-[url('/assets/images/icons/down_arrow_gr.svg')] bg-no-repeat bg-center bg-[length:20px_20px] rotate-0 duration-300}
+  .c-sideToggle.hide .c-sideSubMenu > .c-sideToggleMenuItem:after {@apply hidden}
+  .c-sideSubMenu.active > .c-sideToggleMenuItem:after {@apply content-[''] rotate-180 duration-300}
+  .c-sideToggleBtn {@apply w-8 h-[60px] flex justify-center items-center rounded-r-md border-t-1 border-r-1 border-b-1 border-solid border-zinc-800/6 shadow-lg absolute bottom-60 -right-8 cursor-pointer z-9 bg-white}
+  .c-sideToggleBtn .c-sideToggleBtnIcon {@apply size-5 rotate-0 duration-300 bg-[url('/assets/images/icons/side_toggle_btn_icon.svg')] bg-no-repeat bg-center bg-[length:20px_20px]}
+  .c-sideToggleBtn.hide .c-sideToggleBtnIcon{@apply rotate-180 duration-300}
+  .c-sideToggleSubMenuList {@apply hidden}
+  .sideToggleContent {@apply w-[calc(100%-94px)] h-[100vh] ml-[94px]}
+  .c-sideToggle.hide .c-sideSubMenu .c-sideToggleSubMenuList {@apply absolute -top-[14px] left-[83px] mt-0 border-1 border-solid border-zinc-800/10 rounded-md shadow-lg bg-white p-2 whitespace-nowrap}
+  .c-sideToggle.hide .c-sideSubMenu .c-sideToggleSubMenuList .c-sideToggleMenuItemText {@apply block}
+  .c-sideToggle.hide .c-sideSubMenu .c-sideToggleMenuItemIcon.opacity-0 {@apply hidden}
+  
+}
+
+/* sideContentBox */
+@layer components {
+  .sideContentBox {@apply w-full p-12 h-[calc(100vh-56px)] overflow-y-auto}
+  .sideContentBoxTitle {@apply text-zinc-950 text-3xl/9 font-bold mb-6 }
+  .filterBoxWrap {@apply flex justify-start items-center}  
+  .filterLeft {@apply flex justify-start items-center gap-2}
+  .filterRight {@apply flex justify-end items-center gap-2}
+  .h36Box input {@apply !h-9}
+  .filterGubunText {@apply text-sm/5 text-zinc-500}
+  .filterBoxWrap .searchInput input {@apply bg-zinc-800/6 border-zinc-800/6}
+
+  /* download filter table */
+  .downloadFilterTable table {@apply w-full border-collapse border-t border-zinc-800/10}
+  .downloadFilterTable th {@apply w-40 bg-zinc-800/4 border-b border-r border-zinc-800/10 px-4 py-3 text-left align-middle text-sm/5 font-medium text-zinc-800 whitespace-nowrap}
+  .downloadFilterTable td {@apply border-b border-zinc-800/10 px-4 py-3 align-middle}
+  .downloadFilterTable .downloadFilterCell {@apply border-r border-zinc-800/10}
+  .downloadFilterTable .downloadFilterChecks {@apply flex flex-wrap items-center gap-6}
+  .downloadFilterTable .checkboxCustom + label {@apply text-zinc-700}
+  .downloadFilterTable .checkboxCustom:checked + label {@apply text-primary-600 font-semibold}
+  .downloadFilterAreaList {@apply flex flex-wrap items-start gap-1 w-full}
+  .downloadFilterAreaChip {@apply inline-flex items-center gap-0-5 p-1 rounded-sm bg-primary-100 shrink-0}
+  .downloadFilterAreaChipText {@apply px-1 text-xs/4 font-semibold text-primary-600 whitespace-nowrap}
+  .downloadFilterAreaChipClose {@apply size-4 shrink-0 flex items-center justify-center overflow-clip cursor-pointer}
+  .downloadFilterAreaChipClose img {@apply size-2-5 block}
+  .downloadFilterSearch .searchList.is-limited ul {@apply opacity-30}
+  .downloadFilterSearch .searchList.is-limited ul li:hover {@apply bg-transparent}
+  .downloadFilterSearch .searchList:not(.is-limited) [data-search-item].is-selected {@apply opacity-30 cursor-default}
+  .downloadFilterSearch .searchList:not(.is-limited) [data-search-item].is-selected:hover {@apply bg-transparent pointer-events-none}
+  .downloadSearchLimitTip {@apply fixed z-[20] pointer-events-none rounded-sm bg-white border border-solid border-zinc-800/25 px-3 py-2; box-shadow: 0 2px 3px rgba(15,23,42,0.04), 0 8px 12px rgba(15,23,42,0.08)}
+  .downloadSearchLimitTipTitle {@apply text-sm/5 font-medium text-gray-950}
+  .downloadSearchLimitTipDesc {@apply text-sm/5 font-normal text-zinc-800}
+  .downloadPreviewHead {@apply flex items-center justify-between w-full mb-4}
+  .downloadPreviewFileBtn {@apply h-10 min-w-[72px] px-3-5 font-semibold gap-1 border border-solid border-zinc-800/15}
+  .downloadPreviewFileBtnIcon.is-active {@apply hidden}
+  .downloadPreviewFileBtn.disabled .downloadPreviewFileBtnIcon.is-disabled {@apply block opacity-30}
+  .downloadPreviewFileBtn.disabled .downloadPreviewFileBtnIcon.is-active {@apply hidden}
+  .downloadPreviewFileBtn:not(.disabled) {@apply bg-primary-600 text-white border-zinc-800/15 hover:bg-primary-500}
+  .downloadPreviewFileBtn:not(.disabled) .downloadPreviewFileBtnIcon.is-disabled {@apply hidden}
+  .downloadPreviewFileBtn:not(.disabled) .downloadPreviewFileBtnIcon.is-active {@apply block}
+  .downloadToast .alertText {@apply !flex !flex-col !font-normal whitespace-nowrap}
+  .downloadToast .downloadToastTitle {@apply text-sm/5 font-semibold text-zinc-950}
+  .downloadToast .downloadToastDesc {@apply text-sm/5 font-normal text-zinc-950}
+  .downloadPreviewAddList {@apply flex items-center gap-2}
+  .downloadPreviewFilter {@apply flex items-center gap-4 flex-wrap mt-4}
+  .downloadPreviewFilterLabel {@apply shrink-0 text-sm/5 font-semibold text-gray-500}
+  .downloadPreviewFilterChips {@apply flex flex-wrap items-center gap-2}
+  .downloadPreviewFilterChip {@apply inline-flex items-center gap-0-5 px-2-5 py-1 rounded-full border border-solid text-sm/5 font-semibold whitespace-nowrap}
+  .downloadPreviewFilterChip.is-locked {@apply bg-white border-zinc-800/10 text-gray-500}
+  .downloadPreviewFilterChip.is-selected {@apply bg-white border-primary-500/60 text-primary-600}
+  .downloadPreviewFilterChipIcon {@apply size-3-5 shrink-0 block}
+  .downloadPreviewFilterReset {@apply shrink-0 inline-flex items-center gap-0 text-sm/5 font-medium text-gray-500}
+  .downloadPreviewFilterReset img {@apply size-4 block}
+  .downloadPreviewTable {@apply w-full mt-4 border-t border-solid border-zinc-800/10}
+  /* Figma Scroll/basic (282:47353): max-h 220px + overflow-x 스크롤바 */
+  .downloadPreviewTable .tableDataDom {@apply max-h-[230px] overflow-x-auto overflow-y-hidden pb-0}
+  .downloadPreviewTable .tableDataDom::-webkit-scrollbar {@apply !block h-2 [scrollbar-color:rgba(30,41,57,0.15)_rgba(30,41,57,0.04)] p-0 cursor-pointer}
+  .downloadPreviewTable .tableDataDom::-webkit-scrollbar-track {@apply bg-[rgba(30,41,57,0.04)] p-0}
+  .downloadPreviewTable .tableDataDom::-webkit-scrollbar-thumb {@apply h-2 bg-[rgba(30,41,57,0.15)]}
+  .tableDataDom #downloadPreviewTable th,
+  .tableDataDom #downloadPreviewTable td {@apply !text-left}
+  .tableDataDom #downloadPreviewTable th:nth-child(-n+4),
+  .tableDataDom #downloadPreviewTable td:nth-child(-n+4) {@apply !text-zinc-400}
+  .downloadPreviewAddBtn {@apply h-9 min-w-16 px-3 rounded-md text-md/6 font-medium gap-1-5 border border-solid border-transparent}
+  .downloadPreviewAddBtn.is-none {@apply bg-white border-dashed border-zinc-800/15 text-gray-950}
+  .downloadPreviewAddBtn.is-none:hover {@apply bg-gray-50}
+  .downloadPreviewAddBtn.is-added {@apply bg-zinc-800/6 text-gray-950}
+  .downloadPreviewAddBtn.is-added:hover {@apply bg-zinc-800/10}
+  .downloadPreviewAddBtn.is-active {@apply bg-primary-500/10 text-primary-600}
+  .downloadPreviewAddIcon {@apply size-4 shrink-0 flex items-center justify-center}
+  .downloadPreviewAddIcon img {@apply size-4 block}
+  .downloadPreviewAddClose {@apply hidden size-4 shrink-0 items-center justify-center overflow-clip cursor-pointer}
+  .downloadPreviewAddClose img {@apply size-2-5 block}
+  .downloadPreviewAddBtn.is-none .downloadPreviewAddIcon {@apply flex}
+  .downloadPreviewAddBtn.is-added .downloadPreviewAddIcon,
+  .downloadPreviewAddBtn.is-active .downloadPreviewAddIcon {@apply hidden}
+  .downloadPreviewAddBtn.is-active .downloadPreviewAddClose {@apply flex}
+  .downloadAddModalContent {@apply flex flex-col gap-6 w-full mt-2}
+  .downloadAddField {@apply flex flex-col gap-2 w-full}
+  .downloadAddFieldLabel {@apply text-md/6 font-semibold text-zinc-900}
+  .downloadAddChecks {@apply flex flex-col w-full}
+  .downloadAddChecks > div {@apply flex items-center py-1-5}
+  .downloadAddChecks .checkboxCustom + label {@apply text-md/6 font-medium text-zinc-950 pl-8}
+  .downloadAddChecks .checkboxCustom:checked + label {@apply text-primary-600 font-semibold}
+  .downloadAddInfoBox {@apply w-full rounded-md bg-zinc-800/4 px-3 py-2-5 flex flex-col gap-0-5}
+  .downloadAddInfoBox p {@apply text-sm/5 font-normal text-zinc-700}
+}
+
+/* modal */
+@layer components {
+  .alertModal {@apply hidden fixed top-6 left-1/2 -translate-x-1/2 z-[102] rounded-md p-3 border border-solid justify-center items-center shadow-lg;animation: modalShow 4s forwards}
+  .alertModal .alertIcon {@apply size-4 mr-2}
+  .alertModal .alertText {@apply text-sm/5 font-medium}
+  .alertModal.success {@apply flex bg-green-50 border-green-600/30}
+  .alertModal.success .alertIcon{background:url('/assets/images/icons/success_icon_green.svg') no-repeat center center / 16px 16px}
+  .alertModal.success .alertText {@apply text-green-700}
+  .alertModal.fail {@apply flex bg-red-50 border-red-500/30}
+  .alertModal.fail .alertIcon{background:url('/assets/images/icons/error_icon_red.svg') no-repeat center center / 16px 16px}
+  .alertModal.fail .alertText {@apply text-red-700}
+  .alertModal.alertRight {@apply left-auto right-6 translate-x-0 rounded-2xl px-4 py-3 border-zinc-800/15 bg-white gap-2 justify-start;box-shadow: 0 16px 48px rgba(15, 23, 42, 0.16), 0 -8px 32px rgba(15, 23, 42, 0.01)}
+  .alertModal.alertRight .alertIcon {@apply size-6 mr-0}
+  .alertModal.alertRight .alertText {@apply font-semibold text-zinc-950 px-1}
+  .alertModal.alertRight.success {@apply bg-white border-zinc-800/15}
+  .alertModal.alertRight.success .alertIcon{background:url('/assets/images/icons/success_icon_green.svg') no-repeat center center / 24px 24px}
+  .alertModal.alertRight.success .alertText {@apply text-zinc-950}
+  .modalLayout {@apply fixed top-0 left-0 z-[99] w-full h-full hidden;}
+  .modalLayout.active {@apply block}
+  .modalInner {@apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[calc(100%-32px)] z-10 max-h-[90vh] bg-white p-6 rounded-2xl border-1 border-solid border-zinc-800/15 shadow-lg flex flex-col}
+  .modalInner--confirm, .modalInner--icon {@apply min-w-[320px] w-auto}
+  .modalInner--contents {@apply max-w-[480px] p-5}
+  .modalBg {@apply absolute top-0 left-0 w-full h-full bg-black opacity-15 cursor-pointer}
+  .modalContent {@apply overflow-y-auto min-h-0}
+  .modalContent::-webkit-scrollbar {@apply w-1 bg-transparent}
+  .modalContent::-webkit-scrollbar-thumb {@apply bg-zinc-300 rounded-md cursor-pointer}
+  .modalContent--confirm, .modalContent--icon {@apply flex flex-col gap-2}
+  .modalContent--icon {@apply gap-4 pt-2}
+  .modalContent--contents p {@apply text-sm/5 text-zinc-600 font-normal}
+  .modalTitle {@apply text-base/6 text-zinc-950 font-bold}
+  .modalMessage {@apply text-base/6 text-zinc-600 font-medium whitespace-nowrap}
+  .modalMessage--multiline {@apply whitespace-normal font-normal text-zinc-700}
+  .modalHighlight {@apply font-semibold text-primary-600}
+  .modalMessageNote {@apply mt-0 block text-md/6 font-normal text-zinc-500}
+  .modalInner--skipArea {@apply w-[400px] max-w-[calc(100%-32px)]}
+  .modalInner--skipDraw {@apply w-[420px] max-w-[calc(100%-32px)] rounded-3xl}
+  .modalInner--skipDraw .modalTitle {@apply text-xl/7 font-bold text-zinc-950}
+  .skipDrawContent {@apply flex flex-col w-full mt-4}
+  .skipDrawLead {@apply text-base/6 font-normal text-zinc-950}
+  .skipDrawLeadStrong {@apply font-medium !px-0}
+  .skipDrawPreview {@apply mt-6 w-full h-[240px] rounded-3xl overflow-hidden bg-zinc-100}
+  .skipDrawPreview img {@apply w-full h-full object-cover}
+  .skipDrawFootNote {@apply pt-6 text-center text-base/6 font-normal text-zinc-700}
+  .skipDrawFootNote .modalMessageNote {@apply mt-0}
+  .modalInner--skipDraw .modalFooter--fill button {@apply h-12 rounded-lg text-base/6}
+  .skipDrawLaterBtn {@apply font-medium}
+  .skipDrawNowBtn {@apply font-semibold}
+  #mapRegisterSkipAreaModal, #mapAreaDeleteModal {@apply z-[101]}
+  .modalSubTitle {@apply text-sm/5 text-zinc-500 font-normal pb-4}
+  .modalContText {@apply mb-4 p-2 bg-zinc-800/6 rounded-[2px] text-sm/5 font-medium text-zinc-950}
+  .modalTextGroup {@apply flex flex-col gap-2 w-full}
+  .modalIcon {@apply size-12 rounded-full flex items-center justify-center shrink-0}
+  .modalIconImg {@apply size-6}
+  .modalIcon--success {@apply bg-green-100}
+  .modalIcon--error {@apply bg-red-100}
+  .modalIcon--warning {@apply bg-amber-100}
+  .modalIcon--info {@apply bg-blue-100}
+  .modalIcon--loading {@apply bg-zinc-100}
+  .modalIconSpinner {@apply size-6 rounded-full border-2 border-solid border-zinc-300 border-t-primary-600 animate-spin}
+  .modalClose {@apply absolute top-5 right-5 size-7 cursor-pointer flex justify-center items-center}
+  .modalFooter {@apply flex items-center gap-2 pt-5 shrink-0}
+  .modalFooter--end {@apply justify-end}
+  .modalFooter--fill {@apply justify-between}
+  .modalFooter--fill button {@apply w-full h-9 text-md/6 font-medium}
+  body.modalOpen {@apply overflow-hidden}
+
+  /* Dialog/Contents Modal — 건물 정보 수정 폼 */
+  .modalInner--form {@apply max-w-[420px] p-6}
+  .modalInner--form .modalTitle {@apply text-xl/7 font-bold text-zinc-950 pr-10 shrink-0}
+  .modalInner--form .modalClose {@apply top-6 right-6 size-8}
+  .modalInner--form .modalFooter {@apply shrink-0}
+  .modalInner--form .modalFooter--fill button {@apply h-12 rounded-lg text-base/6}
+  .modalInner--downloadAdd {@apply max-w-[400px] w-[400px] p-6}
+  .modalInner--downloadAdd .modalTitle {@apply text-xl/7 font-bold text-zinc-950 pr-10 shrink-0}
+  .modalInner--downloadAdd .modalClose {@apply top-6 right-6 size-8}
+  .modalInner--downloadAdd .modalFooter {@apply shrink-0 pt-5}
+  .adminForm {@apply flex flex-col gap-8 w-full flex-1}
+  .adminFormField {@apply w-full}
+  .adminFormField .inputLabel {@apply mb-2 text-zinc-800 text-sm/5}
+  .adminForm .inputCustom {@apply h-10 text-md/6 rounded-md}
+  .adminForm .searchIcon {@apply size-5 left-2}
+  .adminForm .searchInput .inputCustom {@apply pl-9 bg-zinc-800/8 border-zinc-800/10 shadow-none}
+  .adminFormSelect {@apply appearance-none bg-[url('/assets/images/icons/down_arrow_gray.svg')] bg-no-repeat bg-[center_right_12px] bg-[length:20px_20px] pr-10 font-medium text-zinc-950}
+  .adminFormSelect:has(option[value=""]:checked) {@apply text-zinc-400}
+  .adminFormSelect option {@apply text-zinc-950}
+  .adminFormSelect option:disabled {@apply text-zinc-400}
+  .inputSuffixWrap {@apply relative w-full}
+  .inputSuffixWrap .inputCustom {@apply pr-12 text-right placeholder:text-left}
+  .inputSuffix {@apply absolute right-3 top-1/2 -translate-y-1/2 text-sm/5 font-medium text-zinc-500 pointer-events-none}
+  .textareaCustom {@apply w-full min-h-[176px] rounded-md border-solid border-1 text-zinc-950 text-md/6 font-normal border-zinc-800/15 p-3 shadow-2xs resize-none}
+  .textareaCustom:focus {@apply !border-primary-500 !outline-none}
+  .textareaCustom:hover {@apply border-primary-500/30 outline-none}
+  .segmentGroup {@apply relative flex h-10 w-full items-center rounded-lg border border-solid border-zinc-800/15 bg-white}
+  .segmentThumb {@apply absolute top-0 left-0 z-0 h-full rounded-lg bg-primary-50 border border-solid border-primary-500/70 shadow-xs pointer-events-none}
+  .segmentGroup.is-ready .segmentThumb {transition: left 0.32s cubic-bezier(0.34, 1.32, 0.64, 1), width 0.32s cubic-bezier(0.34, 1.32, 0.64, 1)}
+  .segmentItem {@apply relative z-[1] flex flex-1 h-10 items-center justify-center rounded-lg text-base/6 font-medium text-zinc-700 cursor-pointer; transition: color 0.2s ease}
+  .segmentItem + .segmentItem:before {@apply content-[''] absolute left-0 top-1/2 -translate-y-1/2 w-px h-4 bg-zinc-800/15}
+  .segmentItem:has(input:checked) {@apply text-primary-600 font-medium}
+  .segmentItem:has(input:checked):before,
+  .segmentItem:has(input:checked) + .segmentItem:before {@apply hidden}
+  .mapRegisterSearch input{@apply !bg-white}
+  .mapRegisterSearch .c-searchbox{@apply !static}
+
+  .downloadFilterTable .c-searchbox {@apply w-[360px]}
+  .downloadFilterTable input.inputCustom {@apply bg-[#F2F2F3] rounded-md border-[#F2F2F3] h-10}
+  .downloadFilterSearch {@apply flex justify-start items-center gap-4 mb-4}
+  .searchResetBtn {@apply flex justify-start items-center text-sm/5 font-medium text-zinc-500 cursor-pointer}
+
+  .loading {@apply fixed top-0 left-0 w-full h-full size-full z-[999]}
+  .loadingBox {@apply absolute left-1/2 top-0 -translate-x-1/2 w-full h-full rounded-lg bg-zinc-950/30 z-1}
+  .loading_center {@apply absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-center items-center gap-2}
+  .loadingBox span {@apply inline-block size-2-5 rounded-full bg-zinc-500 animate-[loadingV2Loading_1s_linear_infinite]}
+
+}
+
+/* 배지 */
+@layer utilities {
+  .badge {@apply rounded-xs px-1 py-0-5 text-sm/5 font-semibold inline-flex justify-center items-center}
+  .badge.dark {@apply bg-zinc-800/90 text-white}
+  .badge.gray {@apply bg-zinc-800/10 text-zinc-600}
+  .badge.rose {@apply bg-rose-500/10 text-rose-500}
+  .badge.pink {@apply bg-pink-500/10 text-pink-600}
+  .badge.fuchsia {@apply bg-fuchsia-500/10 text-fuchsia-600}
+  .badge.purple {@apply bg-purple-500/10 text-purple-600}
+  .badge.violet {@apply bg-violet-500/10 text-violet-600}/*여기까지함*/
+  .badge.indigo {@apply bg-indigo-500/10 text-indigo-600}
+  .badge.blue {@apply bg-blue-500/10 text-blue-600}
+  .badge.cyan {@apply bg-cyan-500/10 text-cyan-600}
+  .badge.teal {@apply bg-teal-500/10 text-teal-600}
+  .badge.green {@apply bg-green-500/10 text-green-600}
+  .badge.lime {@apply bg-lime-500/10 text-lime-600}
+  .badge.yellow {@apply bg-yellow-500/10 text-yellow-600}
+  .badge.amber {@apply bg-amber-500/10 text-amber-600}
+  .badge.orange {@apply bg-orange-500/10 text-orange-600}
+  .badge.red {@apply bg-red-500/10 text-red-600}
 }
