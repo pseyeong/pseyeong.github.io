@@ -1,31 +1,105 @@
 package com.pseyeong.hankki.recipe;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-/**
- * 레시피 조회.
- * TODO(3단계): 예시 데이터를 DB 조회로 바꾼다. 컨트롤러·템플릿은 그대로 둔다.
- */
+import com.pseyeong.hankki.recipe.RecipeRepository.IngredientRow;
+
 @Service
 public class RecipeService {
 
-	private static final List<RecipeSummary> SAMPLE_POPULAR = List.of(
-			new RecipeSummary(1, "대파 계란볶음밥", 2150, 15, "배고픈감자4821", null),
-			new RecipeSummary(2, "참치 김치찌개", 2900, 20, "졸린두부0192", null),
-			new RecipeSummary(3, "전자레인지 계란찜", 900, 5, "배고픈감자4821", null),
-			new RecipeSummary(4, "두부 간장조림", 1800, 15, "졸린두부0192", null));
+	private static final ZoneId SEOUL = ZoneId.of("Asia/Seoul");
 
-	private static final List<RecipeSummary> SAMPLE_LATEST = List.of(
-			new RecipeSummary(5, "양파 듬뿍 제육볶음", 3400, 20, "졸린두부0192", null),
-			new RecipeSummary(6, "에어프라이어 통감자", 1200, 25, "배고픈감자4821", null));
+	private final RecipeRepository repository;
 
-	public List<RecipeSummary> findPopular(int limit) {
-		return SAMPLE_POPULAR.stream().limit(limit).toList();
+	public RecipeService(RecipeRepository repository) {
+		this.repository = repository;
 	}
 
+	public List<RecipeSummary> search(RecipeFilter filter) {
+		return repository.search(filter, null);
+	}
+
+	/** 홈 "지금 인기 있는 레시피" (저장 많은 순) */
+	public List<RecipeSummary> findPopular(int limit) {
+		return repository.search(RecipeFilter.none(RecipeSort.POPULAR), limit);
+	}
+
+	/** 홈 "방금 올라온 레시피" */
 	public List<RecipeSummary> findLatest(int limit) {
-		return SAMPLE_LATEST.stream().limit(limit).toList();
+		return repository.search(RecipeFilter.none(RecipeSort.LATEST), limit);
+	}
+
+	/** 공개 레시피 상세. 없거나 숨김이면 빈 값 */
+	public Optional<RecipeDetail> findDetail(long id) {
+		return repository.findPublicById(id).map(recipe -> {
+			List<IngredientRow> rows = repository.findIngredients(id);
+
+			List<RecipeDetail.Line> ingredients = new ArrayList<>();
+			List<RecipeDetail.Line> customIngredients = new ArrayList<>();
+			List<String> seasonings = new ArrayList<>();
+			BigDecimal shopping = BigDecimal.ZERO;
+			LocalDate priceDate = null;
+
+			for (IngredientRow row : rows) {
+				if (row.name() == null) {
+					customIngredients.add(new RecipeDetail.Line(
+							row.customName(), row.displayAmount() == null ? "" : row.displayAmount(), null));
+					continue;
+				}
+				if (row.priceUpdatedAt() != null) {
+					LocalDate date = row.priceUpdatedAt().atZoneSameInstant(SEOUL).toLocalDate();
+					if (priceDate == null || date.isAfter(priceDate)) {
+						priceDate = date;
+					}
+				}
+				if (row.basic()) {
+					seasonings.add(row.name());
+					continue;
+				}
+				Integer cost = null;
+				if (row.quantity() != null) {
+					cost = row.quantity().multiply(row.unitPrice()).setScale(0, RoundingMode.HALF_UP).intValue();
+					shopping = shopping.add(shoppingCost(row));
+				}
+				ingredients.add(new RecipeDetail.Line(
+						row.name(), amountLabel(row.displayAmount(), row.quantity(), row.unit()), cost));
+			}
+
+			return new RecipeDetail(
+					recipe.id(), recipe.title(), recipe.description(), recipe.coverImage(),
+					recipe.servings(), recipe.cookMinutes(), recipe.tool(),
+					recipe.pricePerServing(), recipe.partialPrice(), recipe.authorNickname(),
+					priceDate,
+					shopping.setScale(0, RoundingMode.HALF_UP).intValue(),
+					ingredients, customIngredients, seasonings,
+					repository.findSteps(id));
+		});
+	}
+
+	/** 장볼 때 비용: 한 포장 단위로 올림해서 산다. 포장 크기가 없으면 사용량만큼만 산다. */
+	private static BigDecimal shoppingCost(IngredientRow row) {
+		BigDecimal pack = row.packSize() != null && row.packSize().signum() > 0 ? row.packSize() : row.quantity();
+		BigDecimal packs = row.quantity().divide(pack, 0, RoundingMode.CEILING);
+		return packs.multiply(pack).multiply(row.unitPrice());
+	}
+
+	/** "1/3대 (20g)", "2개", "1공기". 개 단위는 표시용 분량만 보여준다. */
+	static String amountLabel(String display, BigDecimal quantity, String unit) {
+		String exact = quantity == null ? null : quantity.stripTrailingZeros().toPlainString() + unit;
+		if (display == null || display.isBlank()) {
+			return exact == null ? "" : exact;
+		}
+		if (exact == null || "개".equals(unit)) {
+			return display;
+		}
+		return display + " (" + exact + ")";
 	}
 }

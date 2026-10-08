@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<!--/* 레시피 상세: docs/design/mobile/D4Detail.dc.html (대체 버튼·시트는 4단계, 저장 동작은 5단계) */-->
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{layout/base :: layout(~{::title}, ~{::main}, ~{::meta})}">
+<head>
+	<title th:text="${recipe.title} + ' - 1인분 약 ' + ${#numbers.formatInteger(recipe.pricePerServing, 1, 'COMMA')} + '원 | 자취한끼'">레시피 - 자취한끼</title>
+	<meta name="description" th:content="${recipe.metaDescription()}" content="">
+</head>
+<body>
+<main class="flex flex-1 flex-col">
+
+	<!-- 대표 사진 + 뒤로가기·공유 -->
+	<div class="relative flex h-[300px] flex-none flex-col justify-between bg-photo p-3">
+		<img th:if="${recipe.coverImage}" th:src="${recipe.coverImage}" th:alt="${recipe.title}"
+			class="absolute inset-0 h-full w-full object-cover">
+		<span th:unless="${recipe.coverImage}"
+			class="absolute inset-x-0 top-1/2 -translate-y-1/2 text-center text-caption text-ink-sub">대표 사진</span>
+		<div class="relative flex justify-between">
+			<a th:href="@{/recipes}" aria-label="뒤로" class="btn-icon bg-surface"
+				onclick="if (history.length > 1) { history.back(); return false; }">
+				<svg th:replace="~{fragments/ui :: icon('M15 5l-7 7 7 7', 22, 2)}"></svg>
+			</a>
+			<button type="button" aria-label="공유" class="btn-icon bg-surface">
+				<svg th:replace="~{fragments/ui :: icon('M12 3v12M8 7l4-4 4 4M5 13v7h14v-7', 20, 2)}"></svg>
+			</button>
+		</div>
+	</div>
+
+	<div class="flex flex-1 flex-col gap-stack">
+
+		<!-- 제목, 1인분 단가, 장보기 비용 -->
+		<section class="section relative -mt-5 gap-4 rounded-t-banner pt-6">
+			<div class="flex flex-col gap-2">
+				<h1 class="m-0 text-display font-medium">
+					<th:block th:each="part, st : ${recipe.titleParts()}">
+						<br th:unless="${st.first}"><th:block th:text="${part}">제목</th:block>
+					</th:block>
+				</h1>
+				<div class="text-sub text-ink-sub" th:text="${recipe.metaLine()}">작성자 · 15분 · 1인분 · 프라이팬</div>
+			</div>
+
+			<div class="flex flex-col gap-3 rounded-card bg-primary-soft p-[18px]">
+				<div class="flex items-center justify-between">
+					<span class="badge py-0.5">1인분</span>
+					<span class="text-display font-medium leading-[1.1] text-accent-strong">약 <th:block
+							th:text="${#numbers.formatInteger(recipe.pricePerServing, 1, 'COMMA')}">2,150</th:block><span
+							class="text-title">원</span></span>
+				</div>
+				<div class="flex justify-between border-t border-ink/10 pt-3 text-sub">
+					<span>처음 장볼 때 (남는 재료 포함)</span>
+					<span class="font-medium"
+						th:text="|약 ${#numbers.formatInteger(recipe.shoppingCost, 1, 'COMMA')}원|">약 9,800원</span>
+				</div>
+				<div class="text-caption leading-normal text-ink-sub" th:text="${recipe.priceNote()}">추정치예요</div>
+			</div>
+		</section>
+
+		<!-- 재료 -->
+		<section class="section">
+			<h2 class="section-title mb-1">재료</h2>
+
+			<div th:each="i : ${recipe.ingredients}" class="flex min-h-[60px] items-center gap-2 border-b border-line-soft">
+				<div class="flex flex-1 flex-col gap-0.5">
+					<span th:text="${i.name}">재료</span>
+					<span class="text-caption text-ink-sub" th:text="${i.amount}">1공기</span>
+				</div>
+				<span class="min-w-[60px] text-right font-medium"
+					th:text="${i.cost != null} ? |${#numbers.formatInteger(i.cost, 1, 'COMMA')}원| : ''">600원</span>
+			</div>
+
+			<div th:each="c : ${recipe.customIngredients}" class="flex min-h-[60px] items-center gap-2">
+				<div class="flex flex-1 flex-col gap-0.5">
+					<span th:text="${c.name}">기타 재료</span>
+					<span class="text-caption text-ink-sub"
+						th:text="${#strings.isEmpty(c.amount)} ? '기타 재료' : |${c.amount} · 기타 재료|">약간 · 기타 재료</span>
+				</div>
+				<span class="text-caption text-ink-sub">단가 제외</span>
+			</div>
+
+			<div th:unless="${#lists.isEmpty(recipe.seasonings)}"
+				class="mt-2 flex justify-between gap-3 rounded-field bg-page px-3.5 py-3 text-sub">
+				<span class="font-medium">기본 양념</span>
+				<span class="text-ink-sub" th:text="${#strings.listJoin(recipe.seasonings, ', ')}">식용유, 소금</span>
+			</div>
+		</section>
+
+		<!-- 조리 순서 -->
+		<section class="section flex-1 gap-5">
+			<h2 class="section-title">조리 순서</h2>
+			<div th:each="s : ${recipe.steps}" class="flex gap-3">
+				<span class="flex h-7 w-7 flex-none items-center justify-center rounded-full bg-primary text-sub font-medium text-on-primary"
+					th:text="${s.no}">1</span>
+				<div class="flex flex-1 flex-col gap-2.5">
+					<div class="text-body leading-[1.6]" th:text="${s.content}">조리 설명</div>
+					<th:block th:if="${s.image}">
+						<div th:replace="~{fragments/ui :: photo(${s.image}, |${s.no}단계 사진|, 'h-[150px] rounded-card')}"></div>
+					</th:block>
+				</div>
+			</div>
+		</section>
+	</div>
+
+	<!-- 하단 고정: 공유, 저장 (저장 동작은 5단계) -->
+	<div class="bottom-action flex gap-2.5">
+		<button type="button" aria-label="공유"
+			class="flex h-12 w-12 flex-none items-center justify-center rounded-btn border border-line bg-surface">
+			<svg th:replace="~{fragments/ui :: icon('M12 3v12M8 7l4-4 4 4M5 13v7h14v-7', 20, 2)}"></svg>
+		</button>
+		<button type="button" class="btn-primary flex-1 gap-2">
+			<svg th:replace="~{fragments/ui :: icon('M6 3h12v18l-6-4-6 4z', 18, 2)}"></svg>
+			레시피 저장
+		</button>
+	</div>
+
+</main>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<!--/* 레시피 목록: docs/design/mobile/D3Recipes.dc.html */-->
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{layout/base :: layout(~{::title}, ~{::main}, ~{::meta})}">
+<head>
+	<title>전체 레시피 - 자취한끼</title>
+	<meta name="description" content="가격·조리시간·조리도구로 골라 보는 1인분 자취 레시피. 1인분에 얼마 드는지 한눈에 확인하세요.">
+</head>
+<body>
+<main class="app-main">
+
+	<!-- 필터 칩 (선택 상태는 주소에 담긴다) -->
+	<section class="section-bleed gap-4">
+		<h1 class="section-title">전체 레시피</h1>
+		<div th:each="group : ${groups}" class="flex items-center gap-3">
+			<span class="w-[60px] flex-none text-caption text-ink-sub" th:text="${group.label}">가격</span>
+			<div class="h-scroll gap-2">
+				<th:block th:each="chip : ${group.chips}">
+					<a th:replace="~{fragments/ui :: chip(${chip.label}, ${chip.href}, ${chip.active})}">칩</a>
+				</th:block>
+			</div>
+		</div>
+	</section>
+
+	<!-- 결과 -->
+	<section class="section flex-1 gap-4">
+		<div class="section-header">
+			<h2 class="section-title" th:text="|레시피 ${#lists.size(recipes)}개|">레시피 0개</h2>
+			<select aria-label="정렬" class="rounded-chip border-0 bg-page px-2 py-1 text-caption leading-6"
+				onchange="location.href = this.value">
+				<option th:each="o : ${sortOptions}" th:value="@{${o.href}}" th:text="${o.label}"
+					th:selected="${o.selected}">가격 낮은순</option>
+			</select>
+		</div>
+
+		<p th:if="${#lists.isEmpty(recipes)}" class="m-0 py-10 text-center text-sub text-ink-sub">
+			조건에 맞는 레시피가 아직 없어요.<br>필터를 줄여 보세요.
+		</p>
+
+		<div th:unless="${#lists.isEmpty(recipes)}" class="grid grid-cols-2 gap-x-3 gap-y-5">
+			<th:block th:each="r : ${recipes}">
+				<a th:replace="~{fragments/ui :: recipeCard(${r}, '', 'h-[150px]')}"></a>
+			</th:block>
+		</div>
+	</section>
+
+</main>
+</body>
+</html>

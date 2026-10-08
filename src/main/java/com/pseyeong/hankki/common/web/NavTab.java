@@ -38,7 +38,8 @@ public enum NavTab {
 			return false;
 		}
 		if (this == HOME) {
-			return path.equals("/");
+			// 레시피 목록(/recipes)도 홈 탭으로 본다 (디자인 D3)
+			return path.equals("/") || path.equals("/recipes");
 		}
 		return path.equals(href) || path.startsWith(href + "/");
 	}

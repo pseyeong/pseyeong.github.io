@@ -19,16 +19,6 @@ public class PageController {
 		return placeholder(model, "재료 검색", 4);
 	}
 
-	@GetMapping("/recipes")
-	public String recipes(Model model) {
-		return placeholder(model, "전체 레시피", 3);
-	}
-
-	@GetMapping("/recipes/{id:\\d+}")
-	public String recipeDetail(@PathVariable long id, Model model) {
-		return placeholder(model, "레시피 상세", 3);
-	}
-
 	@GetMapping("/recipes/new")
 	public String recipeNew(Model model) {
 		return placeholder(model, "레시피 작성", 6);
