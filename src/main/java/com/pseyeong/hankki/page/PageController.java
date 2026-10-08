@@ -14,11 +14,6 @@ public class PageController {
 
 	private static final String VIEW = "pages/placeholder";
 
-	@GetMapping("/search")
-	public String search(Model model) {
-		return placeholder(model, "재료 검색", 4);
-	}
-
 	@GetMapping("/recipes/new")
 	public String recipeNew(Model model) {
 		return placeholder(model, "레시피 작성", 6);
@@ -27,16 +22,6 @@ public class PageController {
 	@GetMapping("/recipes/{id:\\d+}/edit")
 	public String recipeEdit(@PathVariable long id, Model model) {
 		return placeholder(model, "레시피 수정", 6);
-	}
-
-	@GetMapping("/ingredients/{name}")
-	public String ingredient(@PathVariable String name, Model model) {
-		return placeholder(model, name + " 레시피", 4);
-	}
-
-	@GetMapping("/budget/{range}")
-	public String budget(@PathVariable String range, Model model) {
-		return placeholder(model, "가격대별 레시피", 4);
 	}
 
 	@GetMapping("/my")

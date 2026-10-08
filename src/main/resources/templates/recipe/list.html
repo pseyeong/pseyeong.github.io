@@ -3,15 +3,15 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
 	th:replace="~{layout/base :: layout(~{::title}, ~{::main}, ~{::meta})}">
 <head>
-	<title>전체 레시피 - 자취한끼</title>
-	<meta name="description" content="가격·조리시간·조리도구로 골라 보는 1인분 자취 레시피. 1인분에 얼마 드는지 한눈에 확인하세요.">
+	<title th:text="${pageTitle}">전체 레시피 - 자취한끼</title>
+	<meta name="description" th:content="${description}" content="">
 </head>
 <body>
 <main class="app-main">
 
-	<!-- 필터 칩 (선택 상태는 주소에 담긴다) -->
-	<section class="section-bleed gap-4">
-		<h1 class="section-title">전체 레시피</h1>
+	<!-- 필터 칩 (선택 상태는 주소에 담긴다). 재료별·가격대별 모음에는 groups 가 없다 -->
+	<section class="section-bleed gap-4" th:if="${groups != null}">
+		<h1 class="section-title" th:text="${heading}">전체 레시피</h1>
 		<div th:each="group : ${groups}" class="flex items-center gap-3">
 			<span class="w-[60px] flex-none text-caption text-ink-sub" th:text="${group.label}">가격</span>
 			<div class="h-scroll gap-2">
@@ -24,6 +24,7 @@
 
 	<!-- 결과 -->
 	<section class="section flex-1 gap-4">
+		<h1 class="section-title" th:if="${groups == null}" th:text="${heading}">제목</h1>
 		<div class="section-header">
 			<h2 class="section-title" th:text="|레시피 ${#lists.size(recipes)}개|">레시피 0개</h2>
 			<select aria-label="정렬" class="rounded-chip border-0 bg-page px-2 py-1 text-caption leading-6"

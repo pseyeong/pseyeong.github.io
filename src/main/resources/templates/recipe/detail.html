@@ -64,6 +64,10 @@
 					<span th:text="${i.name}">재료</span>
 					<span class="text-caption text-ink-sub" th:text="${i.amount}">1공기</span>
 				</div>
+				<button th:if="${i.hasSubstitutes()}" type="button" th:attr="data-sheet-open=|sub-${i.ingredientId}|"
+					class="inline-flex flex-none items-center gap-1 rounded-chip bg-primary-soft px-3 py-1 text-caption font-medium leading-6 text-primary-ink">
+					<svg th:replace="~{fragments/ui :: icon('M4 8h14l-3-3M20 16H6l3 3', 14, 2.2)}"></svg>대체
+				</button>
 				<span class="min-w-[60px] text-right font-medium"
 					th:text="${i.cost != null} ? |${#numbers.formatInteger(i.cost, 1, 'COMMA')}원| : ''">600원</span>
 			</div>
@@ -112,6 +116,49 @@
 		</button>
 	</div>
 
+	<!-- 대체 재료 시트 (docs/design/mobile/D5Substitute.dc.html). 차액은 이 레시피의 사용량 기준 -->
+	<div th:each="i : ${recipe.ingredients}" th:if="${i.hasSubstitutes()}"
+		th:id="|sub-${i.ingredientId}|" class="sheet" hidden role="dialog" aria-modal="true"
+		th:attr="aria-labelledby=|sub-title-${i.ingredientId}|">
+		<div class="sheet-panel">
+			<div class="mx-auto h-1 w-10 rounded-sm bg-line"></div>
+			<div class="flex items-center justify-between">
+				<div class="flex flex-col gap-1">
+					<h2 th:id="|sub-title-${i.ingredientId}|" class="section-title"
+						th:text="|${i.name} 대신 쓸 수 있어요|">대파 대신 쓸 수 있어요</h2>
+					<span class="text-caption text-ink-sub" th:text="${i.sheetSubtitle()}">이 레시피 기준 대파</span>
+				</div>
+				<button type="button" aria-label="닫기" data-sheet-close class="btn-icon -mr-2.5">
+					<svg th:replace="~{fragments/ui :: icon('M6 6l12 12M18 6L6 18', 22, 2)}"></svg>
+				</button>
+			</div>
+
+			<div class="flex flex-col gap-2.5">
+				<div th:each="s : ${i.substitutes}" class="flex flex-col gap-2 rounded-card bg-page p-4">
+					<div class="flex items-center justify-between">
+						<div class="flex items-center gap-2">
+							<span class="text-body font-medium" th:text="${s.name}">쪽파</span>
+							<span class="badge bg-transparent py-0.5" th:classappend="${s.tagClass()}" th:text="${s.tag}">없을 때</span>
+						</div>
+						<span class="text-body font-medium text-accent" th:text="${s.deltaLabel()}">+80원</span>
+					</div>
+					<div class="text-sub" th:text="${s.ratioLabel}">대파 1 : 쪽파 1 → 40g</div>
+					<div class="text-caption leading-normal text-ink-sub" th:if="${s.note}" th:text="${s.note}">설명</div>
+				</div>
+			</div>
+
+			<div class="flex flex-col gap-2">
+				<div class="flex flex-wrap items-center gap-1.5 text-caption text-ink-sub">태그
+					<span class="badge border border-line bg-surface py-0.5 text-ink">없을 때</span>
+					<span class="badge py-0.5">더 싸게</span>
+					<span class="badge bg-ink py-0.5 text-surface">더 가볍게</span>
+				</div>
+				<div class="text-caption leading-normal text-ink-sub">금액은 원래 재료와의 차액이에요. 레시피 단가는 원래 재료 기준으로 표시돼요.</div>
+			</div>
+		</div>
+	</div>
+
+	<script th:src="@{/js/sheet.js}" defer></script>
 </main>
 </body>
 </html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<!--/* 재료로 찾기: docs/design/mobile/D2Search.dc.html */-->
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{layout/base :: layout(~{::title}, ~{::main}, ~{::meta})}">
+<head>
+	<title>재료로 찾기 - 자취한끼</title>
+	<meta name="robots" content="noindex">
+</head>
+<body>
+<main class="app-main">
+
+	<!-- 재료 입력 + 선택한 재료 칩 -->
+	<section class="section gap-3.5 pb-5 pt-2">
+		<div class="flex items-center gap-1">
+			<a th:href="@{/}" aria-label="뒤로" class="btn-icon -ml-3">
+				<svg th:replace="~{fragments/ui :: icon('M15 5l-7 7 7 7', 24, 2)}"></svg>
+			</a>
+			<h1 class="section-title">재료로 찾기</h1>
+		</div>
+
+		<!-- 자바스크립트 없이도 동작: 입력하고 Enter 를 치면 /search?add=... 가 선택 목록에 더해 돌려보낸다 -->
+		<form th:action="@{/search}" method="get" class="relative" data-ingredient-form>
+			<input type="hidden" name="q" th:value="${q}">
+			<label class="search-bar">
+				<span class="flex text-ink"><svg th:replace="~{fragments/ui :: icon('M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM21 21l-4.3-4.3', 20, 2.2)}"></svg></span>
+				<input type="text" name="add" aria-label="재료 추가" placeholder="재료 추가 (목록에서 선택)"
+					autocomplete="off" autocapitalize="off" maxlength="20" data-ingredient-input
+					class="h-touch min-w-0 flex-1 border-0 bg-transparent text-sub text-ink outline-none placeholder:text-ink-sub">
+			</label>
+			<ul class="suggest-list" role="listbox" aria-label="재료 후보" data-suggest-list hidden></ul>
+		</form>
+
+		<div th:if="${hasSelection}" class="flex flex-wrap gap-2">
+			<a th:each="c : ${chips}" th:href="@{${c.removeHref}}" th:aria-label="|${c.name} 빼기|"
+				class="chip chip-active gap-1.5">
+				<span th:text="${c.name}">계란</span>
+				<svg th:replace="~{fragments/ui :: icon('M6 6l12 12M18 6L6 18', 12, 3)}"></svg>
+			</a>
+		</div>
+
+		<div class="text-caption leading-normal text-ink-sub">소금, 간장, 식용유 같은 기본 양념은 있다고 보고 찾아요.</div>
+	</section>
+
+	<!-- 재료를 고르기 전 -->
+	<section th:unless="${hasSelection}" class="section flex-1 items-center justify-center gap-2 py-16 text-center">
+		<p class="m-0 text-body font-medium">냉장고 속 재료를 추가해 보세요</p>
+		<p class="m-0 text-caption leading-normal text-ink-sub">가진 재료와 많이 겹치는 레시피부터 보여드려요.<br>달걀, 계란처럼 어느 쪽으로 입력해도 찾을 수 있어요.</p>
+	</section>
+
+	<th:block th:if="${hasSelection}">
+
+		<!-- 재료 일치순 결과 -->
+		<section class="section pb-2" th:with="matches=${result.matches}">
+			<div class="section-header pb-1">
+				<h2 class="section-title" th:text="|레시피 ${#lists.size(matches)}개|">레시피 0개</h2>
+				<span class="btn-sm">재료 일치순</span>
+			</div>
+
+			<p th:if="${#lists.isEmpty(matches)}" class="m-0 py-8 text-center text-sub text-ink-sub">
+				일치하는 레시피가 아직 없어요.<br>재료를 더 추가해 보세요.
+			</p>
+
+			<a th:each="m : ${matches}" th:href="@{/recipes/{id}(id=${m.recipe.id})}" class="list-row py-3.5">
+				<div class="flex min-w-0 flex-1 flex-col gap-1.5">
+					<span class="badge self-start py-0.5"
+						th:classappend="${!m.complete()} ? 'bg-page text-ink'" th:text="${m.badge()}">재료 모두 보유</span>
+					<span class="text-body font-medium" th:text="${m.recipe.title}">레시피 제목</span>
+					<span class="text-caption text-ink-sub" th:text="${m.need()}">지금 바로 만들 수 있어요</span>
+					<div th:replace="~{fragments/ui :: price(${m.recipe.pricePerServing}, ${m.recipe.cookTimeLabel()})}"></div>
+				</div>
+				<div th:replace="~{fragments/ui :: photo(${m.recipe.coverImage}, ${m.recipe.title}, 'h-[104px] w-[104px] rounded-card')}"></div>
+			</a>
+		</section>
+
+		<!-- 대체 재료로 가능한 레시피 -->
+		<section class="section flex-1 gap-3" th:unless="${#lists.isEmpty(result.substitutes)}">
+			<h2 class="section-title">대체 재료로 만들 수 있어요</h2>
+			<a th:each="s : ${result.substitutes}" th:href="@{/recipes/{id}(id=${s.recipe.id})}"
+				class="flex items-center gap-3.5 rounded-card bg-primary-soft p-3.5">
+				<div class="flex min-w-0 flex-1 flex-col gap-1.5">
+					<span class="flex items-center gap-1.5 text-caption font-medium text-accent-strong">
+						<svg th:replace="~{fragments/ui :: icon('M4 8h14l-3-3M20 16H6l3 3', 16, 2)}"></svg>
+						<span th:text="${s.hint}">쪽파 대신 대파로 가능</span>
+					</span>
+					<span class="text-body font-medium" th:text="${s.recipe.title}">레시피 제목</span>
+					<div class="text-sub">
+						<span class="font-medium text-accent-strong"
+							th:text="|약 ${#numbers.formatInteger(s.recipe.pricePerServing, 1, 'COMMA')}원|">약 1,300원</span><span
+							class="price-meta" th:text="| · ${s.recipe.cookTimeLabel()}|"> · 10분</span>
+					</div>
+				</div>
+				<div th:replace="~{fragments/ui :: photo(${s.recipe.coverImage}, ${s.recipe.title}, 'h-[88px] w-[88px] rounded-thumb bg-surface')}"></div>
+			</a>
+		</section>
+	</th:block>
+
+	<script th:src="@{/js/ingredient-search.js}" defer></script>
+</main>
+</body>
+</html>

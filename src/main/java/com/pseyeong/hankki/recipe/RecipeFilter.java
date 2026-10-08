@@ -62,6 +62,18 @@ public record RecipeFilter(Integer price, Integer time, String tool, RecipeSort 
 				.toList();
 	}
 
+	/** 가격·시간·도구 필터가 걸린 목록 주소 (홈 바로가기 등). 예: /recipes?price=3000 */
+	public static String link(Integer price, Integer time, String tool) {
+		return href(price, time, tool, RecipeSort.PRICE);
+	}
+
+	/** 목록 말고 다른 목록 페이지(재료별, 가격대별)의 정렬 선택지. basePath 는 인코딩된 경로 */
+	public static List<SortOption> sortOptionsFor(String basePath, RecipeSort current) {
+		return java.util.Arrays.stream(RecipeSort.values())
+				.map(s -> new SortOption(s.label(), s == RecipeSort.PRICE ? basePath : basePath + "?sort=" + s.code(), s == current))
+				.toList();
+	}
+
 	private static String href(Integer price, Integer time, String tool, RecipeSort sort) {
 		UriComponentsBuilder builder = UriComponentsBuilder.fromPath("/recipes");
 		if (price != null) {

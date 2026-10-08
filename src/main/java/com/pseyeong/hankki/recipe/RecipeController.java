@@ -29,6 +29,9 @@ public class RecipeController {
 			Model model) {
 		RecipeFilter filter = RecipeFilter.of(price, time, tool, sort);
 		List<RecipeSummary> recipes = recipeService.search(filter);
+		model.addAttribute("heading", "전체 레시피");
+		model.addAttribute("pageTitle", "전체 레시피 - 자취한끼");
+		model.addAttribute("description", "가격·조리시간·조리도구로 골라 보는 1인분 자취 레시피. 1인분에 얼마 드는지 한눈에 확인하세요.");
 		model.addAttribute("groups", filter.groups());
 		model.addAttribute("sortOptions", filter.sortOptions());
 		model.addAttribute("recipes", recipes);

@@ -43,6 +43,7 @@
     --color-photo: #E7E5E4;
     --color-line: #E7E5E4;
     --color-line-soft: #F5F5F4;
+    --color-scrim: #44403C; /* 시트 뒤 어두운 영역 */
 
     --space-gutter: 20px;
     --space-stack: 8px;
@@ -189,6 +190,35 @@
   /* 목록 한 줄 */
   .list-row {
     @apply flex items-center gap-3.5 border-b border-line-soft py-3;
+  }
+
+  /* --- 아래에서 올라오는 시트 (static/js/sheet.js) --- */
+  .sheet {
+    @apply fixed inset-0 z-50 flex flex-col justify-end bg-scrim/70;
+  }
+  .sheet[hidden] {
+    @apply hidden;
+  }
+  .sheet-panel {
+    @apply mx-auto flex max-h-[90vh] w-full max-w-app flex-col gap-[18px] overflow-y-auto rounded-t-sheet bg-surface px-gutter pb-6 pt-3;
+  }
+
+  /* --- 재료 자동완성 목록 (static/js/ingredient-search.js) --- */
+  .suggest-list {
+    @apply absolute left-0 right-0 top-full z-20 mt-1.5 max-h-[320px] overflow-y-auto rounded-card border border-line bg-surface py-1.5 shadow-lg;
+  }
+  .suggest-list[hidden] {
+    @apply hidden;
+  }
+  .suggest-item {
+    @apply flex min-h-touch cursor-pointer items-center gap-2 px-4 text-sub;
+  }
+  .suggest-item-active,
+  .suggest-item:hover {
+    @apply bg-page;
+  }
+  .suggest-alias {
+    @apply text-caption text-ink-sub;
   }
 
   /* --- 하단 탭 --- */

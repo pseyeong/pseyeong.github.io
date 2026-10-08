@@ -44,6 +44,7 @@ module.exports = {
           sub: withVar('ink-sub'), // 설명글
           mute: withVar('ink-mute'), // 비활성 탭
         },
+        scrim: withVar('scrim'), // 시트 뒤 어두운 영역
         page: withVar('page'), // 화면 바탕, 입력창·칩 바탕
         surface: withVar('surface'), // 구역 바탕
         photo: withVar('photo'), // 사진 자리
@@ -67,6 +68,7 @@ module.exports = {
         btn: '12px', // 화면 맨 아래 주요 버튼
         field: '12px', // 입력창
         pill: '24px', // 검색창
+        sheet: '24px', // 아래에서 올라오는 시트 윗모서리
         badge: '6px',
       },
       maxWidth: {

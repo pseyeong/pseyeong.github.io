@@ -35,8 +35,47 @@ public record RecipeDetail(
 
 	private static final DateTimeFormatter DATE = DateTimeFormatter.ofPattern("yyyy.MM.dd");
 
-	/** @param cost 이 레시피 전체 사용량 기준 금액(원), 계산할 수 없으면 null */
-	public record Line(String name, String amount, Integer cost) {
+	/**
+	 * @param cost 이 레시피 전체 사용량 기준 금액(원), 계산할 수 없으면 null
+	 * @param substitutes 대체 재료 (없으면 빈 목록)
+	 */
+	public record Line(Long ingredientId, String name, String amount, Integer cost, List<Substitute> substitutes) {
+
+		public boolean hasSubstitutes() {
+			return !substitutes.isEmpty();
+		}
+
+		/** 대체 시트 맨 위 설명: "이 레시피 기준 대파 1/2대 (40g) · 300원" */
+		public String sheetSubtitle() {
+			String price = cost == null ? "" : " · " + String.format("%,d", cost) + "원";
+			return "이 레시피 기준 " + name + " " + amount + price;
+		}
+	}
+
+	/**
+	 * 대체 재료 한 건.
+	 *
+	 * @param delta 이 레시피 사용량 기준, 원래 재료와의 차액(원). 계산할 수 없으면 null
+	 * @param ratioLabel "대파 1 : 쪽파 1 → 40g"
+	 */
+	public record Substitute(String name, String tag, Integer delta, String ratioLabel, String note) {
+
+		/** "+80원", "-120원", "0원" */
+		public String deltaLabel() {
+			if (delta == null) {
+				return "";
+			}
+			return (delta > 0 ? "+" : delta < 0 ? "-" : "") + String.format("%,d", Math.abs(delta)) + "원";
+		}
+
+		/** 태그 색: 없을 때(흰색) / 더 싸게(초록) / 더 가볍게(검정) */
+		public String tagClass() {
+			return switch (tag) {
+				case "더 싸게" -> "bg-primary text-on-primary";
+				case "더 가볍게" -> "bg-ink text-surface";
+				default -> "bg-surface text-ink";
+			};
+		}
 	}
 
 	public record Step(int no, String content, String image) {
