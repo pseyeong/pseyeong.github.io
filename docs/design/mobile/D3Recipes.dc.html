@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>레시피 목록 (디자인)</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@500;700&display=swap" rel="stylesheet">
+<style>
+@font-face{font-family:'GMarketSans';font-weight:300;font-display:swap;src:url('/_blob/98f92f89064b07f1f2e8b811c67330cc') format('woff')}
+@font-face{font-family:'GMarketSans';font-weight:500;font-display:swap;src:url('/_blob/666de4c9d161cad06f93b05690400823') format('woff')}
+@font-face{font-family:'GMarketSans';font-weight:700;font-display:swap;src:url('/_blob/2fbc9019a45b936cb878f55921ee339d') format('woff')}
+body{margin:0}
+b{font-weight:500}
+a{color:#1C1917;text-decoration:none}a:hover{color:#DC2626}
+button,select{font-family:inherit;color:inherit;font-weight:inherit}
+</style>
+</helmet>
+<div style="width: 390px; height: 1200px; box-sizing: border-box; display: flex; flex-direction: column; background: #F5F5F4; color: #1C1917; font-family: 'GMarketSans', 'Gmarket Sans', 'IBM Plex Sans KR', sans-serif; font-size: 16px; font-weight: 300">
+<div style="flex: 1; display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; flex-direction: column; gap: 16px; padding: 20px 0 20px 20px; background: #FFFFFF">
+<h1 style="margin: 0; font-size: 18px; font-weight: 500">전체 레시피</h1>
+<sc-for list="{{groups}}" as="g" hint-placeholder-count="3">
+<div style="display: flex; align-items: center; gap: 12px">
+<span style="width: 60px; flex: none; font-size: 14px; color: #57534E">{{g.label}}</span>
+<div style="display: flex; gap: 8px; overflow-x: auto; padding-right: 20px">
+<sc-for list="{{g.chips}}" as="f" hint-placeholder-count="3">
+<button type="button" onClick="{{f.pick}}" style="flex: none; padding: 4px 12px; border-radius: 16px; border: 1px solid {{f.border}}; background: {{f.bg}}; font-size: 15px; font-weight: {{f.weight}}; line-height: 24px; white-space: nowrap">{{f.label}}</button>
+</sc-for>
+</div>
+</div>
+</sc-for>
+</div>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 16px; padding: 20px; background: #FFFFFF">
+<div style="display: flex; justify-content: space-between; align-items: center">
+<h2 style="margin: 0; font-size: 18px; font-weight: 500">레시피 38개</h2>
+<select aria-label="정렬" style="padding: 4px 8px; border-radius: 16px; border: 0; background: #F5F5F4; font-size: 14px; line-height: 24px"><option>가격 낮은순</option><option>최신순</option><option>인기순</option><option>조리시간 짧은순</option></select>
+</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 12px">
+<sc-for list="{{recipes}}" as="r" hint-placeholder-count="6">
+<a href="D4Detail.dc.html" style="display: flex; flex-direction: column; gap: 6px">
+<div style="height: 150px; border-radius: 16px; background: #E7E5E4; display: flex; align-items: center; justify-content: center; font-size: 14px; color: #57534E">사진</div>
+<div style="margin-top: 4px; font-size: 16px; font-weight: 500; line-height: 1.35">{{r.title}}</div>
+<div style="font-size: 15px"><span style="font-weight: 500; color: #DC2626">약 {{r.price}}원</span><span style="font-size: 14px; color: #57534E"> · {{r.meta}}</span></div>
+</a>
+</sc-for>
+</div>
+</div>
+</div>
+<nav style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); height: 64px; border-top: 1px solid #E7E5E4; background: #FFFFFF">
+<sc-for list="{{tabs}}" as="t" hint-placeholder-count="4">
+<a href="{{t.href}}" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; font-size: 14px; font-weight: {{t.weight}}; color: {{t.color}}"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="{{t.d}}"/></svg>{{t.label}}</a>
+</sc-for>
+</nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1200}}'>
+class Component extends DCLogic {
+state = { price: '3천원 이하', time: '', tool: '전자레인지' };
+chips(key, labels) {
+return labels.map((label) => {
+const on = this.state[key] === label;
+return { label, bg: on ? '#16A34A' : '#FFFFFF', border: on ? '#16A34A' : '#E7E5E4', weight: on ? 500 : 300, pick: () => this.setState({ [key]: on ? '' : label }) };
+});
+}
+renderVals() {
+const T = [
+['홈', 'D1Home.dc.html', 'M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z'],
+['검색', 'D2Search.dc.html', 'M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM21 21l-4.3-4.3'],
+['작성', 'D6Write.dc.html', 'M12 5v14M5 12h14'],
+['마이', 'D7My.dc.html', 'M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8zM4 21c0-4 4-6 8-6s8 2 8 6']
+];
+return {
+tabs: T.map((t, i) => ({ label: t[0], href: t[1], d: t[2], color: i === 0 ? '#1C1917' : '#78716C', weight: i === 0 ? 500 : 300 })),
+groups: [
+{ label: '가격', chips: this.chips('price', ['3천원 이하', '5천원 이하', '1만원 이하']) },
+{ label: '시간', chips: this.chips('time', ['10분 이내', '20분 이내', '30분 이내']) },
+{ label: '도구', chips: this.chips('tool', ['전자레인지', '에어프라이어', '프라이팬', '냄비']) }
+],
+recipes: [
+{ title: '전자레인지 계란찜', price: '900', meta: '5분' },
+{ title: '전자레인지 감자버터', price: '1,100', meta: '8분' },
+{ title: '참치마요 컵밥', price: '1,900', meta: '5분' },
+{ title: '전자레인지 두부덮밥', price: '2,000', meta: '10분' },
+{ title: '콘치즈', price: '2,400', meta: '6분' },
+{ title: '전자레인지 카레', price: '2,800', meta: '12분' }
+]
+};
+}
+}
+</script>
+</body>
+</html>

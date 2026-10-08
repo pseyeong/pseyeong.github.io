@@ -1,0 +1,127 @@
+package com.pseyeong.hankki.page;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
+/**
+ * docs/PLAN.md 사이트맵의 아직 만들지 않은 페이지들.
+ * 각 단계에서 기능별 컨트롤러를 만들면 여기서 해당 매핑을 지운다.
+ */
+@Controller
+public class PageController {
+
+	private static final String VIEW = "pages/placeholder";
+
+	@GetMapping("/search")
+	public String search(Model model) {
+		return placeholder(model, "재료 검색", 4);
+	}
+
+	@GetMapping("/recipes")
+	public String recipes(Model model) {
+		return placeholder(model, "전체 레시피", 3);
+	}
+
+	@GetMapping("/recipes/{id:\\d+}")
+	public String recipeDetail(@PathVariable long id, Model model) {
+		return placeholder(model, "레시피 상세", 3);
+	}
+
+	@GetMapping("/recipes/new")
+	public String recipeNew(Model model) {
+		return placeholder(model, "레시피 작성", 6);
+	}
+
+	@GetMapping("/recipes/{id:\\d+}/edit")
+	public String recipeEdit(@PathVariable long id, Model model) {
+		return placeholder(model, "레시피 수정", 6);
+	}
+
+	@GetMapping("/ingredients/{name}")
+	public String ingredient(@PathVariable String name, Model model) {
+		return placeholder(model, name + " 레시피", 4);
+	}
+
+	@GetMapping("/budget/{range}")
+	public String budget(@PathVariable String range, Model model) {
+		return placeholder(model, "가격대별 레시피", 4);
+	}
+
+	@GetMapping("/my")
+	public String my(Model model) {
+		return placeholder(model, "마이", 7);
+	}
+
+	@GetMapping("/my/saved")
+	public String mySaved(Model model) {
+		return placeholder(model, "저장한 레시피", 7);
+	}
+
+	@GetMapping("/my/recipes")
+	public String myRecipes(Model model) {
+		return placeholder(model, "내가 쓴 레시피", 7);
+	}
+
+	@GetMapping("/my/settings")
+	public String mySettings(Model model) {
+		return placeholder(model, "설정", 7);
+	}
+
+	@GetMapping("/login")
+	public String login(Model model) {
+		return placeholder(model, "로그인", 5);
+	}
+
+	@GetMapping("/about")
+	public String about(Model model) {
+		return placeholder(model, "서비스 소개", 9);
+	}
+
+	@GetMapping("/terms")
+	public String terms(Model model) {
+		return placeholder(model, "이용약관", 9);
+	}
+
+	@GetMapping("/privacy")
+	public String privacy(Model model) {
+		return placeholder(model, "개인정보처리방침", 9);
+	}
+
+	@GetMapping("/admin")
+	public String admin(Model model) {
+		return placeholder(model, "관리자 요약", 8);
+	}
+
+	@GetMapping("/admin/recipes")
+	public String adminRecipes(Model model) {
+		return placeholder(model, "레시피 관리", 8);
+	}
+
+	@GetMapping("/admin/recipes/new")
+	public String adminRecipeNew(Model model) {
+		return placeholder(model, "레시피 등록", 8);
+	}
+
+	@GetMapping("/admin/ingredients")
+	public String adminIngredients(Model model) {
+		return placeholder(model, "재료 가격표", 8);
+	}
+
+	@GetMapping("/admin/substitutes")
+	public String adminSubstitutes(Model model) {
+		return placeholder(model, "대체 재료", 8);
+	}
+
+	@GetMapping("/admin/pending")
+	public String adminPending(Model model) {
+		return placeholder(model, "기타 재료 후보", 8);
+	}
+
+	private String placeholder(Model model, String title, int step) {
+		model.addAttribute("pageTitle", title);
+		model.addAttribute("step", step);
+		return VIEW;
+	}
+}

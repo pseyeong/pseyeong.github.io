@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>재료 가격표</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#1A1F16;text-decoration:none}a:hover{color:#1F7A4D}
+input,select,button{font-family:'IBM Plex Sans KR',sans-serif;color:#1A1F16}
+table{border-collapse:collapse;width:100%;min-width:820px}
+th{text-align:left;font-size:12px;font-weight:600;color:#5A6355;padding:10px 12px;border-bottom:1px solid #E3E7DE}
+td{font-size:14px;padding:8px 12px;border-bottom:1px solid #E3E7DE}
+</style>
+</helmet>
+<div style="display: flex; flex-wrap: wrap; min-height: 800px; background: #FFFFFF; color: #1A1F16; font-family: 'IBM Plex Sans KR', sans-serif">
+<aside style="flex: 1 1 200px; box-sizing: border-box; padding: 24px 16px; background: #F3F5F0; display: flex; flex-direction: column; gap: 4px">
+<div style="padding: 0 12px 16px; font-size: 16px; font-weight: 700; color: #1F7A4D">자취한끼 관리자</div>
+<a href="Admin.dc.html" style="display: flex; align-items: center; height: 44px; padding: 0 12px; border-radius: 10px; font-size: 14px; color: #3F463B">요약</a>
+<a href="AdminRecipes.dc.html" style="display: flex; align-items: center; height: 44px; padding: 0 12px; border-radius: 10px; font-size: 14px; color: #3F463B">레시피</a>
+<a href="AdminIngredients.dc.html" style="display: flex; align-items: center; height: 44px; padding: 0 12px; border-radius: 10px; font-size: 14px; font-weight: 700; background: #FFFFFF; color: #1F7A4D">재료 가격표</a>
+<a href="AdminSubstitutes.dc.html" style="display: flex; align-items: center; height: 44px; padding: 0 12px; border-radius: 10px; font-size: 14px; color: #3F463B">대체 재료</a>
+<a href="AdminPending.dc.html" style="display: flex; align-items: center; justify-content: space-between; height: 44px; padding: 0 12px; border-radius: 10px; font-size: 14px; color: #3F463B">기타 재료 후보<span style="padding: 2px 8px; border-radius: 10px; background: #FFE27A; font-size: 12px; font-weight: 700; color: #1A1F16">7</span></a>
+</aside>
+<main style="flex: 999 1 560px; min-width: 0; box-sizing: border-box; padding: 32px; display: flex; flex-direction: column; gap: 20px">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px">
+<h1 style="margin: 0; font-size: 24px; font-weight: 700">재료 가격표</h1>
+<button type="button" style="height: 44px; padding: 0 16px; border: 0; border-radius: 12px; background: #1F7A4D; color: #FFFFFF; font-size: 14px; font-weight: 700">재료 추가</button>
+</div>
+<div style="padding: 12px 16px; border-radius: 12px; background: #F3F5F0; font-size: 13px; line-height: 1.6; color: #3F463B">가격을 바꾸면 그 재료를 쓰는 레시피의 1인분 단가가 자동으로 다시 계산돼요. 기본 양념은 재료 검색 매칭에서 빠져요.</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<input type="search" aria-label="재료 검색" placeholder="재료 이름 또는 별칭 검색" style="flex: 1 1 240px; height: 44px; box-sizing: border-box; padding: 0 14px; border-radius: 12px; border: 1px solid #E3E7DE; font-size: 14px">
+<select aria-label="분류" style="height: 44px; padding: 0 12px; border-radius: 12px; border: 1px solid #E3E7DE; background: #FFFFFF; font-size: 14px"><option>전체 분류</option><option>채소</option><option>육류·가공육</option><option>계란·두부</option><option>양념</option></select>
+<select aria-label="갱신 상태" style="height: 44px; padding: 0 12px; border-radius: 12px; border: 1px solid #E3E7DE; background: #FFFFFF; font-size: 14px"><option>전체</option><option>갱신 30일 지남</option></select>
+</div>
+<div style="overflow-x: auto">
+<table>
+<thead><tr><th>재료</th><th>별칭</th><th>분류</th><th>기준 단위</th><th>단위당 가격 (원)</th><th>기본 양념</th><th>가격 갱신일</th><th>사용 레시피</th></tr></thead>
+<tbody>
+<sc-for list="{{rows}}" as="r" hint-placeholder-count="7">
+<tr>
+<td style="font-weight: 600">{{r.name}}</td>
+<td style="color: #5A6355">{{r.alias}}</td>
+<td>{{r.cat}}</td>
+<td>{{r.unit}}</td>
+<td><input type="text" aria-label="단위당 가격" value="{{r.price}}" style="width: 96px; height: 44px; box-sizing: border-box; padding: 0 10px; border-radius: 10px; border: 1px solid #E3E7DE; font-size: 14px; text-align: right"></td>
+<td><input type="checkbox" aria-label="기본 양념" checked="{{r.basic}}" style="width: 20px; height: 20px; accent-color: #1F7A4D"></td>
+<td style="color: {{r.dateColor}}; font-weight: {{r.dateWeight}}">{{r.date}}</td>
+<td>{{r.used}}개</td>
+</tr>
+</sc-for>
+</tbody>
+</table>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":800}}'>
+class Component extends DCLogic {
+renderVals() {
+const rows = [
+{ name: '계란', alias: '달걀', cat: '계란·두부', unit: '개', price: '280', basic: false, date: '2026.10.01', used: 21 },
+{ name: '대파', alias: '파', cat: '채소', unit: 'g', price: '7.5', basic: false, date: '2026.10.01', used: 18 },
+{ name: '양파', alias: '', cat: '채소', unit: 'g', price: '3', basic: false, date: '2026.10.01', used: 16 },
+{ name: '두부', alias: '', cat: '계란·두부', unit: 'g', price: '5', basic: false, date: '2026.08.28', used: 7, old: true },
+{ name: '햄', alias: '스팸, 통조림햄', cat: '육류·가공육', unit: 'g', price: '11', basic: false, date: '2026.10.01', used: 6 },
+{ name: '굴소스', alias: '', cat: '양념', unit: 'g', price: '9.3', basic: false, date: '2026.08.28', used: 5, old: true },
+{ name: '소금', alias: '', cat: '양념', unit: 'g', price: '2', basic: true, date: '2026.10.01', used: 44 }
+];
+return { rows: rows.map((r) => ({ ...r, dateColor: r.old ? '#B3261E' : '#5A6355', dateWeight: r.old ? 600 : 400 })) };
+}
+}
+</script>
+</body>
+</html>

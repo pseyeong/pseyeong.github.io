@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>재료 검색 결과 (디자인)</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@500;700&amp;display=swap" rel="stylesheet">
+<style>
+@font-face{font-family:'GMarketSans';font-weight:300;font-display:swap;src:url('/_blob/98f92f89064b07f1f2e8b811c67330cc') format('woff')}
+@font-face{font-family:'GMarketSans';font-weight:500;font-display:swap;src:url('/_blob/666de4c9d161cad06f93b05690400823') format('woff')}
+@font-face{font-family:'GMarketSans';font-weight:700;font-display:swap;src:url('/_blob/2fbc9019a45b936cb878f55921ee339d') format('woff')}
+body{margin:0}
+b{font-weight:500}
+a{color:#1C1917;text-decoration:none}a:hover{color:#DC2626}
+button,input{font-family:inherit;color:inherit;font-weight:inherit}
+</style>
+</helmet>
+<div style="width: 390px; height: 1200px; box-sizing: border-box; display: flex; flex-direction: column; background: #F5F5F4; color: #1C1917; font-family: 'GMarketSans', 'Gmarket Sans', 'IBM Plex Sans KR', sans-serif; font-size: 16px; font-weight: 300">
+<div style="flex: 1; display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; flex-direction: column; gap: 14px; padding: 8px 20px 20px; background: #FFFFFF">
+<div style="display: flex; align-items: center; gap: 4px">
+<a href="D1Home.dc.html" aria-label="뒤로" style="display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; margin-left: -12px"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"></path></svg></a>
+<h1 style="margin: 0; font-size: 18px; font-weight: 500">재료로 찾기</h1>
+</div>
+<div style="display: flex; align-items: center; gap: 10px; height: 48px; padding: 0 16px; border-radius: 24px; background: #F5F5F4">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1C1917" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg>
+<input type="text" aria-label="재료 추가" placeholder="재료 추가 (목록에서 선택)" style="flex: 1; min-width: 0; height: 44px; border: 0; background: none; font-size: 15px">
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<sc-for list="{{have}}" as="h" hint-placeholder-count="3">
+<button type="button" style="display: flex; align-items: center; gap: 6px; padding: 4px 12px; border: 0; border-radius: 16px; background: #16A34A; font-size: 15px; font-weight: 500; line-height: 24px">{{h}}<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+</sc-for>
+</div>
+<div style="font-size: 14px; line-height: 1.5; color: #57534E">소금, 간장, 식용유 같은 기본 양념은 있다고 보고 찾아요.</div>
+</div>
+<div style="display: flex; flex-direction: column; padding: 20px 20px 8px; background: #FFFFFF">
+<div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 4px">
+<h2 style="margin: 0; font-size: 18px; font-weight: 500">레시피 12개</h2>
+<span style="padding: 4px 12px; border-radius: 16px; background: #F5F5F4; font-size: 14px; line-height: 24px">재료 일치순</span>
+</div>
+<sc-for list="{{rows}}" as="r" hint-placeholder-count="3">
+<a href="D4Detail.dc.html" style="display: flex; gap: 14px; align-items: center; padding: 14px 0; border-bottom: 1px solid #F5F5F4">
+<div style="flex: 1; display: flex; flex-direction: column; gap: 6px; min-width: 0">
+<span style="align-self: flex-start; padding: 2px 8px; border-radius: 6px; background: {{r.bg}}; font-size: 14px; font-weight: 500">{{r.match}}</span>
+<span style="font-size: 16px; font-weight: 500">{{r.title}}</span>
+<span style="font-size: 14px; color: #57534E">{{r.need}}</span>
+<span style="font-size: 15px"><span style="font-weight: 500; color: #DC2626">약 {{r.price}}원</span><span style="font-size: 14px; color: #57534E"> · {{r.time}}</span></span>
+</div>
+<div style="width: 104px; height: 104px; flex: none; border-radius: 16px; background: #E7E5E4; display: flex; align-items: center; justify-content: center; font-size: 14px; color: #57534E">사진</div>
+</a>
+</sc-for>
+</div>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 12px; padding: 20px; background: #FFFFFF">
+<h2 style="margin: 0; font-size: 18px; font-weight: 500">대체 재료로 만들 수 있어요</h2>
+<a href="D4Detail.dc.html" style="display: flex; gap: 14px; align-items: center; padding: 14px; border-radius: 16px; background: #F0FDF4">
+<div style="flex: 1; display: flex; flex-direction: column; gap: 6px; min-width: 0">
+<span style="display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 500; color: #B91C1C"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h14l-3-3M20 16H6l3 3"></path></svg>쪽파 대신 대파로 가능</span>
+<span style="font-size: 16px; font-weight: 500">쪽파 계란말이</span>
+<span style="font-size: 15px"><span style="font-weight: 500; color: #B91C1C">약 1,300원</span><span style="font-size: 14px; color: #57534E"> · 10분</span></span>
+</div>
+<div style="width: 88px; height: 88px; flex: none; border-radius: 14px; background: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 14px; color: #57534E">사진</div>
+</a>
+</div>
+</div>
+<nav style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); height: 64px; border-top: 1px solid #E7E5E4; background: #FFFFFF">
+<sc-for list="{{tabs}}" as="t" hint-placeholder-count="4">
+<a href="{{t.href}}" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; font-size: 14px; font-weight: {{t.weight}}; color: {{t.color}}"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="{{t.d}}"></path></svg>{{t.label}}</a>
+</sc-for>
+</nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1200}}'>
+class Component extends DCLogic {
+renderVals() {
+const T = [
+['홈', 'D1Home.dc.html', 'M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z'],
+['검색', 'D2Search.dc.html', 'M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM21 21l-4.3-4.3'],
+['작성', 'D6Write.dc.html', 'M12 5v14M5 12h14'],
+['마이', 'D7My.dc.html', 'M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8zM4 21c0-4 4-6 8-6s8 2 8 6']
+];
+return {
+tabs: T.map((t, i) => ({ label: t[0], href: t[1], d: t[2], color: i === 1 ? '#1C1917' : '#78716C', weight: i === 1 ? 500 : 300 })),
+have: ['계란', '양파', '대파'],
+rows: [
+{ title: '양파 계란덮밥', match: '재료 모두 보유', bg: '#16A34A', need: '지금 바로 만들 수 있어요', price: '1,700', time: '10분' },
+{ title: '대파 계란볶음밥', match: '4개 중 3개 보유', bg: '#F5F5F4', need: '햄만 더 있으면 돼요', price: '2,150', time: '15분' },
+{ title: '양파 참치전', match: '4개 중 2개 보유', bg: '#F5F5F4', need: '참치캔, 부침가루 필요', price: '2,600', time: '20분' }
+]
+};
+}
+}
+</script>
+</body>
+</html>

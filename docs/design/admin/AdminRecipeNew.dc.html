@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>레시피 등록 (PC)</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#1A1F16;text-decoration:none}a:hover{color:#1F7A4D}
+input,select,textarea,button{font-family:'IBM Plex Sans KR',sans-serif;color:#1A1F16}
+table{border-collapse:collapse;width:100%;min-width:620px}
+th{text-align:left;font-size:12px;font-weight:600;color:#5A6355;padding:8px 8px;border-bottom:1px solid #E3E7DE}
+td{font-size:14px;padding:6px 8px;border-bottom:1px solid #E3E7DE}
+</style>
+</helmet>
+<div style="display: flex; flex-wrap: wrap; min-height: 1180px; background: #FFFFFF; color: #1A1F16; font-family: 'IBM Plex Sans KR', sans-serif">
+<aside style="flex: 1 1 200px; box-sizing: border-box; padding: 24px 16px; background: #F3F5F0; display: flex; flex-direction: column; gap: 4px">
+<div style="padding: 0 12px 16px; font-size: 16px; font-weight: 700; color: #1F7A4D">자취한끼 관리자</div>
+<a href="Admin.dc.html" style="display: flex; align-items: center; height: 44px; padding: 0 12px; border-radius: 10px; font-size: 14px; color: #3F463B">요약</a>
+<a href="AdminRecipes.dc.html" style="display: flex; align-items: center; height: 44px; padding: 0 12px; border-radius: 10px; font-size: 14px; font-weight: 700; background: #FFFFFF; color: #1F7A4D">레시피</a>
+<a href="AdminIngredients.dc.html" style="display: flex; align-items: center; height: 44px; padding: 0 12px; border-radius: 10px; font-size: 14px; color: #3F463B">재료 가격표</a>
+<a href="AdminSubstitutes.dc.html" style="display: flex; align-items: center; height: 44px; padding: 0 12px; border-radius: 10px; font-size: 14px; color: #3F463B">대체 재료</a>
+<a href="AdminPending.dc.html" style="display: flex; align-items: center; justify-content: space-between; height: 44px; padding: 0 12px; border-radius: 10px; font-size: 14px; color: #3F463B">기타 재료 후보<span style="padding: 2px 8px; border-radius: 10px; background: #FFE27A; font-size: 12px; font-weight: 700; color: #1A1F16">7</span></a>
+</aside>
+<main style="flex: 999 1 560px; min-width: 0; box-sizing: border-box; padding: 32px; display: flex; flex-direction: column; gap: 24px">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<a href="AdminRecipes.dc.html" style="font-size: 13px; color: #5A6355; padding: 8px 0">레시피 목록으로</a>
+<h1 style="margin: 0; font-size: 24px; font-weight: 700">레시피 등록</h1>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 32px; align-items: flex-start">
+<div style="flex: 999 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 28px">
+<section style="display: flex; flex-direction: column; gap: 14px">
+<h2 style="margin: 0; font-size: 17px; font-weight: 700">기본 정보</h2>
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">제목<input type="text" value="대파 계란볶음밥" style="height: 44px; box-sizing: border-box; padding: 0 12px; border-radius: 10px; border: 1px solid #E3E7DE; font-size: 14px"></label>
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">소개<textarea style="height: 72px; box-sizing: border-box; padding: 10px 12px; border-radius: 10px; border: 1px solid #E3E7DE; font-size: 14px; line-height: 1.5; resize: vertical">파기름으로 향을 낸 기본 볶음밥. 냉장고에 남은 재료로 15분이면 돼요.</textarea></label>
+<div style="display: flex; flex-wrap: wrap; gap: 12px">
+<label style="flex: 1 1 100px; display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">인분<input type="number" value="1" style="height: 44px; box-sizing: border-box; padding: 0 12px; border-radius: 10px; border: 1px solid #E3E7DE; font-size: 14px"></label>
+<label style="flex: 1 1 100px; display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">조리시간 (분)<input type="number" value="15" style="height: 44px; box-sizing: border-box; padding: 0 12px; border-radius: 10px; border: 1px solid #E3E7DE; font-size: 14px"></label>
+<label style="flex: 2 1 180px; display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">조리도구<select style="height: 44px; padding: 0 10px; border-radius: 10px; border: 1px solid #E3E7DE; background: #FFFFFF; font-size: 14px"><option>프라이팬</option><option>냄비</option><option>전자레인지</option><option>에어프라이어</option></select></label>
+</div>
+<button type="button" style="height: 96px; border-radius: 10px; border: 1px dashed #8A9384; background: #F3F5F0; font-size: 14px; color: #5A6355">대표 사진 올리기 (끌어다 놓기 가능)</button>
+</section>
+<section style="display: flex; flex-direction: column; gap: 10px">
+<h2 style="margin: 0; font-size: 17px; font-weight: 700">재료</h2>
+<div style="overflow-x: auto">
+<table>
+<thead><tr><th>재료</th><th>사용량</th><th>단위</th><th>표시용 분량</th><th style="text-align: right">금액</th><th></th></tr></thead>
+<tbody>
+<sc-for list="{{ings}}" as="i" hint-placeholder-count="5">
+<tr>
+<td><input type="text" aria-label="재료" value="{{i.name}}" style="width: 100%; min-width: 120px; height: 44px; box-sizing: border-box; padding: 0 10px; border-radius: 10px; border: 1px solid #E3E7DE; font-size: 14px"></td>
+<td><input type="text" aria-label="사용량" value="{{i.qty}}" style="width: 72px; height: 44px; box-sizing: border-box; padding: 0 10px; border-radius: 10px; border: 1px solid #E3E7DE; font-size: 14px; text-align: right"></td>
+<td style="color: #5A6355">{{i.unit}}</td>
+<td><input type="text" aria-label="표시용 분량" value="{{i.show}}" style="width: 110px; height: 44px; box-sizing: border-box; padding: 0 10px; border-radius: 10px; border: 1px solid #E3E7DE; font-size: 14px"></td>
+<td style="text-align: right; font-weight: 600; white-space: nowrap">{{i.cost}}</td>
+<td><button type="button" aria-label="재료 삭제" style="width: 44px; height: 44px; border: 0; background: none; color: #5A6355"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></td>
+</tr>
+</sc-for>
+</tbody>
+</table>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<button type="button" style="height: 44px; padding: 0 14px; border-radius: 10px; border: 1px solid #C9CFC3; background: #FFFFFF; font-size: 14px; font-weight: 600">재료 추가</button>
+<button type="button" style="height: 44px; padding: 0 14px; border-radius: 10px; border: 1px solid #E3E7DE; background: #FFFFFF; font-size: 14px; color: #5A6355">목록에 없는 재료 직접 입력</button>
+</div>
+<span style="font-size: 12px; color: #5A6355">기본 양념(식용유, 소금, 후추)은 가격표에서 자동으로 구분돼요. 김가루는 가격표에 없어 단가에서 빠져요.</span>
+</section>
+<section style="display: flex; flex-direction: column; gap: 10px">
+<h2 style="margin: 0; font-size: 17px; font-weight: 700">조리 순서</h2>
+<sc-for list="{{steps}}" as="s" hint-placeholder-count="4">
+<div style="display: flex; gap: 10px; align-items: flex-start"><span style="width: 28px; height: 28px; flex: none; margin-top: 8px; border-radius: 14px; background: #1F7A4D; color: #FFFFFF; font-size: 14px; font-weight: 700; display: flex; align-items: center; justify-content: center">{{s.n}}</span><textarea aria-label="단계 설명" style="flex: 1; min-width: 0; height: 56px; box-sizing: border-box; padding: 10px 12px; border-radius: 10px; border: 1px solid #E3E7DE; font-size: 14px; line-height: 1.5; resize: vertical">{{s.text}}</textarea><button type="button" aria-label="단계 사진 추가" style="width: 56px; height: 56px; flex: none; border-radius: 10px; border: 1px dashed #8A9384; background: #F3F5F0; font-size: 12px; color: #5A6355">사진</button></div>
+</sc-for>
+<button type="button" style="align-self: flex-start; height: 44px; padding: 0 14px; border-radius: 10px; border: 1px solid #C9CFC3; background: #FFFFFF; font-size: 14px; font-weight: 600">단계 추가</button>
+</section>
+</div>
+<div style="flex: 1 1 260px; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; flex-direction: column; gap: 10px; padding: 18px; border-radius: 14px; background: #FFE27A">
+<span style="font-size: 13px; font-weight: 600">예상 1인분 단가</span>
+<span style="font-size: 28px; font-weight: 700">약 2,150원</span>
+<div style="display: flex; justify-content: space-between; font-size: 13px; padding-top: 10px; border-top: 1px solid rgba(26,31,22,0.2)"><span>처음 장볼 때</span><span style="font-weight: 600">약 9,800원</span></div>
+<span style="font-size: 12px">일부 재료 제외 · 가격 기준일 2026.10.01</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 14px; padding: 18px; border-radius: 14px; border: 1px solid #E3E7DE">
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">작성자 계정<select style="height: 44px; padding: 0 10px; border-radius: 10px; border: 1px solid #E3E7DE; background: #FFFFFF; font-size: 14px"><option>자취한끼 공식</option><option>내 계정 (배고픈감자4821)</option></select></label>
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">공개 상태<select style="height: 44px; padding: 0 10px; border-radius: 10px; border: 1px solid #E3E7DE; background: #FFFFFF; font-size: 14px"><option>공개</option><option>숨김 (검수 전)</option></select></label>
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">출처 (공공데이터 등)<input type="text" placeholder="출처가 있으면 적어 주세요" style="height: 44px; box-sizing: border-box; padding: 0 12px; border-radius: 10px; border: 1px solid #E3E7DE; font-size: 14px"></label>
+</div>
+<button type="button" style="height: 52px; border: 0; border-radius: 12px; background: #1F7A4D; color: #FFFFFF; font-size: 16px; font-weight: 700">등록하기</button>
+<button type="button" style="height: 48px; border-radius: 12px; border: 1px solid #C9CFC3; background: #FFFFFF; font-size: 14px; font-weight: 600">등록하고 다음 레시피 쓰기</button>
+</div>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":1180}}'>
+class Component extends DCLogic {
+renderVals() {
+return {
+ings: [
+{ name: '밥', qty: '210', unit: 'g', show: '1공기', cost: '600원' },
+{ name: '계란', qty: '2', unit: '개', show: '2개', cost: '560원' },
+{ name: '대파', qty: '40', unit: 'g', show: '1/2대', cost: '300원' },
+{ name: '햄', qty: '50', unit: 'g', show: '50g', cost: '550원' },
+{ name: '굴소스', qty: '15', unit: 'g', show: '1큰술', cost: '140원' },
+{ name: '김가루 (기타 재료)', qty: '', unit: '', show: '약간', cost: '단가 제외' }
+],
+steps: [
+{ n: 1, text: '대파는 송송 썰고 햄은 작게 깍둑썰기 해요.' },
+{ n: 2, text: '팬에 식용유를 두르고 약불에서 대파를 볶아 파기름을 내요.' },
+{ n: 3, text: '햄을 넣어 볶다가 한쪽으로 밀고 계란을 풀어 스크램블해요.' },
+{ n: 4, text: '밥과 굴소스를 넣고 센불에서 빠르게 볶은 뒤 소금, 후추로 간해요.' }
+]
+};
+}
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>마이 (디자인)</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@500;700&display=swap" rel="stylesheet">
+<style>
+@font-face{font-family:'GMarketSans';font-weight:300;font-display:swap;src:url('/_blob/98f92f89064b07f1f2e8b811c67330cc') format('woff')}
+@font-face{font-family:'GMarketSans';font-weight:500;font-display:swap;src:url('/_blob/666de4c9d161cad06f93b05690400823') format('woff')}
+@font-face{font-family:'GMarketSans';font-weight:700;font-display:swap;src:url('/_blob/2fbc9019a45b936cb878f55921ee339d') format('woff')}
+body{margin:0}
+b{font-weight:500}
+a{color:#1C1917;text-decoration:none}a:hover{color:#DC2626}
+button{font-family:inherit;color:inherit}
+</style>
+</helmet>
+<div style="width: 390px; height: 900px; box-sizing: border-box; display: flex; flex-direction: column; background: #F5F5F4; color: #1C1917; font-family: 'GMarketSans', 'Gmarket Sans', 'IBM Plex Sans KR', sans-serif; font-size: 16px; font-weight: 300">
+<div style="flex: 1; display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; flex-direction: column; gap: 16px; padding: 24px 20px 20px; background: #FFFFFF">
+<div style="display: flex; align-items: center; gap: 14px">
+<div style="width: 60px; height: 60px; flex: none; border-radius: 24px; background: #16A34A; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 500">감자</div>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 4px; min-width: 0">
+<h1 style="margin: 0; font-size: 18px; font-weight: 500">배고픈감자4821</h1>
+<span style="font-size: 14px; color: #57534E">오늘도 알뜰하게 한 끼</span>
+</div>
+<a href="D9Nickname.dc.html" style="padding: 4px 12px; border-radius: 16px; background: #F5F5F4; font-size: 14px; line-height: 24px">설정</a>
+</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+<div style="display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border-radius: 16px; background: #F5F5F4"><span style="font-size: 15px">저장</span><span style="font-size: 18px; font-weight: 500">12</span></div>
+<div style="display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border-radius: 16px; background: #F5F5F4"><span style="font-size: 15px">작성</span><span style="font-size: 18px; font-weight: 500">3</span></div>
+</div>
+</div>
+<div style="flex: 1; display: flex; flex-direction: column; background: #FFFFFF">
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-bottom: 1px solid #E7E5E4">
+<sc-for list="{{tabsTop}}" as="t" hint-placeholder-count="2">
+<button type="button" onClick="{{t.pick}}" style="height: 52px; border: 0; border-bottom: 3px solid {{t.line}}; background: none; font-size: 16px; font-weight: {{t.weight}}; color: {{t.fg}}">{{t.label}}</button>
+</sc-for>
+</div>
+<div style="display: flex; flex-direction: column; padding: 4px 20px">
+<sc-for list="{{items}}" as="r" hint-placeholder-count="4">
+<a href="D4Detail.dc.html" style="display: flex; gap: 14px; align-items: center; padding: 14px 0; border-bottom: 1px solid #F5F5F4">
+<div style="width: 76px; height: 76px; flex: none; border-radius: 14px; background: #E7E5E4; display: flex; align-items: center; justify-content: center; font-size: 14px; color: #57534E">사진</div>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 6px; min-width: 0"><span style="font-size: 16px; font-weight: 500">{{r.title}}</span><span style="font-size: 14px; color: #57534E">{{r.meta}}</span><span style="font-size: 15px; font-weight: 500; color: #DC2626">약 {{r.price}}원</span></div>
+</a>
+</sc-for>
+</div>
+</div>
+</div>
+<nav style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); height: 64px; border-top: 1px solid #E7E5E4; background: #FFFFFF">
+<sc-for list="{{tabs}}" as="t" hint-placeholder-count="4">
+<a href="{{t.href}}" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; font-size: 14px; font-weight: {{t.weight}}; color: {{t.color}}"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="{{t.d}}"/></svg>{{t.label}}</a>
+</sc-for>
+</nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":900}}'>
+class Component extends DCLogic {
+state = { tab: 'saved' };
+renderVals() {
+const T = [
+['홈', 'D1Home.dc.html', 'M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z'],
+['검색', 'D2Search.dc.html', 'M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM21 21l-4.3-4.3'],
+['작성', 'D6Write.dc.html', 'M12 5v14M5 12h14'],
+['마이', 'D7My.dc.html', 'M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8zM4 21c0-4 4-6 8-6s8 2 8 6']
+];
+const tab = this.state.tab;
+const mk = (id, label) => ({ label, fg: tab === id ? '#1C1917' : '#78716C', weight: tab === id ? 500 : 300, line: tab === id ? '#16A34A' : 'transparent', pick: () => this.setState({ tab: id }) });
+const saved = [
+{ title: '참치 김치찌개', price: '2,900', meta: '20분 · 냄비' },
+{ title: '전자레인지 계란찜', price: '900', meta: '5분 · 전자레인지' },
+{ title: '두부 간장조림', price: '1,800', meta: '15분 · 프라이팬' },
+{ title: '양파 듬뿍 제육볶음', price: '3,400', meta: '20분 · 프라이팬' }
+];
+const mine = [
+{ title: '대파 계란볶음밥', price: '2,150', meta: '저장 48' },
+{ title: '에어프라이어 통감자', price: '1,200', meta: '저장 21' },
+{ title: '양파 계란덮밥', price: '1,700', meta: '저장 9' }
+];
+return {
+tabs: T.map((t, i) => ({ label: t[0], href: t[1], d: t[2], color: i === 3 ? '#1C1917' : '#78716C', weight: i === 3 ? 500 : 300 })),
+tabsTop: [mk('saved', '저장한 레시피'), mk('mine', '내가 쓴 레시피')],
+items: tab === 'saved' ? saved : mine
+};
+}
+}
+</script>
+</body>
+</html>

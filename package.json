@@ -1,0 +1,19 @@
+{
+  "name": "hankki",
+  "version": "0.0.1",
+  "private": true,
+  "description": "자취한끼 - Tailwind CSS 빌드용 (서버는 Spring Boot)",
+  "scripts": {
+    "dev": "concurrently -k -n css,server -c green,blue \"npm:dev:css\" \"npm:dev:server\"",
+    "dev:css": "tailwindcss -i ./src/main/resources/static/css/input.css -o ./src/main/resources/static/css/app.css --postcss --watch=always",
+    "dev:server": "mvnw spring-boot:run",
+    "build:css": "tailwindcss -i ./src/main/resources/static/css/input.css -o ./src/main/resources/static/css/app.css --postcss --minify",
+    "build": "npm run build:css && mvnw -DskipTests package"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.6.1",
+    "concurrently": "^10.0.5",
+    "postcss": "^8.5.29",
+    "tailwindcss": "^3.4.19"
+  }
+}

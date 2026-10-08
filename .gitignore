@@ -1,0 +1,38 @@
+# Maven
+target/
+.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+HELP.md
+
+# Node / Tailwind
+node_modules/
+npm-debug.*
+# Tailwind 빌드 결과물 (npm run build:css 로 생성)
+src/main/resources/static/css/app.css
+
+# 업로드 파일 (로컬 저장 시)
+uploads/
+
+# IDE
+.idea/
+*.iws
+*.iml
+*.ipr
+.vscode/
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env
+.env
+.env.*
+!.env.example

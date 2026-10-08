@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<!--/* 아직 만들지 않은 페이지 (PageController). 단계마다 실제 화면으로 바꾼다 */-->
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{layout/base :: layout(~{::title}, ~{::main})}">
+<head>
+	<title th:text="|${pageTitle} - 자취한끼|">페이지 - 자취한끼</title>
+</head>
+<body>
+<main class="app-main">
+	<section class="section gap-2">
+		<h1 class="section-title" th:text="${pageTitle}">페이지</h1>
+		<p class="m-0 text-caption text-ink-sub">
+			이 화면은 <b th:text="|${step}단계|">1단계</b>에서 만들어요.
+		</p>
+		<p class="m-0 text-caption text-ink-mute" th:text="${currentPath}">/path</p>
+	</section>
+	<section class="section flex-1 justify-end">
+		<a th:href="@{/}" class="btn-primary">홈으로</a>
+	</section>
+</main>
+</body>
+</html>

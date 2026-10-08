@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<!--/*
+  공통 UI 조각 모음. 스타일은 static/css/input.css 의 @layer components 클래스를 쓴다.
+
+  아이콘       ~{fragments/ui :: icon(${path}, 22, 2)}
+  하단 탭      ~{fragments/ui :: bottomTab}
+  칩(링크)     ~{fragments/ui :: chip('3천원 이하', '/recipes', true)}
+  가격         ~{fragments/ui :: price(${2150}, '15분')}            → 약 2,150원 · 15분
+  사진 자리    ~{fragments/ui :: photo(${src}, ${alt}, 'h-[150px] rounded-card')}
+  레시피 카드  ~{fragments/ui :: recipeCard(${recipe}, 'w-[148px]', 'h-[148px]')}
+  레시피 한 줄 ~{fragments/ui :: recipeRow(${recipe})}
+
+  CSS 클래스로만 쓰는 것: .section(흰 구역) .btn-primary(하단 주요 버튼) .btn-sm .chip .chip-active
+                         .input .search-bar .badge .list-row .bottom-action .btn-icon
+*/-->
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<!-- 선 아이콘 (SVG path 하나) -->
+<svg th:fragment="icon(d, size, stroke)"
+	th:attr="width=${size},height=${size},stroke-width=${stroke}"
+	viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+	<path th:attr="d=${d}"></path>
+</svg>
+
+<!-- 하단 탭: 홈·검색·작성·마이 (navTabs, currentPath 는 GlobalModelAdvice 가 넣는다) -->
+<nav th:fragment="bottomTab" class="tab-bar" aria-label="주요 메뉴">
+	<a th:each="tab : ${navTabs}"
+		th:with="active=${tab.isActive(currentPath)}"
+		th:href="@{${tab.href}}"
+		class="tab-item"
+		th:classappend="${active} ? 'tab-item-active'"
+		th:attr="aria-current=${active} ? 'page' : null">
+		<svg th:replace="~{fragments/ui :: icon(${tab.icon}, 22, 2)}"></svg>
+		<span th:text="${tab.label}">홈</span>
+	</a>
+</nav>
+
+<!-- 칩 (링크형). 버튼형은 <button class="chip"> 로 직접 쓴다 -->
+<a th:fragment="chip(label, href, active)"
+	th:href="@{${href}}"
+	class="chip"
+	th:classappend="${active} ? 'chip-active'"
+	th:text="${label}">칩</a>
+
+<!-- 가격: "약 2,150원 · 15분" (meta 가 없으면 null) -->
+<div th:fragment="price(amount, meta)" class="text-sub">
+	<span class="price" th:text="|약 ${#numbers.formatInteger(amount, 1, 'COMMA')}원|">약 2,150원</span><span
+		class="price-meta" th:if="${meta}" th:text="| · ${meta}|"> · 15분</span>
+</div>
+
+<!-- 사진 (없으면 회색 사진 자리). cls 로 크기·모서리를 준다 -->
+<div th:fragment="photo(src, alt, cls)" class="photo" th:classappend="${cls}">
+	<img th:if="${src}" th:src="${src}" th:alt="${alt}" loading="lazy">
+	<th:block th:unless="${src}">사진</th:block>
+</div>
+
+<!-- 레시피 카드 (세로형: 홈 인기, 목록 2열) -->
+<a th:fragment="recipeCard(recipe, cls, photoCls)"
+	th:href="@{/recipes/{id}(id=${recipe.id})}"
+	class="flex flex-col gap-1.5"
+	th:classappend="${cls}">
+	<div th:replace="~{fragments/ui :: photo(${recipe.coverImage}, ${recipe.title}, |rounded-card ${photoCls}|)}"></div>
+	<div class="mt-1 text-body font-medium leading-[1.35]" th:text="${recipe.title}">레시피 제목</div>
+	<div th:replace="~{fragments/ui :: price(${recipe.pricePerServing}, ${recipe.cookTimeLabel()})}"></div>
+</a>
+
+<!-- 레시피 한 줄 (가로형: 홈 최신, 마이 목록) -->
+<a th:fragment="recipeRow(recipe)"
+	th:href="@{/recipes/{id}(id=${recipe.id})}"
+	class="list-row">
+	<div class="flex min-w-0 flex-1 flex-col gap-1.5">
+		<span class="text-body font-medium" th:text="${recipe.title}">레시피 제목</span>
+		<span class="text-caption text-ink-sub" th:text="|${recipe.cookTimeLabel()} · ${recipe.authorNickname}|">20분 · 닉네임</span>
+		<span class="price text-sub" th:text="|약 ${#numbers.formatInteger(recipe.pricePerServing, 1, 'COMMA')}원|">약 3,400원</span>
+	</div>
+	<div th:replace="~{fragments/ui :: photo(${recipe.coverImage}, ${recipe.title}, 'h-[84px] w-[84px] rounded-thumb')}"></div>
+</a>
+
+</body>
+</html>

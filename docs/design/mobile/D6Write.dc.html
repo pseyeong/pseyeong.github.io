@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>레시피 작성 (디자인)</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@500;700&display=swap" rel="stylesheet">
+<style>
+@font-face{font-family:'GMarketSans';font-weight:300;font-display:swap;src:url('/_blob/98f92f89064b07f1f2e8b811c67330cc') format('woff')}
+@font-face{font-family:'GMarketSans';font-weight:500;font-display:swap;src:url('/_blob/666de4c9d161cad06f93b05690400823') format('woff')}
+@font-face{font-family:'GMarketSans';font-weight:700;font-display:swap;src:url('/_blob/2fbc9019a45b936cb878f55921ee339d') format('woff')}
+body{margin:0}
+b{font-weight:500}
+a{color:#1C1917;text-decoration:none}a:hover{color:#DC2626}
+button,input,textarea{font-family:inherit;color:inherit;font-weight:inherit}
+</style>
+</helmet>
+<div style="width: 390px; height: 1750px; box-sizing: border-box; display: flex; flex-direction: column; background: #F5F5F4; color: #1C1917; font-family: 'GMarketSans', 'Gmarket Sans', 'IBM Plex Sans KR', sans-serif; font-size: 16px; font-weight: 300">
+<div style="display: flex; align-items: center; justify-content: space-between; padding: 8px 20px 8px 8px; background: #FFFFFF">
+<div style="display: flex; align-items: center"><a href="D1Home.dc.html" aria-label="닫기" style="display: flex; align-items: center; justify-content: center; width: 44px; height: 44px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></a><h1 style="margin: 0; font-size: 18px; font-weight: 500">레시피 작성</h1></div>
+<span style="font-size: 14px; color: #57534E">임시저장됨</span>
+</div>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 8px; padding-top: 8px">
+<div style="display: flex; flex-direction: column; gap: 20px; padding: 20px; background: #FFFFFF">
+<button type="button" style="height: 160px; border-radius: 16px; border: 0; background: #F5F5F4; font-size: 15px; color: #57534E">대표 사진 올리기</button>
+<label style="display: flex; flex-direction: column; gap: 8px; font-size: 15px; font-weight: 500">제목<input type="text" value="대파 계란볶음밥" style="height: 48px; box-sizing: border-box; padding: 0 14px; border-radius: 12px; border: 0; background: #F5F5F4; font-size: 16px; font-weight: 300"></label>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+<label style="display: flex; flex-direction: column; gap: 8px; font-size: 15px; font-weight: 500">인분<input type="number" value="1" style="height: 48px; box-sizing: border-box; padding: 0 14px; border-radius: 12px; border: 0; background: #F5F5F4; font-size: 16px; font-weight: 300"></label>
+<label style="display: flex; flex-direction: column; gap: 8px; font-size: 15px; font-weight: 500">조리시간 (분)<input type="number" value="15" style="height: 48px; box-sizing: border-box; padding: 0 14px; border-radius: 12px; border: 0; background: #F5F5F4; font-size: 16px; font-weight: 300"></label>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span style="font-size: 15px; font-weight: 500">조리도구</span>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<button type="button" style="padding: 4px 12px; border-radius: 16px; border: 1px solid #16A34A; background: #16A34A; font-size: 15px; font-weight: 500; line-height: 24px">프라이팬</button>
+<button type="button" style="padding: 4px 12px; border-radius: 16px; border: 1px solid #E7E5E4; background: #FFFFFF; font-size: 15px; line-height: 24px">냄비</button>
+<button type="button" style="padding: 4px 12px; border-radius: 16px; border: 1px solid #E7E5E4; background: #FFFFFF; font-size: 15px; line-height: 24px">전자레인지</button>
+<button type="button" style="padding: 4px 12px; border-radius: 16px; border: 1px solid #E7E5E4; background: #FFFFFF; font-size: 15px; line-height: 24px">에어프라이어</button>
+</div>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 12px; padding: 20px; background: #FFFFFF">
+<div style="display: flex; flex-direction: column; gap: 4px"><h2 style="margin: 0; font-size: 18px; font-weight: 500">재료</h2><span style="font-size: 14px; line-height: 1.5; color: #57534E">목록에서 고르면 단가가 자동 계산돼요. 사용량은 g 또는 개로 적어 주세요.</span></div>
+<sc-for list="{{ings}}" as="i" hint-placeholder-count="2">
+<div style="display: flex; flex-direction: column; gap: 10px; padding: 14px; border-radius: 16px; background: #F5F5F4">
+<div style="display: flex; justify-content: space-between; align-items: center"><span style="font-size: 16px; font-weight: 500">{{i.name}}</span><span style="font-size: 15px; font-weight: 500; color: #DC2626">{{i.cost}}</span></div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+<label style="display: flex; flex-direction: column; gap: 4px; font-size: 14px; color: #57534E">사용량<input type="text" value="{{i.qty}}" style="height: 44px; box-sizing: border-box; padding: 0 12px; border-radius: 10px; border: 0; background: #FFFFFF; font-size: 16px; color: #1C1917"></label>
+<label style="display: flex; flex-direction: column; gap: 4px; font-size: 14px; color: #57534E">표시용 분량<input type="text" value="{{i.show}}" style="height: 44px; box-sizing: border-box; padding: 0 12px; border-radius: 10px; border: 0; background: #FFFFFF; font-size: 16px; color: #1C1917"></label>
+</div>
+</div>
+</sc-for>
+<div style="display: flex; flex-direction: column; border-radius: 16px; border: 2px solid #16A34A; overflow: hidden">
+<input type="text" aria-label="재료 검색" value="달" style="height: 48px; box-sizing: border-box; padding: 0 14px; border: 0; border-bottom: 1px solid #E7E5E4; font-size: 16px">
+<button type="button" style="display: flex; justify-content: space-between; align-items: center; height: 48px; padding: 0 14px; border: 0; background: #F0FDF4; font-size: 16px; text-align: left"><span><b>계란</b> · 달걀</span><span style="font-size: 14px; color: #57534E">개당 280원</span></button>
+<button type="button" style="display: flex; justify-content: space-between; align-items: center; height: 48px; padding: 0 14px; border: 0; background: #FFFFFF; font-size: 16px; text-align: left"><span><b>닭가슴살</b> · 달가슴살</span><span style="font-size: 14px; color: #57534E">100g당 1,300원</span></button>
+<button type="button" style="height: 48px; padding: 0 14px; border: 0; border-top: 1px solid #E7E5E4; background: #FFFFFF; font-size: 14px; color: #57534E; text-align: left">목록에 없어요 · 기타 재료로 직접 입력 (단가 제외)</button>
+</div>
+<div style="display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border-radius: 16px; background: #F0FDF4">
+<span style="font-size: 15px; font-weight: 500">예상 1인분 단가</span><span style="font-size: 18px; font-weight: 500; color: #B91C1C">약 860원</span>
+</div>
+</div>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 12px; padding: 20px; background: #FFFFFF">
+<h2 style="margin: 0; font-size: 18px; font-weight: 500">조리 순서</h2>
+<div style="display: flex; gap: 10px"><span style="width: 28px; height: 28px; flex: none; margin-top: 10px; border-radius: 14px; background: #16A34A; font-size: 15px; font-weight: 500; display: flex; align-items: center; justify-content: center">1</span><textarea aria-label="1단계 설명" style="flex: 1; min-width: 0; height: 80px; box-sizing: border-box; padding: 12px 14px; border-radius: 12px; border: 0; background: #F5F5F4; font-size: 16px; line-height: 1.5; resize: none">대파는 송송 썰고 햄은 작게 깍둑썰기 해요.</textarea><button type="button" aria-label="1단계 사진 추가" style="width: 64px; height: 80px; flex: none; border-radius: 12px; border: 0; background: #F5F5F4; font-size: 14px; color: #57534E">사진</button></div>
+<div style="display: flex; gap: 10px"><span style="width: 28px; height: 28px; flex: none; margin-top: 10px; border-radius: 14px; background: #16A34A; font-size: 15px; font-weight: 500; display: flex; align-items: center; justify-content: center">2</span><textarea aria-label="2단계 설명" placeholder="다음 단계를 적어 주세요" style="flex: 1; min-width: 0; height: 80px; box-sizing: border-box; padding: 12px 14px; border-radius: 12px; border: 0; background: #F5F5F4; font-size: 16px; line-height: 1.5; resize: none"></textarea><button type="button" aria-label="2단계 사진 추가" style="width: 64px; height: 80px; flex: none; border-radius: 12px; border: 0; background: #F5F5F4; font-size: 14px; color: #57534E">사진</button></div>
+<button type="button" style="align-self: flex-start; padding: 4px 12px; border-radius: 16px; border: 1px solid #1C1917; background: #FFFFFF; font-size: 15px; font-weight: 500; line-height: 24px">단계 추가</button>
+</div>
+</div>
+<div style="padding: 12px 20px 20px; border-top: 1px solid #E7E5E4; background: #FFFFFF">
+<button type="button" style="width: 100%; padding: 12px; border: 0; border-radius: 12px; background: #16A34A; font-size: 16px; font-weight: 500; line-height: 24px">레시피 올리기</button>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1750}}'>
+class Component extends DCLogic {
+renderVals() {
+return { ings: [
+{ name: '계란', cost: '560원', qty: '2 개', show: '2개' },
+{ name: '대파', cost: '300원', qty: '40 g', show: '1/2대' }
+] };
+}
+}
+</script>
+</body>
+</html>

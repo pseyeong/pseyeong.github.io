@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>로그인 (디자인)</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@500;700&display=swap" rel="stylesheet">
+<style>
+@font-face{font-family:'GMarketSans';font-weight:300;font-display:swap;src:url('/_blob/98f92f89064b07f1f2e8b811c67330cc') format('woff')}
+@font-face{font-family:'GMarketSans';font-weight:500;font-display:swap;src:url('/_blob/666de4c9d161cad06f93b05690400823') format('woff')}
+@font-face{font-family:'GMarketSans';font-weight:700;font-display:swap;src:url('/_blob/2fbc9019a45b936cb878f55921ee339d') format('woff')}
+body{margin:0}
+b{font-weight:500}
+a{color:#1C1917;text-decoration:none}a:hover{color:#DC2626}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; display: flex; flex-direction: column; background: #16A34A; color: #1C1917; font-family: 'GMarketSans', 'Gmarket Sans', 'IBM Plex Sans KR', sans-serif; font-size: 16px; font-weight: 300">
+<div style="padding: 8px">
+<a href="D1Home.dc.html" aria-label="닫기" style="display: flex; align-items: center; justify-content: center; width: 44px; height: 44px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></a>
+</div>
+<div style="flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 16px; padding: 0 28px">
+<div style="font-size: 18px; font-weight: 500">자취<span style="color: #F0FDF4">한끼</span></div>
+<h1 style="margin: 0; font-size: 36px; line-height: 1.25; font-weight: 500">있는 재료로<br>알뜰하게<br>한 끼</h1>
+<p style="margin: 0; font-size: 16px; line-height: 1.6">검색과 열람은 로그인 없이도 할 수 있어요. 저장과 작성에만 로그인이 필요해요.</p>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px; padding: 28px 20px 32px; border-radius: 24px 24px 0 0; background: #FFFFFF">
+<a href="D7My.dc.html" style="padding: 12px; border-radius: 12px; background: #1C1917; font-size: 16px; font-weight: 500; line-height: 24px; text-align: center; color: #FFFFFF">카카오로 시작하기</a>
+<a href="D7My.dc.html" style="padding: 11px; border-radius: 12px; border: 1px solid #D6D3D1; font-size: 16px; font-weight: 500; line-height: 24px; text-align: center">구글로 시작하기</a>
+<div style="margin-top: 6px; padding: 14px 16px; border-radius: 16px; background: #F5F5F4; font-size: 15px; line-height: 1.6">가입하면 <b>배고픈감자4821</b> 같은 닉네임이 자동으로 만들어져요. 실명과 프로필 사진은 가져오지 않아요.</div>
+<div style="font-size: 14px; line-height: 1.6; color: #57534E; text-align: center">시작하면 <a href="#" style="text-decoration: underline; color: #57534E">이용약관</a>과 <a href="#" style="text-decoration: underline; color: #57534E">개인정보처리방침</a>에 동의하게 돼요.</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

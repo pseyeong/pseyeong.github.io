@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>기타 재료 후보</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#1A1F16;text-decoration:none}a:hover{color:#1F7A4D}
+button{font-family:'IBM Plex Sans KR',sans-serif;color:#1A1F16}
+table{border-collapse:collapse;width:100%;min-width:760px}
+th{text-align:left;font-size:12px;font-weight:600;color:#5A6355;padding:10px 12px;border-bottom:1px solid #E3E7DE}
+td{font-size:14px;padding:8px 12px;border-bottom:1px solid #E3E7DE}
+</style>
+</helmet>
+<div style="display: flex; flex-wrap: wrap; min-height: 800px; background: #FFFFFF; color: #1A1F16; font-family: 'IBM Plex Sans KR', sans-serif">
+<aside style="flex: 1 1 200px; box-sizing: border-box; padding: 24px 16px; background: #F3F5F0; display: flex; flex-direction: column; gap: 4px">
+<div style="padding: 0 12px 16px; font-size: 16px; font-weight: 700; color: #1F7A4D">자취한끼 관리자</div>
+<a href="Admin.dc.html" style="display: flex; align-items: center; height: 44px; padding: 0 12px; border-radius: 10px; font-size: 14px; color: #3F463B">요약</a>
+<a href="AdminRecipes.dc.html" style="display: flex; align-items: center; height: 44px; padding: 0 12px; border-radius: 10px; font-size: 14px; color: #3F463B">레시피</a>
+<a href="AdminIngredients.dc.html" style="display: flex; align-items: center; height: 44px; padding: 0 12px; border-radius: 10px; font-size: 14px; color: #3F463B">재료 가격표</a>
+<a href="AdminSubstitutes.dc.html" style="display: flex; align-items: center; height: 44px; padding: 0 12px; border-radius: 10px; font-size: 14px; color: #3F463B">대체 재료</a>
+<a href="AdminPending.dc.html" style="display: flex; align-items: center; justify-content: space-between; height: 44px; padding: 0 12px; border-radius: 10px; font-size: 14px; font-weight: 700; background: #FFFFFF; color: #1F7A4D">기타 재료 후보<span style="padding: 2px 8px; border-radius: 10px; background: #FFE27A; font-size: 12px; font-weight: 700; color: #1A1F16">7</span></a>
+</aside>
+<main style="flex: 999 1 560px; min-width: 0; box-sizing: border-box; padding: 32px; display: flex; flex-direction: column; gap: 20px">
+<h1 style="margin: 0; font-size: 24px; font-weight: 700">기타 재료 후보</h1>
+<div style="padding: 12px 16px; border-radius: 12px; background: #F3F5F0; font-size: 13px; line-height: 1.6; color: #3F463B">작성자가 목록에 없어서 직접 입력한 재료예요. 정식 재료로 등록하거나 기존 재료의 별칭으로 연결하면, 이 재료를 쓴 레시피의 단가가 다시 계산돼요.</div>
+<div style="overflow-x: auto">
+<table>
+<thead><tr><th>입력된 이름</th><th>사용 레시피</th><th>최근 입력일</th><th>비슷한 기존 재료</th><th>처리</th></tr></thead>
+<tbody>
+<sc-for list="{{rows}}" as="r" hint-placeholder-count="7">
+<tr>
+<td style="font-weight: 600">{{r.name}}</td><td>{{r.used}}개</td><td style="color: #5A6355">{{r.date}}</td><td style="color: #3F463B">{{r.similar}}</td>
+<td><div style="display: flex; flex-wrap: wrap; gap: 6px"><button type="button" style="height: 44px; padding: 0 12px; border: 0; border-radius: 10px; background: #1F7A4D; color: #FFFFFF; font-size: 13px; font-weight: 700">정식 재료로 등록</button><button type="button" style="height: 44px; padding: 0 12px; border-radius: 10px; border: 1px solid #E3E7DE; background: #FFFFFF; font-size: 13px; font-weight: 600">별칭으로 연결</button><button type="button" style="height: 44px; padding: 0 12px; border-radius: 10px; border: 1px solid #E3E7DE; background: #FFFFFF; font-size: 13px; font-weight: 600; color: #5A6355">무시</button></div></td>
+</tr>
+</sc-for>
+</tbody>
+</table>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":800}}'>
+class Component extends DCLogic {
+renderVals() {
+return { rows: [
+{ name: '김가루', used: 6, date: '2026.10.06', similar: '김' },
+{ name: '스리라차', used: 3, date: '2026.10.05', similar: '없음' },
+{ name: '체다치즈', used: 3, date: '2026.10.05', similar: '슬라이스치즈' },
+{ name: '달걀흰자', used: 2, date: '2026.10.04', similar: '계란 (달걀)' },
+{ name: '쯔유', used: 2, date: '2026.10.03', similar: '없음' },
+{ name: '후리카케', used: 1, date: '2026.10.02', similar: '없음' },
+{ name: '트러플오일', used: 1, date: '2026.10.01', similar: '없음' }
+] };
+}
+}
+</script>
+</body>
+</html>

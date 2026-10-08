@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>대체 재료 (디자인)</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@500;700&display=swap" rel="stylesheet">
+<style>
+@font-face{font-family:'GMarketSans';font-weight:300;font-display:swap;src:url('/_blob/98f92f89064b07f1f2e8b811c67330cc') format('woff')}
+@font-face{font-family:'GMarketSans';font-weight:500;font-display:swap;src:url('/_blob/666de4c9d161cad06f93b05690400823') format('woff')}
+@font-face{font-family:'GMarketSans';font-weight:700;font-display:swap;src:url('/_blob/2fbc9019a45b936cb878f55921ee339d') format('woff')}
+body{margin:0}
+b{font-weight:500}
+a{color:#1C1917;text-decoration:none}a:hover{color:#DC2626}
+</style>
+</helmet>
+<div style="width: 390px; height: 900px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: flex-end; background: #44403C; color: #1C1917; font-family: 'GMarketSans', 'Gmarket Sans', 'IBM Plex Sans KR', sans-serif; font-size: 16px; font-weight: 300">
+<div style="flex: 1; display: flex; align-items: flex-start; justify-content: center; padding-top: 40px; font-size: 14px; color: #E7E5E4">레시피 상세 화면 위에 열리는 시트</div>
+<div style="display: flex; flex-direction: column; gap: 18px; padding: 12px 20px 24px; border-radius: 24px 24px 0 0; background: #FFFFFF">
+<div style="width: 40px; height: 4px; border-radius: 2px; background: #E7E5E4; align-self: center"></div>
+<div style="display: flex; justify-content: space-between; align-items: center">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<h1 style="margin: 0; font-size: 18px; font-weight: 500">대파 대신 쓸 수 있어요</h1>
+<span style="font-size: 14px; color: #57534E">이 레시피 기준 대파 1/2대 (40g) · 300원</span>
+</div>
+<a href="D4Detail.dc.html" aria-label="닫기" style="display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; margin-right: -10px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></a>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<sc-for list="{{subs}}" as="s" hint-placeholder-count="3">
+<div style="display: flex; flex-direction: column; gap: 8px; padding: 16px; border-radius: 16px; background: #F5F5F4">
+<div style="display: flex; justify-content: space-between; align-items: center">
+<div style="display: flex; align-items: center; gap: 8px"><span style="font-size: 16px; font-weight: 500">{{s.name}}</span><span style="padding: 2px 8px; border-radius: 6px; background: {{s.bg}}; font-size: 14px; font-weight: 500">{{s.tag}}</span></div>
+<span style="font-size: 16px; font-weight: 500; color: {{s.deltaColor}}">{{s.delta}}</span>
+</div>
+<div style="font-size: 15px">{{s.ratio}}</div>
+<div style="font-size: 14px; line-height: 1.5; color: #57534E">{{s.note}}</div>
+</div>
+</sc-for>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 14px; color: #57534E">태그
+<span style="padding: 2px 8px; border-radius: 6px; background: #FFFFFF; border: 1px solid #E7E5E4; font-weight: 500; color: #1C1917">없을 때</span>
+<span style="padding: 2px 8px; border-radius: 6px; background: #16A34A; font-weight: 500; color: #1C1917">더 싸게</span>
+<span style="padding: 2px 8px; border-radius: 6px; background: #1C1917; font-weight: 500; color: #FFFFFF">더 가볍게</span>
+</div>
+<div style="font-size: 14px; line-height: 1.5; color: #57534E">금액은 원래 재료와의 차액이에요. 레시피 단가는 원래 재료 기준으로 표시돼요.</div>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":900}}'>
+class Component extends DCLogic {
+renderVals() {
+return { subs: [
+{ name: '쪽파', tag: '없을 때', bg: '#FFFFFF', delta: '+80원', deltaColor: '#DC2626', ratio: '대파 1 : 쪽파 1 → 40g', note: '향이 조금 약해요. 넉넉히 넣어도 좋아요.' },
+{ name: '양파', tag: '더 싸게', bg: '#16A34A', delta: '-120원', deltaColor: '#DC2626', ratio: '대파 1 : 양파 1.5 → 1/4개 (60g)', note: '단맛이 늘어요. 볶음 요리에 한해 어울려요.' },
+{ name: '부추', tag: '없을 때', bg: '#FFFFFF', delta: '+150원', deltaColor: '#DC2626', ratio: '대파 1 : 부추 1 → 40g', note: '마지막에 넣어 살짝만 볶아요.' }
+] };
+}
+}
+</script>
+</body>
+</html>

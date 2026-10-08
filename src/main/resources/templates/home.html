@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<!--/* 홈: docs/design/mobile/D1Home.dc.html */-->
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{layout/base :: layout(~{::title}, ~{::main})}">
+<head>
+	<title>자취한끼 - 가진 재료로 찾는 1인분 레시피</title>
+</head>
+<body>
+<main class="app-main">
+
+	<!-- 상단: 로고, 검색창, 배너 -->
+	<section class="section gap-4 pt-4">
+		<header class="section-header">
+			<h1 class="m-0 text-title font-medium">자취<span class="text-accent">한끼</span></h1>
+			<a th:href="@{/login}" class="btn-sm">로그인</a>
+		</header>
+
+		<a th:href="@{/search}" class="search-bar hover:text-ink-sub">
+			<span class="flex text-ink"><svg th:replace="~{fragments/ui :: icon('M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM21 21l-4.3-4.3', 20, 2.2)}"></svg></span>
+			<span>냉장고 속 재료를 검색해 보세요</span>
+		</a>
+
+		<a th:href="@{/recipes}" class="flex flex-col items-start gap-2.5 rounded-banner bg-primary px-5 py-[22px] text-on-primary hover:text-on-primary">
+			<span class="text-caption font-medium">이번 주 장보기 추천</span>
+			<span class="text-display font-medium">만원으로<br>3끼 해결</span>
+			<span class="btn-sm-dark mt-1">레시피 보기</span>
+		</a>
+	</section>
+
+	<!-- 바로가기 8개 -->
+	<nav class="grid grid-cols-4 gap-x-1 gap-y-[18px] bg-surface px-3 py-5" aria-label="바로가기">
+		<a th:each="s : ${shortcuts}" th:href="@{${s.href}}" class="flex flex-col items-center gap-2 text-caption">
+			<span class="flex h-14 w-14 items-center justify-center rounded-banner" th:classappend="${s.tone}">
+				<svg th:replace="~{fragments/ui :: icon(${s.icon}, 26, 1.8)}"></svg>
+			</span>
+			<span th:text="${s.label}">3천원 이하</span>
+		</a>
+	</nav>
+
+	<!-- 인기 레시피 (가로 스크롤) -->
+	<section class="section-bleed gap-3.5">
+		<div class="section-header pr-gutter">
+			<h2 class="section-title">지금 인기 있는 레시피</h2>
+			<a th:href="@{/recipes}" class="section-more">전체 보기</a>
+		</div>
+		<div class="h-scroll gap-3">
+			<th:block th:each="r : ${popular}">
+				<a th:replace="~{fragments/ui :: recipeCard(${r}, 'w-[148px] flex-none', 'h-[148px]')}"></a>
+			</th:block>
+		</div>
+	</section>
+
+	<!-- 최신 레시피 -->
+	<section class="section flex-1">
+		<h2 class="section-title mb-1.5">방금 올라온 레시피</h2>
+		<th:block th:each="r : ${latest}">
+			<a th:replace="~{fragments/ui :: recipeRow(${r})}"></a>
+		</th:block>
+	</section>
+
+</main>
+</body>
+</html>

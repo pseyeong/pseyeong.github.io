@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>레시피 관리</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#1A1F16;text-decoration:none}a:hover{color:#1F7A4D}
+input,select,button{font-family:'IBM Plex Sans KR',sans-serif;color:#1A1F16}
+table{border-collapse:collapse;width:100%;min-width:760px}
+th{text-align:left;font-size:12px;font-weight:600;color:#5A6355;padding:10px 12px;border-bottom:1px solid #E3E7DE}
+td{font-size:14px;padding:8px 12px;border-bottom:1px solid #E3E7DE}
+</style>
+</helmet>
+<div style="display: flex; flex-wrap: wrap; min-height: 800px; background: #FFFFFF; color: #1A1F16; font-family: 'IBM Plex Sans KR', sans-serif">
+<aside style="flex: 1 1 200px; box-sizing: border-box; padding: 24px 16px; background: #F3F5F0; display: flex; flex-direction: column; gap: 4px">
+<div style="padding: 0 12px 16px; font-size: 16px; font-weight: 700; color: #1F7A4D">자취한끼 관리자</div>
+<a href="Admin.dc.html" style="display: flex; align-items: center; height: 44px; padding: 0 12px; border-radius: 10px; font-size: 14px; color: #3F463B">요약</a>
+<a href="AdminRecipes.dc.html" style="display: flex; align-items: center; height: 44px; padding: 0 12px; border-radius: 10px; font-size: 14px; font-weight: 700; background: #FFFFFF; color: #1F7A4D">레시피</a>
+<a href="AdminIngredients.dc.html" style="display: flex; align-items: center; height: 44px; padding: 0 12px; border-radius: 10px; font-size: 14px; color: #3F463B">재료 가격표</a>
+<a href="AdminSubstitutes.dc.html" style="display: flex; align-items: center; height: 44px; padding: 0 12px; border-radius: 10px; font-size: 14px; color: #3F463B">대체 재료</a>
+<a href="AdminPending.dc.html" style="display: flex; align-items: center; justify-content: space-between; height: 44px; padding: 0 12px; border-radius: 10px; font-size: 14px; color: #3F463B">기타 재료 후보<span style="padding: 2px 8px; border-radius: 10px; background: #FFE27A; font-size: 12px; font-weight: 700; color: #1A1F16">7</span></a>
+</aside>
+<main style="flex: 999 1 560px; min-width: 0; box-sizing: border-box; padding: 32px; display: flex; flex-direction: column; gap: 20px">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px">
+<h1 style="margin: 0; font-size: 24px; font-weight: 700">레시피</h1>
+<div style="display: flex; gap: 8px">
+<button type="button" style="height: 44px; padding: 0 16px; border-radius: 12px; border: 1px solid #C9CFC3; background: #FFFFFF; font-size: 14px; font-weight: 600">CSV 일괄 등록</button>
+<button type="button" style="height: 44px; padding: 0 16px; border: 0; border-radius: 12px; background: #1F7A4D; color: #FFFFFF; font-size: 14px; font-weight: 700">레시피 등록</button>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 4px; padding: 16px 18px; border-radius: 12px; border: 1px dashed #8A9384; background: #F3F5F0">
+<span style="font-size: 14px; font-weight: 600">CSV 파일을 여기에 끌어다 놓으면 여러 레시피를 한 번에 등록해요</span>
+<span style="font-size: 13px; color: #5A6355">목록에 없는 재료는 기타 재료로 들어가고, 등록 전에 미리보기에서 확인할 수 있어요. <a href="#" style="text-decoration: underline; color: #1F7A4D">양식 내려받기</a></span>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<input type="search" aria-label="레시피 검색" placeholder="제목 또는 작성자 검색" style="flex: 1 1 240px; height: 44px; box-sizing: border-box; padding: 0 14px; border-radius: 12px; border: 1px solid #E3E7DE; font-size: 14px">
+<select aria-label="상태" style="height: 44px; padding: 0 12px; border-radius: 12px; border: 1px solid #E3E7DE; background: #FFFFFF; font-size: 14px"><option>전체 상태</option><option>공개</option><option>숨김</option></select>
+<select aria-label="작성자 구분" style="height: 44px; padding: 0 12px; border-radius: 12px; border: 1px solid #E3E7DE; background: #FFFFFF; font-size: 14px"><option>전체 작성자</option><option>공식 계정</option><option>일반 사용자</option></select>
+</div>
+<div style="overflow-x: auto">
+<table>
+<thead><tr><th>제목</th><th>작성자</th><th>1인분 단가</th><th>상태</th><th>등록일</th><th>관리</th></tr></thead>
+<tbody>
+<sc-for list="{{rows}}" as="r" hint-placeholder-count="6">
+<tr>
+<td style="font-weight: 600">{{r.title}}<sc-if value="{{r.partial}}" hint-placeholder-val="{{false}}"><span style="margin-left: 8px; padding: 2px 8px; border-radius: 6px; background: #F3F5F0; font-size: 11px; font-weight: 600; color: #3F463B">일부 재료 제외</span></sc-if></td>
+<td>{{r.by}}</td><td>{{r.price}}</td>
+<td><span style="padding: 3px 10px; border-radius: 6px; background: {{r.bg}}; font-size: 12px; font-weight: 600; color: {{r.fg}}">{{r.status}}</span></td>
+<td style="color: #5A6355">{{r.date}}</td>
+<td><div style="display: flex; gap: 6px"><button type="button" style="height: 44px; padding: 0 12px; border-radius: 10px; border: 1px solid #E3E7DE; background: #FFFFFF; font-size: 13px; font-weight: 600">수정</button><button type="button" onClick="{{r.toggle}}" style="height: 44px; padding: 0 12px; border-radius: 10px; border: 1px solid #E3E7DE; background: #FFFFFF; font-size: 13px; font-weight: 600">{{r.action}}</button></div></td>
+</tr>
+</sc-for>
+</tbody>
+</table>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":800}}'>
+class Component extends DCLogic {
+state = { hidden: { 5: true } };
+renderVals() {
+const base = [
+{ title: '양파 듬뿍 제육볶음', by: '졸린두부0192', price: '약 3,400원', date: '2026.10.06' },
+{ title: '에어프라이어 통감자', by: '배고픈감자4821', price: '약 1,200원', date: '2026.10.05' },
+{ title: '대파 계란볶음밥', by: '자취한끼 공식', price: '약 2,150원', date: '2026.10.04', partial: true },
+{ title: '참치 김치찌개', by: '자취한끼 공식', price: '약 2,900원', date: '2026.10.04' },
+{ title: '전자레인지 계란찜', by: '자취한끼 공식', price: '약 900원', date: '2026.10.03' },
+{ title: '광고성 게시글 예시', by: '느긋한김치7730', price: '계산 불가', date: '2026.10.03', partial: true }
+];
+return { rows: base.map((r, i) => {
+const h = !!this.state.hidden[i];
+return { ...r, partial: !!r.partial, status: h ? '숨김' : '공개', bg: h ? '#F3F5F0' : '#E4F2EA', fg: h ? '#3F463B' : '#17603C', action: h ? '공개' : '숨김', toggle: () => this.setState({ hidden: { ...this.state.hidden, [i]: !h } }) };
+}) };
+}
+}
+</script>
+</body>
+</html>

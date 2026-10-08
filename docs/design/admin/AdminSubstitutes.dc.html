@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>대체 재료 관리</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#1A1F16;text-decoration:none}a:hover{color:#1F7A4D}
+input,select,button{font-family:'IBM Plex Sans KR',sans-serif;color:#1A1F16}
+table{border-collapse:collapse;width:100%;min-width:760px}
+th{text-align:left;font-size:12px;font-weight:600;color:#5A6355;padding:10px 12px;border-bottom:1px solid #E3E7DE}
+td{font-size:14px;padding:8px 12px;border-bottom:1px solid #E3E7DE}
+</style>
+</helmet>
+<div style="display: flex; flex-wrap: wrap; min-height: 800px; background: #FFFFFF; color: #1A1F16; font-family: 'IBM Plex Sans KR', sans-serif">
+<aside style="flex: 1 1 200px; box-sizing: border-box; padding: 24px 16px; background: #F3F5F0; display: flex; flex-direction: column; gap: 4px">
+<div style="padding: 0 12px 16px; font-size: 16px; font-weight: 700; color: #1F7A4D">자취한끼 관리자</div>
+<a href="Admin.dc.html" style="display: flex; align-items: center; height: 44px; padding: 0 12px; border-radius: 10px; font-size: 14px; color: #3F463B">요약</a>
+<a href="AdminRecipes.dc.html" style="display: flex; align-items: center; height: 44px; padding: 0 12px; border-radius: 10px; font-size: 14px; color: #3F463B">레시피</a>
+<a href="AdminIngredients.dc.html" style="display: flex; align-items: center; height: 44px; padding: 0 12px; border-radius: 10px; font-size: 14px; color: #3F463B">재료 가격표</a>
+<a href="AdminSubstitutes.dc.html" style="display: flex; align-items: center; height: 44px; padding: 0 12px; border-radius: 10px; font-size: 14px; font-weight: 700; background: #FFFFFF; color: #1F7A4D">대체 재료</a>
+<a href="AdminPending.dc.html" style="display: flex; align-items: center; justify-content: space-between; height: 44px; padding: 0 12px; border-radius: 10px; font-size: 14px; color: #3F463B">기타 재료 후보<span style="padding: 2px 8px; border-radius: 10px; background: #FFE27A; font-size: 12px; font-weight: 700; color: #1A1F16">7</span></a>
+</aside>
+<main style="flex: 999 1 560px; min-width: 0; box-sizing: border-box; padding: 32px; display: flex; flex-direction: column; gap: 20px">
+<h1 style="margin: 0; font-size: 24px; font-weight: 700">대체 재료</h1>
+<div style="display: flex; flex-direction: column; gap: 12px; padding: 18px; border-radius: 14px; border: 1px solid #E3E7DE">
+<h2 style="margin: 0; font-size: 15px; font-weight: 700">대체 재료 쌍 추가</h2>
+<div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-end">
+<label style="flex: 1 1 140px; display: flex; flex-direction: column; gap: 6px; font-size: 12px; font-weight: 600; color: #5A6355">원래 재료<input type="text" value="설탕" style="height: 44px; box-sizing: border-box; padding: 0 12px; border-radius: 10px; border: 1px solid #E3E7DE; font-size: 14px"></label>
+<label style="flex: 1 1 140px; display: flex; flex-direction: column; gap: 6px; font-size: 12px; font-weight: 600; color: #5A6355">대신 쓸 재료<input type="text" value="알룰로스" style="height: 44px; box-sizing: border-box; padding: 0 12px; border-radius: 10px; border: 1px solid #E3E7DE; font-size: 14px"></label>
+<label style="flex: 0 1 90px; display: flex; flex-direction: column; gap: 6px; font-size: 12px; font-weight: 600; color: #5A6355">비율 (1 : ?)<input type="text" value="1.3" style="height: 44px; box-sizing: border-box; padding: 0 12px; border-radius: 10px; border: 1px solid #E3E7DE; font-size: 14px"></label>
+<label style="flex: 0 1 130px; display: flex; flex-direction: column; gap: 6px; font-size: 12px; font-weight: 600; color: #5A6355">태그<select style="height: 44px; padding: 0 10px; border-radius: 10px; border: 1px solid #E3E7DE; background: #FFFFFF; font-size: 14px"><option>더 가볍게</option><option>더 싸게</option><option>없을 때</option></select></label>
+<label style="flex: 3 1 220px; display: flex; flex-direction: column; gap: 6px; font-size: 12px; font-weight: 600; color: #5A6355">한 줄 설명<input type="text" value="단맛이 약해요. 조금 더 넣어 주세요." style="height: 44px; box-sizing: border-box; padding: 0 12px; border-radius: 10px; border: 1px solid #E3E7DE; font-size: 14px"></label>
+<button type="button" style="height: 44px; padding: 0 18px; border: 0; border-radius: 10px; background: #1F7A4D; color: #FFFFFF; font-size: 14px; font-weight: 700">추가</button>
+</div>
+<span style="font-size: 12px; color: #5A6355">한 방향으로만 저장돼요. 반대 방향도 필요하면 따로 추가해 주세요.</span>
+</div>
+<div style="overflow-x: auto">
+<table>
+<thead><tr><th>원래 재료</th><th>대신 쓸 재료</th><th>비율</th><th>태그</th><th>설명</th><th>관리</th></tr></thead>
+<tbody>
+<sc-for list="{{rows}}" as="r" hint-placeholder-count="6">
+<tr>
+<td style="font-weight: 600">{{r.from}}</td><td style="font-weight: 600">{{r.to}}</td><td>1 : {{r.ratio}}</td>
+<td><span style="padding: 3px 10px; border-radius: 6px; background: {{r.bg}}; font-size: 12px; font-weight: 600; color: {{r.fg}}">{{r.tag}}</span></td>
+<td style="color: #3F463B">{{r.note}}</td>
+<td><div style="display: flex; gap: 6px"><button type="button" style="height: 44px; padding: 0 12px; border-radius: 10px; border: 1px solid #E3E7DE; background: #FFFFFF; font-size: 13px; font-weight: 600">수정</button><button type="button" style="height: 44px; padding: 0 12px; border-radius: 10px; border: 1px solid #E3E7DE; background: #FFFFFF; font-size: 13px; font-weight: 600; color: #B3261E">삭제</button></div></td>
+</tr>
+</sc-for>
+</tbody>
+</table>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":800}}'>
+class Component extends DCLogic {
+renderVals() {
+const c = { '없을 때': ['#F3F5F0', '#3F463B'], '더 싸게': ['#FFE27A', '#1A1F16'], '더 가볍게': ['#E1EEFB', '#1D5FA8'] };
+const rows = [
+{ from: '대파', to: '쪽파', ratio: '1', tag: '없을 때', note: '향이 조금 약해요. 넉넉히 넣어도 좋아요.' },
+{ from: '대파', to: '양파', ratio: '1.5', tag: '더 싸게', note: '단맛이 늘어요. 볶음 요리에 한해 어울려요.' },
+{ from: '생크림', to: '우유+버터', ratio: '1', tag: '더 싸게', note: '우유 3 : 버터 1로 섞어요. 휘핑은 안 돼요.' },
+{ from: '마요네즈', to: '그릭요거트', ratio: '1', tag: '더 가볍게', note: '산미가 있어요. 설탕을 조금 더해도 좋아요.' },
+{ from: '맛술', to: '소주+설탕', ratio: '1', tag: '없을 때', note: '소주 1큰술에 설탕 1/2작은술.' },
+{ from: '소고기', to: '돼지고기 앞다리', ratio: '1', tag: '더 싸게', note: '볶음, 찌개에 어울려요.' }
+];
+return { rows: rows.map((r) => ({ ...r, bg: c[r.tag][0], fg: c[r.tag][1] })) };
+}
+}
+</script>
+</body>
+</html>

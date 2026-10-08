@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<!--/*
+  공통 레이아웃: 기기별 폭(폰 430 / 태블릿 768 / PC 1024) 가운데 정렬 + 하단 탭
+  사용법 (각 페이지 최상단):
+    <html th:replace="~{layout/base :: layout(~{::title}, ~{::main})}">
+*/-->
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" th:fragment="layout(title, content)">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+	<meta name="theme-color" content="#FFFFFF">
+	<title th:replace="${title}">자취한끼</title>
+	<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+	<link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+	<div class="app-shell">
+		<main th:replace="${content}"></main>
+		<nav th:replace="~{fragments/ui :: bottomTab}"></nav>
+	</div>
+</body>
+</html>

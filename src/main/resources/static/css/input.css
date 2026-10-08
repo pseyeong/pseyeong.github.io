@@ -1,0 +1,204 @@
+/*
+ * Tailwind 입력 파일. 빌드 결과는 같은 폴더의 app.css (npm run dev:css / build:css)
+ * 공통 색·여백은 :root 변수 → tailwind.config.js → 클래스(bg-primary 등) 순서로 연결된다.
+ */
+
+@font-face {
+  font-family: 'GMarketSans';
+  font-weight: 300;
+  font-display: swap;
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansLight.woff') format('woff');
+}
+@font-face {
+  font-family: 'GMarketSans';
+  font-weight: 500;
+  font-display: swap;
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+}
+@font-face {
+  font-family: 'GMarketSans';
+  font-weight: 700;
+  font-display: swap;
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff') format('woff');
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===== 디자인 토큰 (색은 hex, 투명도 클래스 bg-primary/50 사용 가능) ===== */
+@layer base {
+  :root {
+    --color-primary: #16A34A;
+    --color-primary-soft: #E5E7EB;
+    --color-primary-ink: #166534;
+    --color-on-primary: #FFFFFF; /* 초록 바탕 위 글자·아이콘 */
+    --color-accent: #DC2626;
+    --color-accent-strong: #B91C1C;
+    --color-ink: #1C1917;
+    --color-ink-sub: #57534E;
+    --color-ink-mute: #78716C;
+    --color-page: #F5F5F4;
+    --color-surface: #FFFFFF;
+    --color-photo: #E7E5E4;
+    --color-line: #E7E5E4;
+    --color-line-soft: #F5F5F4;
+
+    --space-gutter: 20px;
+    --space-stack: 8px;
+    --size-tab: 64px;
+    --size-touch: 44px;
+    --size-field: 48px;
+    /* 기기별 화면 폭: 폰 → 태블릿 → PC */
+    --app-max-width: 430px;
+  }
+
+  @media (min-width: 768px) {
+    :root {
+      --app-max-width: 768px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    :root {
+      --app-max-width: 1024px;
+    }
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-page font-sans text-body font-light text-ink antialiased;
+  }
+  a {
+    @apply text-ink no-underline;
+  }
+  a:hover {
+    @apply text-accent;
+  }
+  b,
+  strong {
+    @apply font-medium;
+  }
+  button,
+  input,
+  select,
+  textarea {
+    font-family: inherit;
+    color: inherit;
+  }
+}
+
+/* ===== 공통 컴포넌트 ===== */
+@layer components {
+  /* --- 레이아웃 --- */
+  /* 기기별 폭 가운데 정렬 화면 틀 */
+  .app-shell {
+    @apply mx-auto flex min-h-screen w-full max-w-app flex-col bg-page;
+  }
+  /* 흰 구역들을 8px 간격으로 쌓는 본문 */
+  .app-main {
+    @apply flex flex-1 flex-col gap-stack;
+  }
+  /* 흰 바탕 구역 (안쪽 여백 20px) */
+  .section {
+    @apply flex flex-col bg-surface p-gutter;
+  }
+  /* 가로 스크롤 목록이 있는 구역: 오른쪽 여백은 스크롤 영역이 가진다 */
+  .section-bleed {
+    @apply flex flex-col bg-surface py-gutter pl-gutter;
+  }
+  .section-header {
+    @apply flex items-center justify-between;
+  }
+  .section-title {
+    @apply m-0 text-title font-medium;
+  }
+  .section-more {
+    @apply text-caption text-ink-sub;
+  }
+  .h-scroll {
+    @apply flex overflow-x-auto pr-gutter;
+    scrollbar-width: none;
+  }
+  .h-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* --- 버튼 --- */
+  /* 칩: 선택 안 됨 */
+  .chip {
+    @apply inline-flex flex-none items-center whitespace-nowrap rounded-chip border border-line bg-surface px-3 py-1 text-sub font-light leading-6;
+  }
+  /* 칩: 선택됨 (초록 바탕 위 글자는 검정) */
+  .chip-active {
+    @apply border-primary bg-primary font-medium text-on-primary;
+  }
+  /* 회색 바탕 작은 버튼 (로그인, 설정 등) */
+  .btn-sm {
+    @apply inline-flex flex-none items-center rounded-chip bg-page px-3 py-1 text-caption leading-6;
+  }
+  /* 검정 바탕 작은 버튼 (배너 안 "레시피 보기") */
+  .btn-sm-dark {
+    @apply inline-flex flex-none items-center rounded-chip bg-ink px-3 py-1 text-caption font-medium leading-6 text-surface;
+  }
+  /* 화면 맨 아래 주요 버튼 (가로 꽉 채움) */
+  .btn-primary {
+    @apply flex w-full items-center justify-center rounded-btn border-0 bg-primary p-3 text-body font-medium leading-6 text-on-primary disabled:opacity-40;
+  }
+  .btn-primary:hover {
+    @apply text-on-primary brightness-95;
+  }
+  /* 주요 버튼을 담는 하단 고정 바 */
+  .bottom-action {
+    @apply sticky bottom-0 border-t border-line bg-surface px-gutter pb-gutter pt-3;
+  }
+  /* 아이콘 버튼 (최소 44px) */
+  .btn-icon {
+    @apply inline-flex h-touch w-touch flex-none items-center justify-center rounded-full border-0 bg-transparent;
+  }
+
+  /* --- 입력 --- */
+  .input {
+    @apply h-field w-full rounded-field border-2 border-transparent bg-page px-4 text-body outline-none focus:border-primary;
+  }
+  .search-bar {
+    @apply flex h-field items-center gap-2.5 rounded-pill bg-page px-4 text-sub text-ink-sub;
+  }
+
+  /* --- 표시 --- */
+  /* 가격: "약 2,150원" */
+  .price {
+    @apply font-medium text-accent;
+  }
+  /* 가격 뒤 부가 정보: " · 15분" */
+  .price-meta {
+    @apply text-caption text-ink-sub;
+  }
+  .badge {
+    @apply inline-flex items-center rounded-badge bg-primary px-2 text-caption font-medium leading-6 text-on-primary;
+  }
+  /* 사진 자리 */
+  .photo {
+    @apply flex flex-none items-center justify-center overflow-hidden bg-photo text-caption text-ink-sub;
+  }
+  .photo > img {
+    @apply h-full w-full object-cover;
+  }
+  /* 목록 한 줄 */
+  .list-row {
+    @apply flex items-center gap-3.5 border-b border-line-soft py-3;
+  }
+
+  /* --- 하단 탭 --- */
+  .tab-bar {
+    @apply sticky bottom-0 z-10 grid h-tab grid-cols-4 border-t border-line bg-surface;
+  }
+  .tab-item {
+    @apply flex flex-col items-center justify-center gap-0.5 text-caption font-light text-ink-mute;
+  }
+  .tab-item-active {
+    @apply font-medium text-ink;
+  }
+}
