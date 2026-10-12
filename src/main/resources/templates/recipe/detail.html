@@ -110,10 +110,24 @@
 			class="flex h-12 w-12 flex-none items-center justify-center rounded-btn border border-line bg-surface">
 			<svg th:replace="~{fragments/ui :: icon('M12 3v12M8 7l4-4 4 4M5 13v7h14v-7', 20, 2)}"></svg>
 		</button>
-		<button type="button" class="btn-primary flex-1 gap-2">
+		<!-- 비로그인: 로그인 후 이 레시피로 돌아온다 -->
+		<a th:if="${loginUser == null}" th:href="@{/login(next=${'/recipes/' + recipe.id})}" class="btn-primary flex-1 gap-2">
 			<svg th:replace="~{fragments/ui :: icon('M6 3h12v18l-6-4-6 4z', 18, 2)}"></svg>
 			레시피 저장
-		</button>
+		</a>
+		<form th:if="${loginUser != null and !saved}" th:action="@{/recipes/{id}/save(id=${recipe.id})}" method="post" class="flex flex-1">
+			<button type="submit" class="btn-primary gap-2">
+				<svg th:replace="~{fragments/ui :: icon('M6 3h12v18l-6-4-6 4z', 18, 2)}"></svg>
+				레시피 저장
+			</button>
+		</form>
+		<form th:if="${loginUser != null and saved}" th:action="@{/recipes/{id}/unsave(id=${recipe.id})}" method="post" class="flex flex-1">
+			<button type="submit" aria-label="저장 취소"
+				class="flex w-full items-center justify-center gap-2 rounded-btn border border-line bg-surface p-3 text-body font-medium leading-6 text-ink">
+				<svg th:replace="~{fragments/ui :: icon('M5 13l4 4L19 7', 18, 2.2)}"></svg>
+				저장됨
+			</button>
+		</form>
 	</div>
 
 	<!-- 대체 재료 시트 (docs/design/mobile/D5Substitute.dc.html). 차액은 이 레시피의 사용량 기준 -->

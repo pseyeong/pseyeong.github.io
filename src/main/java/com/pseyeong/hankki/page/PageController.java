@@ -44,11 +44,6 @@ public class PageController {
 		return placeholder(model, "설정", 7);
 	}
 
-	@GetMapping("/login")
-	public String login(Model model) {
-		return placeholder(model, "로그인", 5);
-	}
-
 	@GetMapping("/about")
 	public String about(Model model) {
 		return placeholder(model, "서비스 소개", 9);

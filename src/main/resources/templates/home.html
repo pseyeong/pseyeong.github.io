@@ -12,7 +12,8 @@
 	<section class="section gap-4 pt-4">
 		<header class="section-header">
 			<h1 class="m-0 text-title font-medium">자취<span class="text-accent">한끼</span></h1>
-			<a th:href="@{/login}" class="btn-sm">로그인</a>
+			<a th:if="${loginUser == null}" th:href="@{/login}" class="btn-sm">로그인</a>
+			<a th:if="${loginUser != null}" th:href="@{/my}" class="btn-sm" th:text="${loginUser.nickname}">닉네임</a>
 		</header>
 
 		<a th:href="@{/search}" class="search-bar hover:text-ink-sub">

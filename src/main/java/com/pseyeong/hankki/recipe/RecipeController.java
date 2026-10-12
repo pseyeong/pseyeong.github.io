@@ -3,6 +3,7 @@ package com.pseyeong.hankki.recipe;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,13 +11,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.pseyeong.hankki.member.LoginUser;
+
 @Controller
 public class RecipeController {
 
 	private final RecipeService recipeService;
+	private final SaveRepository saveRepository;
 
-	public RecipeController(RecipeService recipeService) {
+	public RecipeController(RecipeService recipeService, SaveRepository saveRepository) {
 		this.recipeService = recipeService;
+		this.saveRepository = saveRepository;
 	}
 
 	/** 전체 레시피 목록. 필터 상태는 쿼리 문자열에 담긴다. */
@@ -39,10 +44,11 @@ public class RecipeController {
 	}
 
 	@GetMapping("/recipes/{id:\\d+}")
-	public String detail(@PathVariable long id, Model model) {
+	public String detail(@PathVariable long id, @AuthenticationPrincipal LoginUser user, Model model) {
 		RecipeDetail recipe = recipeService.findDetail(id)
 				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 		model.addAttribute("recipe", recipe);
+		model.addAttribute("saved", user != null && saveRepository.isSaved(user.id(), id));
 		model.addAttribute("hideTab", true);
 		return "recipe/detail";
 	}

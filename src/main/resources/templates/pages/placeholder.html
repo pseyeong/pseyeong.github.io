@@ -14,6 +14,13 @@
 		</p>
 		<p class="m-0 text-caption text-ink-mute" th:text="${currentPath}">/path</p>
 	</section>
+	<!-- 7단계에서 마이페이지·설정 화면으로 바꾼다. 그 전까지 로그인 확인과 로그아웃용 -->
+	<section class="section gap-3" th:if="${loginUser != null}">
+		<p class="m-0 text-sub" th:text="|${loginUser.nickname} 님으로 로그인했어요.|">닉네임 님으로 로그인했어요.</p>
+		<form th:action="@{/logout}" method="post">
+			<button type="submit" class="btn-sm">로그아웃</button>
+		</form>
+	</section>
 	<section class="section flex-1 justify-end">
 		<a th:href="@{/}" class="btn-primary">홈으로</a>
 	</section>
