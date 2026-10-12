@@ -6,9 +6,9 @@
   "scripts": {
     "dev": "concurrently -k -n css,server -c green,blue \"npm:dev:css\" \"npm:dev:server\"",
     "dev:css": "tailwindcss -i ./src/main/resources/static/css/input.css -o ./src/main/resources/static/css/app.css --postcss --watch=always",
-    "dev:server": "mvnw spring-boot:run",
+    "dev:server": "node scripts/mvnw.js spring-boot:run",
     "build:css": "tailwindcss -i ./src/main/resources/static/css/input.css -o ./src/main/resources/static/css/app.css --postcss --minify",
-    "build": "npm run build:css && mvnw -DskipTests package"
+    "build": "npm run build:css && node scripts/mvnw.js -DskipTests package"
   },
   "devDependencies": {
     "autoprefixer": "^10.6.1",
