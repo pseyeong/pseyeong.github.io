@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{layout/base :: layout(~{::title}, ~{::main}, ~{})}">
+<head>
+	<title>접근할 수 없어요 - 자취한끼</title>
+</head>
+<body>
+<main class="app-main">
+	<section class="section flex-1 items-center justify-center gap-2 text-center">
+		<h1 class="section-title">접근할 수 없어요</h1>
+		<p class="m-0 text-caption text-ink-sub">내가 쓴 레시피만 수정할 수 있어요.</p>
+		<a th:href="@{/recipes}" class="btn-primary mt-6">레시피 둘러보기</a>
+	</section>
+</main>
+</body>
+</html>

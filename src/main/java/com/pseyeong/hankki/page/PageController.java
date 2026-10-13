@@ -3,7 +3,6 @@ package com.pseyeong.hankki.page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 /**
  * docs/PLAN.md 사이트맵의 아직 만들지 않은 페이지들.
@@ -13,36 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class PageController {
 
 	private static final String VIEW = "pages/placeholder";
-
-	@GetMapping("/recipes/new")
-	public String recipeNew(Model model) {
-		return placeholder(model, "레시피 작성", 6);
-	}
-
-	@GetMapping("/recipes/{id:\\d+}/edit")
-	public String recipeEdit(@PathVariable long id, Model model) {
-		return placeholder(model, "레시피 수정", 6);
-	}
-
-	@GetMapping("/my")
-	public String my(Model model) {
-		return placeholder(model, "마이", 7);
-	}
-
-	@GetMapping("/my/saved")
-	public String mySaved(Model model) {
-		return placeholder(model, "저장한 레시피", 7);
-	}
-
-	@GetMapping("/my/recipes")
-	public String myRecipes(Model model) {
-		return placeholder(model, "내가 쓴 레시피", 7);
-	}
-
-	@GetMapping("/my/settings")
-	public String mySettings(Model model) {
-		return placeholder(model, "설정", 7);
-	}
 
 	@GetMapping("/about")
 	public String about(Model model) {

@@ -1,5 +1,7 @@
 package com.pseyeong.hankki.ingredient;
 
+import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,8 +15,11 @@ public class IngredientRepository {
 	public record Ingredient(long id, String name, boolean basic) {
 	}
 
-	/** 자동완성 후보. 별칭으로 찾은 경우 alias 에 그 별칭이 들어간다 ("달걀" → 계란). */
-	public record Suggestion(String name, String alias) {
+	/**
+	 * 자동완성 후보. 별칭으로 찾은 경우 alias 에 그 별칭이 들어간다 ("달걀" → 계란).
+	 * 레시피 작성 화면이 예상 단가를 바로 계산하도록 단위와 단위당 가격도 함께 준다 (공개 정보).
+	 */
+	public record Suggestion(long id, String name, String alias, String unit, BigDecimal unitPrice, boolean basic) {
 	}
 
 	private final JdbcClient jdbc;
@@ -41,7 +46,7 @@ public class IngredientRepository {
 	public List<Suggestion> suggest(String q, boolean includeBasic, int limit) {
 		String escaped = escapeLike(q.trim());
 		return jdbc.sql("""
-				select i.name,
+				select i.id, i.name, i.unit, i.unit_price, i.is_basic,
 				       case when i.name ilike :contains escape '\\' then null
 				            else (select a from unnest(i.aliases) a where a ilike :contains escape '\\' order by a limit 1)
 				       end as alias
@@ -56,7 +61,19 @@ public class IngredientRepository {
 				.param("prefix", escaped + "%")
 				.param("includeBasic", includeBasic)
 				.param("limit", limit)
-				.query((rs, n) -> new Suggestion(rs.getString("name"), rs.getString("alias")))
+				.query((rs, n) -> new Suggestion(rs.getLong("id"), rs.getString("name"), rs.getString("alias"),
+						rs.getString("unit"), rs.getBigDecimal("unit_price"), rs.getBoolean("is_basic")))
+				.list();
+	}
+
+	/** ids 중 실제로 등록된 재료의 id */
+	public List<Long> findExistingIds(Collection<Long> ids) {
+		if (ids.isEmpty()) {
+			return List.of();
+		}
+		return jdbc.sql("select id from ingredients where id in (:ids)")
+				.param("ids", ids)
+				.query(Long.class)
 				.list();
 	}
 

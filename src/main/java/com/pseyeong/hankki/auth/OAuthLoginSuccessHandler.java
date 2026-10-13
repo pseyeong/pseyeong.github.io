@@ -1,17 +1,10 @@
 package com.pseyeong.hankki.auth;
 
 import java.io.IOException;
-import java.util.List;
 
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
-import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.stereotype.Component;
 
 import com.pseyeong.hankki.member.LoginUser;
@@ -30,10 +23,11 @@ import jakarta.servlet.http.HttpServletResponse;
 public class OAuthLoginSuccessHandler implements AuthenticationSuccessHandler {
 
 	private final MemberService memberService;
-	private final SecurityContextRepository securityContextRepository = new HttpSessionSecurityContextRepository();
+	private final LoginSession loginSession;
 
-	public OAuthLoginSuccessHandler(MemberService memberService) {
+	public OAuthLoginSuccessHandler(MemberService memberService, LoginSession loginSession) {
 		this.memberService = memberService;
+		this.loginSession = loginSession;
 	}
 
 	@Override
@@ -41,15 +35,7 @@ public class OAuthLoginSuccessHandler implements AuthenticationSuccessHandler {
 			Authentication authentication) throws IOException {
 		OAuth2AuthenticationToken oauth = (OAuth2AuthenticationToken) authentication;
 		LoginUser user = memberService.findOrCreate(oauth.getAuthorizedClientRegistrationId(), oauth.getName());
-
-		List<SimpleGrantedAuthority> authorities = user.isAdmin()
-				? List.of(new SimpleGrantedAuthority("ROLE_USER"), new SimpleGrantedAuthority("ROLE_ADMIN"))
-				: List.of(new SimpleGrantedAuthority("ROLE_USER"));
-		SecurityContext context = SecurityContextHolder.createEmptyContext();
-		context.setAuthentication(new UsernamePasswordAuthenticationToken(user, null, authorities));
-		SecurityContextHolder.setContext(context);
-		securityContextRepository.saveContext(context, request, response);
-
+		loginSession.establish(request, response, user);
 		response.sendRedirect(request.getContextPath() + LoginRedirect.consume(request, "/"));
 	}
 }

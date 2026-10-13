@@ -90,7 +90,7 @@ public class RecipeService {
 			}
 
 			return new RecipeDetail(
-					recipe.id(), recipe.title(), recipe.description(), recipe.coverImage(),
+					recipe.id(), recipe.authorId(), recipe.title(), recipe.description(), recipe.coverImage(),
 					recipe.servings(), recipe.cookMinutes(), recipe.tool(),
 					recipe.pricePerServing(), recipe.partialPrice(), recipe.authorNickname(),
 					priceDate,

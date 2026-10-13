@@ -22,6 +22,18 @@ public class NicknameGenerator {
 			"참치", "햄", "치즈", "떡볶이", "김밥", "만두", "토마토", "고구마", "옥수수", "버섯",
 			"애호박", "콩나물", "브로콜리", "단무지", "식빵", "우동", "볶음밥", "순두부", "멸치", "깍두기");
 
+	/**
+	 * 마이페이지 동그라미에 넣는 글자. 닉네임 끝 숫자를 뗀 뒤 음식 이름으로 끝나면 그 음식("감자"),
+	 * 아니면(직접 바꾼 닉네임) 앞 두 글자.
+	 */
+	public static String avatarLabel(String nickname) {
+		String base = nickname.replaceAll("\\d+$", "");
+		return FOODS.stream()
+				.filter(base::endsWith)
+				.max(java.util.Comparator.comparingInt(String::length))
+				.orElse(nickname.substring(0, Math.min(2, nickname.length())));
+	}
+
 	public String generate() {
 		ThreadLocalRandom random = ThreadLocalRandom.current();
 		return ADJECTIVES.get(random.nextInt(ADJECTIVES.size()))

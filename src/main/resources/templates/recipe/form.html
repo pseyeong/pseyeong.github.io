@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<!--/* 레시피 작성·수정: docs/design/mobile/D6Write.dc.html. 동작은 static/js/recipe-form.js */-->
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{layout/base :: layout(~{::title}, ~{::main}, ~{::meta})}">
+<head>
+	<title th:text="${mode == 'edit'} ? '레시피 수정 - 자취한끼' : '레시피 작성 - 자취한끼'">레시피 작성 - 자취한끼</title>
+	<meta name="robots" content="noindex">
+	<meta name="_csrf" th:content="${_csrf.token}" content="">
+	<meta name="_csrf_header" th:content="${_csrf.headerName}" content="">
+</head>
+<body>
+<main class="flex flex-1 flex-col" data-recipe-form th:attr="data-mode=${mode},data-recipe-id=${recipeId}">
+
+	<header class="flex items-center justify-between bg-surface py-2 pl-2 pr-5">
+		<div class="flex items-center">
+			<a th:href="${mode == 'edit'} ? @{/recipes/{id}(id=${recipeId})} : @{/}" aria-label="닫기" class="btn-icon">
+				<svg th:replace="~{fragments/ui :: icon('M6 6l12 12M18 6L6 18', 22, 2)}"></svg>
+			</a>
+			<h1 class="section-title" th:text="${mode == 'edit'} ? '레시피 수정' : '레시피 작성'">레시피 작성</h1>
+		</div>
+		<span class="text-caption text-ink-sub" data-draft-status aria-live="polite"></span>
+	</header>
+
+	<div class="mt-2 flex flex-1 flex-col gap-stack">
+
+		<!-- 대표 사진, 제목, 인분·시간, 조리도구 -->
+		<section class="section gap-5">
+			<p th:unless="${storageReady}" class="m-0 rounded-card bg-page px-4 py-3 text-caption leading-normal text-accent">
+				사진 저장소가 아직 설정되지 않아 사진은 올릴 수 없어요. 사진 없이도 레시피는 올릴 수 있어요.
+			</p>
+
+			<button type="button" data-cover
+				class="relative flex h-[160px] w-full items-center justify-center overflow-hidden rounded-card border-0 bg-page text-sub text-ink-sub">
+				<img data-cover-img alt="대표 사진" class="absolute inset-0 h-full w-full object-cover" hidden>
+				<span data-cover-label>대표 사진 올리기</span>
+			</button>
+			<button type="button" data-cover-remove class="-mt-3 self-start text-caption text-ink-sub underline" hidden>대표 사진 지우기</button>
+
+			<label class="flex flex-col gap-2 text-sub font-medium">제목
+				<input type="text" data-title maxlength="60" autocomplete="off" class="input font-light">
+			</label>
+
+			<div class="grid grid-cols-2 gap-3">
+				<label class="flex flex-col gap-2 text-sub font-medium">인분
+					<input type="number" inputmode="numeric" min="1" max="20" data-servings class="input font-light">
+				</label>
+				<label class="flex flex-col gap-2 text-sub font-medium">조리시간 (분)
+					<input type="number" inputmode="numeric" min="1" max="600" data-minutes class="input font-light">
+				</label>
+			</div>
+
+			<div class="flex flex-col gap-2">
+				<span class="text-sub font-medium">조리도구</span>
+				<div class="flex flex-wrap gap-2">
+					<button th:each="t : ${tools}" type="button" class="chip" th:attr="data-tool=${t}" th:text="${t}">프라이팬</button>
+				</div>
+			</div>
+		</section>
+
+		<!-- 재료 -->
+		<section class="section gap-3">
+			<div class="flex flex-col gap-1">
+				<h2 class="section-title">재료</h2>
+				<span class="text-caption leading-normal text-ink-sub">목록에서 고르면 단가가 자동 계산돼요. 사용량은 g, ml 또는 개로 적어 주세요.</span>
+			</div>
+
+			<div class="flex flex-col gap-3" data-ingredient-list></div>
+
+			<div class="relative flex flex-col overflow-hidden rounded-card border-2 border-line focus-within:border-primary">
+				<input type="text" aria-label="재료 검색" placeholder="재료 이름을 입력해 주세요 (예: 달걀)" maxlength="20"
+					autocomplete="off" data-ing-search
+					class="h-field border-0 bg-surface px-3.5 text-body outline-none placeholder:text-ink-sub">
+				<div data-ing-results class="flex flex-col border-t border-line" hidden></div>
+			</div>
+
+			<div class="flex items-center justify-between rounded-card bg-primary-soft px-4 py-3.5">
+				<span class="text-sub font-medium">예상 1인분 단가</span>
+				<span class="text-title font-medium text-accent-strong" data-total>약 0원</span>
+			</div>
+		</section>
+
+		<!-- 조리 순서 -->
+		<section class="section flex-1 gap-3">
+			<h2 class="section-title">조리 순서</h2>
+			<div class="flex flex-col gap-3" data-step-list></div>
+			<button type="button" data-add-step
+				class="self-start rounded-chip border border-ink bg-surface px-3 py-1 text-sub font-medium leading-6">단계 추가</button>
+		</section>
+
+		<section class="section" th:if="${mode == 'edit'}">
+			<button type="button" data-delete class="self-start border-0 bg-transparent p-0 text-caption text-accent underline">이 레시피 삭제</button>
+		</section>
+	</div>
+
+	<!-- 하단 고정: 오류 안내 + 올리기 -->
+	<div class="bottom-action flex flex-col gap-2">
+		<p data-form-error role="alert" class="m-0 whitespace-pre-line rounded-card bg-page px-4 py-3 text-caption leading-normal text-accent" hidden></p>
+		<button type="button" data-submit class="btn-primary"
+			th:text="${mode == 'edit'} ? '수정 완료' : '레시피 올리기'">레시피 올리기</button>
+	</div>
+
+	<input type="file" accept="image/*" data-file-input hidden>
+
+	<!-- 재료 한 줄 -->
+	<template id="tpl-ingredient">
+		<div class="flex flex-col gap-2.5 rounded-card bg-page p-3.5">
+			<div class="flex items-center justify-between gap-2">
+				<span class="min-w-0 flex-1 truncate text-body font-medium" data-name></span>
+				<span class="text-sub font-medium text-accent" data-cost></span>
+				<button type="button" aria-label="재료 삭제" data-remove class="btn-icon -mr-2 h-9 w-9">
+					<svg th:replace="~{fragments/ui :: icon('M6 6l12 12M18 6L6 18', 16, 2)}"></svg>
+				</button>
+			</div>
+			<div class="grid grid-cols-2 gap-2">
+				<label class="flex flex-col gap-1 text-caption text-ink-sub" data-qty-box>
+					<span data-qty-label>사용량</span>
+					<input type="number" inputmode="decimal" min="0" step="any" data-qty
+						class="h-[44px] rounded-[10px] border-0 bg-surface px-3 text-body text-ink outline-none">
+				</label>
+				<label class="flex flex-col gap-1 text-caption text-ink-sub">표시용 분량
+					<input type="text" maxlength="30" data-display placeholder="예: 1/2대"
+						class="h-[44px] rounded-[10px] border-0 bg-surface px-3 text-body text-ink outline-none placeholder:text-ink-mute">
+				</label>
+			</div>
+		</div>
+	</template>
+
+	<!-- 조리 순서 한 줄 -->
+	<template id="tpl-step">
+		<div class="flex gap-2.5">
+			<span class="mt-2.5 flex h-7 w-7 flex-none items-center justify-center rounded-full bg-primary text-sub font-medium text-on-primary" data-no></span>
+			<textarea data-content maxlength="500" class="h-20 min-w-0 flex-1 resize-none rounded-field border-0 bg-page px-3.5 py-3 text-body leading-normal outline-none"></textarea>
+			<button type="button" data-photo class="relative flex h-20 w-16 flex-none items-center justify-center overflow-hidden rounded-field border-0 bg-page text-caption text-ink-sub">
+				<img data-photo-img alt="" class="absolute inset-0 h-full w-full object-cover" hidden>
+				<span data-photo-label>사진</span>
+			</button>
+		</div>
+	</template>
+
+	<script th:inline="javascript">
+		window.__RECIPE__ = /*[[${formData}]]*/ null;
+	</script>
+	<script th:src="@{/js/recipe-form.js}" defer></script>
+</main>
+</body>
+</html>

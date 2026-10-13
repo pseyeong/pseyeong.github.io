@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<!--/* 설정·닉네임 수정: docs/design/mobile/D9Nickname.dc.html. 입력 검사는 static/js/nickname.js */-->
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{layout/base :: layout(~{::title}, ~{::main}, ~{::meta})}">
+<head>
+	<title>설정 - 자취한끼</title>
+	<meta name="robots" content="noindex">
+	<meta name="_csrf" th:content="${_csrf.token}" content="">
+	<meta name="_csrf_header" th:content="${_csrf.headerName}" content="">
+</head>
+<body>
+<main class="flex flex-1 flex-col">
+
+	<header class="flex items-center bg-surface p-2">
+		<a th:href="@{/my}" aria-label="뒤로" class="btn-icon">
+			<svg th:replace="~{fragments/ui :: icon('M15 5l-7 7 7 7', 24, 2)}"></svg>
+		</a>
+		<h1 class="section-title">설정</h1>
+	</header>
+
+	<div class="mt-2 flex flex-1 flex-col gap-stack">
+
+		<!-- 닉네임 -->
+		<section class="section gap-3" data-nick-form
+			th:attr="data-current=${loginUser.nickname},data-lock-days=${lockDays}">
+			<div class="flex items-center justify-between">
+				<label for="nick" class="text-title font-medium">닉네임</label>
+				<button type="button" data-nick-random class="btn-sm border-0 disabled:opacity-40">랜덤 뽑기</button>
+			</div>
+			<input id="nick" type="text" maxlength="12" autocomplete="off" autocapitalize="off" spellcheck="false"
+				data-nick-input th:value="${loginUser.nickname}"
+				class="h-[52px] rounded-field border-2 border-line bg-surface px-3.5 text-body outline-none disabled:bg-page disabled:text-ink-sub">
+			<div class="flex justify-between text-caption">
+				<span class="font-medium" data-nick-msg role="status" aria-live="polite"></span>
+				<span class="text-ink-sub"><span data-nick-count>0</span>/12</span>
+			</div>
+			<ul class="m-0 list-disc rounded-card bg-page py-3.5 pl-[34px] pr-4 text-caption leading-[1.8] text-ink-sub marker:text-ink-sub">
+				<li>2~12자, 한글·영문·숫자만 쓸 수 있어요</li>
+				<li>공백과 특수문자는 쓸 수 없어요</li>
+				<li>다른 사람이 쓰고 있는 닉네임은 쓸 수 없어요</li>
+				<li>변경 후 30일 동안은 다시 바꿀 수 없어요</li>
+			</ul>
+			<button type="button" data-nick-save class="btn-primary">닉네임 저장</button>
+		</section>
+
+		<!-- 약관 -->
+		<section class="flex flex-col bg-surface px-gutter py-1">
+			<a th:href="@{/terms}" class="flex h-14 items-center justify-between border-b border-line-soft text-body">
+				이용약관
+				<span class="text-ink-mute"><svg th:replace="~{fragments/ui :: icon('M9 5l7 7-7 7', 18, 2)}"></svg></span>
+			</a>
+			<a th:href="@{/privacy}" class="flex h-14 items-center justify-between text-body">
+				개인정보처리방침
+				<span class="text-ink-mute"><svg th:replace="~{fragments/ui :: icon('M9 5l7 7-7 7', 18, 2)}"></svg></span>
+			</a>
+		</section>
+
+		<!-- 로그아웃, 탈퇴 -->
+		<section class="flex flex-1 flex-col bg-surface px-gutter py-1">
+			<form th:action="@{/logout}" method="post" class="border-b border-line-soft">
+				<button type="submit" class="flex h-14 w-full items-center border-0 bg-transparent p-0 text-left text-body">로그아웃</button>
+			</form>
+			<button type="button" data-sheet-open="withdraw-sheet"
+				class="flex h-14 items-center border-0 bg-transparent p-0 text-left text-sub text-accent">회원 탈퇴</button>
+		</section>
+	</div>
+
+	<!-- 탈퇴 확인 시트 -->
+	<div id="withdraw-sheet" class="sheet" hidden role="dialog" aria-modal="true" aria-labelledby="withdraw-title">
+		<div class="sheet-panel">
+			<div class="mx-auto h-1 w-10 rounded-sm bg-line"></div>
+			<h2 id="withdraw-title" class="section-title">정말 탈퇴할까요?</h2>
+			<ul class="m-0 list-disc rounded-card bg-page py-3.5 pl-[34px] pr-4 text-sub leading-[1.8] marker:text-ink-sub">
+				<li>저장한 레시피 목록은 삭제돼요</li>
+				<li>내가 쓴 레시피는 그대로 남고, 작성자는 "익명"으로 표시돼요</li>
+				<li>탈퇴하면 되돌릴 수 없어요. 같은 계정으로 다시 가입하면 새 닉네임으로 시작해요</li>
+				<li>카카오·구글 쪽 연결 해제는 각 서비스의 설정에서 할 수 있어요</li>
+			</ul>
+			<div class="flex gap-2.5">
+				<button type="button" data-sheet-close
+					class="flex-1 rounded-btn border border-line bg-surface p-3 text-body font-medium leading-6">취소</button>
+				<form th:action="@{/my/withdraw}" method="post" class="flex flex-1">
+					<button type="submit"
+						class="w-full rounded-btn border-0 bg-accent p-3 text-body font-medium leading-6 text-surface">탈퇴하기</button>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<script th:src="@{/js/sheet.js}" defer></script>
+	<script th:src="@{/js/nickname.js}" defer></script>
+</main>
+</body>
+</html>

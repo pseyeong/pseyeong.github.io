@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<!--/* 마이페이지: docs/design/mobile/D7My.dc.html. 저장한 레시피(/my/saved)와 내가 쓴 레시피(/my/recipes) 탭 */-->
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{layout/base :: layout(~{::title}, ~{::main}, ~{::meta})}">
+<head>
+	<title>마이 - 자취한끼</title>
+	<meta name="robots" content="noindex">
+</head>
+<body>
+<main class="app-main">
+
+	<!-- 프로필과 저장·작성 수 -->
+	<section class="section gap-4 pb-5 pt-6">
+		<div class="flex items-center gap-3.5">
+			<div class="flex h-[60px] w-[60px] flex-none items-center justify-center rounded-[24px] bg-primary text-title font-medium text-on-primary"
+				th:text="${avatar}" aria-hidden="true">감자</div>
+			<div class="flex min-w-0 flex-1 flex-col gap-1">
+				<h1 class="section-title truncate" th:text="${loginUser.nickname}">닉네임</h1>
+				<span class="text-caption text-ink-sub">오늘도 알뜰하게 한 끼</span>
+			</div>
+			<a th:href="@{/my/settings}" class="btn-sm">설정</a>
+		</div>
+		<div class="grid grid-cols-2 gap-2">
+			<a th:href="@{/my/saved}" class="flex items-center justify-between rounded-card bg-page px-4 py-3.5">
+				<span class="text-sub">저장</span><span class="text-title font-medium" th:text="${savedCount}">0</span>
+			</a>
+			<a th:href="@{/my/recipes}" class="flex items-center justify-between rounded-card bg-page px-4 py-3.5">
+				<span class="text-sub">작성</span><span class="text-title font-medium" th:text="${writtenCount}">0</span>
+			</a>
+		</div>
+	</section>
+
+	<!-- 탭과 목록 -->
+	<section class="flex flex-1 flex-col bg-surface">
+		<div class="grid grid-cols-2 border-b border-line" role="tablist">
+			<a th:href="@{/my/saved}" role="tab" th:attr="aria-selected=${tab == 'saved'}"
+				class="flex h-[52px] items-center justify-center border-b-[3px] text-body hover:text-ink"
+				th:classappend="${tab == 'saved'} ? 'border-primary font-medium text-ink' : 'border-transparent font-light text-ink-mute'">저장한 레시피</a>
+			<a th:href="@{/my/recipes}" role="tab" th:attr="aria-selected=${tab == 'mine'}"
+				class="flex h-[52px] items-center justify-center border-b-[3px] text-body hover:text-ink"
+				th:classappend="${tab == 'mine'} ? 'border-primary font-medium text-ink' : 'border-transparent font-light text-ink-mute'">내가 쓴 레시피</a>
+		</div>
+
+		<div class="flex flex-col px-gutter py-1">
+			<a th:each="r : ${items}" th:href="@{/recipes/{id}(id=${r.id})}" class="list-row py-3.5">
+				<div th:replace="~{fragments/ui :: photo(${r.coverImage}, ${r.title}, 'h-[76px] w-[76px] rounded-thumb')}"></div>
+				<div class="flex min-w-0 flex-1 flex-col gap-1.5">
+					<span class="text-body font-medium" th:text="${r.title}">레시피 제목</span>
+					<span class="text-caption text-ink-sub"
+						th:text="${tab == 'saved'} ? ${r.savedMeta()} : ${r.writtenMeta()}">20분 · 냄비</span>
+					<span class="price text-sub"
+						th:text="|약 ${#numbers.formatInteger(r.pricePerServing, 1, 'COMMA')}원|">약 2,150원</span>
+				</div>
+			</a>
+
+			<div th:if="${#lists.isEmpty(items)}" class="flex flex-col items-center gap-3 py-16 text-center">
+				<p class="m-0 text-sub text-ink-sub" th:if="${tab == 'saved'}">아직 저장한 레시피가 없어요.<br>마음에 드는 레시피를 저장해 보세요.</p>
+				<p class="m-0 text-sub text-ink-sub" th:if="${tab == 'mine'}">아직 쓴 레시피가 없어요.<br>나만의 한 끼를 올려 보세요.</p>
+				<a th:if="${tab == 'saved'}" th:href="@{/recipes}" class="btn-sm">레시피 둘러보기</a>
+				<a th:if="${tab == 'mine'}" th:href="@{/recipes/new}" class="btn-sm">레시피 올리기</a>
+			</div>
+		</div>
+	</section>
+
+</main>
+</body>
+</html>

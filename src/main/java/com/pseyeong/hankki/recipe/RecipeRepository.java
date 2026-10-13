@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.JdbcClient;
@@ -21,6 +22,7 @@ public class RecipeRepository {
 	/** 상세 화면 기본 정보 */
 	public record RecipeRow(
 			long id,
+			UUID authorId,
 			String title,
 			String description,
 			String coverImage,
@@ -114,7 +116,7 @@ public class RecipeRepository {
 
 	public Optional<RecipeRow> findPublicById(long id) {
 		return jdbc.sql("""
-				select r.id, r.title, r.description, r.cover_image, r.servings, r.cook_minutes, r.tool,
+				select r.id, r.author_id, r.title, r.description, r.cover_image, r.servings, r.cook_minutes, r.tool,
 				       r.price_per_serving, r.is_partial_price, coalesce(p.nickname, '익명') as nickname
 				from recipes r
 				left join profiles p on p.id = r.author_id
@@ -123,6 +125,7 @@ public class RecipeRepository {
 				.param("id", id)
 				.query((rs, n) -> new RecipeRow(
 						rs.getLong("id"),
+						rs.getObject("author_id", UUID.class),
 						rs.getString("title"),
 						rs.getString("description"),
 						rs.getString("cover_image"),

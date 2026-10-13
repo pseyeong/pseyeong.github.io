@@ -3,6 +3,7 @@ package com.pseyeong.hankki.recipe;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * 레시피 상세 화면용 데이터.
@@ -17,6 +18,7 @@ import java.util.List;
  */
 public record RecipeDetail(
 		long id,
+		UUID authorId,
 		String title,
 		String description,
 		String coverImage,

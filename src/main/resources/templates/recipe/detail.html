@@ -37,6 +37,8 @@
 					</th:block>
 				</h1>
 				<div class="text-sub text-ink-sub" th:text="${recipe.metaLine()}">작성자 · 15분 · 1인분 · 프라이팬</div>
+				<a th:if="${loginUser != null and (loginUser.admin or loginUser.id == recipe.authorId)}"
+					th:href="@{/recipes/{id}/edit(id=${recipe.id})}" class="btn-sm mt-1 self-start">수정</a>
 			</div>
 
 			<div class="flex flex-col gap-3 rounded-card bg-primary-soft p-[18px]">
