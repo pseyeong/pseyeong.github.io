@@ -1,0 +1,11 @@
+{
+  "name": "place",
+  "private": true,
+  "scripts": {
+    "build": "tailwindcss -i ./src/main/resources/static/css/style.css -o ./src/main/resources/static/css/output.css --minify",
+    "watch": "tailwindcss -i ./src/main/resources/static/css/style.css -o ./src/main/resources/static/css/output.css --watch"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.17"
+  }
+}

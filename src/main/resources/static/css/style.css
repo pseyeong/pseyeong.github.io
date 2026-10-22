@@ -1,0 +1,146 @@
+﻿@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html,
+  body {
+    @apply h-full overflow-hidden bg-zinc-100 text-zinc-900 font-sans antialiased;
+  }
+
+  button,
+  input {
+    @apply font-sans;
+  }
+}
+
+@layer components {
+  .chip {
+    @apply inline-flex items-center justify-center min-h-9 px-3 rounded-full border text-xs whitespace-nowrap transition-colors;
+  }
+
+  .chip-active {
+    @apply border-zinc-900 bg-zinc-900 text-white;
+  }
+
+  .chip-idle {
+    @apply border-zinc-300 bg-white text-zinc-900;
+  }
+
+  .stat-card {
+    @apply flex flex-col gap-0-5 rounded-xl bg-zinc-100 p-2-5;
+  }
+
+  .sign-row {
+    @apply flex items-center gap-2-5 rounded-xl border border-zinc-200 px-3 py-2;
+  }
+
+  .map-faux-road-h {
+    @apply absolute left-0 right-0 bg-white;
+  }
+
+  .map-faux-road-v {
+    @apply absolute top-0 bottom-0 bg-white;
+  }
+
+  .map-pin {
+    @apply absolute -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white;
+  }
+
+  .panel-tab {
+    @apply min-h-12 border-b-2 text-sm transition-colors;
+  }
+
+  .panel-tab-active {
+    @apply border-primary-600 font-semibold text-zinc-900 bg-white;
+  }
+
+  .panel-tab-idle {
+    @apply border-transparent text-zinc-500 bg-white;
+  }
+
+  .btn-primary {
+    @apply min-h-11 rounded-xl bg-primary-600 text-sm font-semibold text-white;
+  }
+
+  .btn-secondary {
+    @apply min-h-11 rounded-xl border border-zinc-300 bg-white text-sm font-semibold text-zinc-900;
+  }
+}
+
+@layer utilities {
+  .mo-sheet-ranking {
+    @apply absolute inset-x-0 bottom-0 z-30 flex h-80 flex-col gap-2-5 rounded-t-3xl border-t border-zinc-200 bg-white px-4 pb-6 pt-2-5 shadow-xl lg:hidden;
+  }
+
+  .mo-sheet-detail {
+    @apply absolute inset-x-0 bottom-0 top-[190px] z-30 hidden flex-col rounded-t-3xl border-t border-zinc-200 bg-white shadow-xl lg:hidden;
+  }
+
+  .mo-search {
+    @apply absolute inset-0 z-50 hidden flex-col bg-white lg:hidden;
+  }
+
+  .mo-back-detail {
+    @apply absolute left-3 top-[max(12px,env(safe-area-inset-top))] z-40 hidden h-11 w-11 items-center justify-center rounded-xl border border-zinc-300 bg-white shadow-sm lg:hidden;
+  }
+
+  .mo-map-fab {
+    @apply absolute bottom-[336px] right-3 z-20 flex h-11 w-11 items-center justify-center rounded-xl border border-zinc-300 bg-white text-zinc-900 shadow-sm lg:hidden;
+  }
+
+  .mo-map-badge {
+    @apply absolute bottom-[336px] left-3 z-20 rounded-md border border-dashed border-zinc-400 bg-white px-2 py-0-5 text-2xs text-zinc-600 lg:hidden;
+  }
+
+  .mo-top-bar {
+    @apply absolute inset-x-3 top-[max(12px,env(safe-area-inset-top))] z-20 flex flex-col gap-2-5 lg:hidden;
+  }
+}
+
+html[data-sheet='detail'] .mo-top-bar,
+html[data-search='open'] .mo-top-bar {
+  display: none;
+}
+
+html[data-sheet='detail'] .mo-sheet-ranking {
+  display: none;
+}
+
+html[data-sheet='detail'] .mo-sheet-detail {
+  display: flex;
+}
+
+html[data-sheet='detail'] .mo-back-detail {
+  display: flex;
+}
+
+html[data-sheet='detail'] .mo-map-fab,
+html[data-sheet='detail'] .mo-map-badge {
+  bottom: auto;
+  top: 148px;
+}
+
+html[data-sheet='detail'] .mo-map-badge {
+  top: 156px;
+}
+
+html[data-search='open'] .mo-sheet-ranking,
+html[data-search='open'] .mo-sheet-detail,
+html[data-search='open'] .mo-back-detail,
+html[data-search='open'] .mo-map-fab,
+html[data-search='open'] .mo-map-badge {
+  display: none !important;
+}
+
+html[data-search='open'] .mo-search {
+  display: flex;
+}
+
+@media (min-width: 1024px) {
+  html[data-sheet='detail'] .mo-sheet-detail,
+  html[data-sheet='detail'] .mo-back-detail,
+  html[data-search='open'] .mo-search {
+    display: none !important;
+  }
+}

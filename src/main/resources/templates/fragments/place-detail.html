@@ -1,0 +1,115 @@
+<div th:fragment="placeDetail(compact)" xmlns:th="http://www.thymeleaf.org" class="flex flex-col gap-4">
+
+  <div class="flex flex-col gap-1-5">
+    <div class="flex flex-wrap items-center gap-1-5">
+      <span class="rounded-md bg-zinc-900 px-2 py-0-5 text-2xs font-bold text-white">회전문 자리</span>
+      <span class="rounded-md bg-zinc-100 px-2 py-0-5 text-2xs text-zinc-500">예시 데이터</span>
+    </div>
+    <span class="text-base font-semibold text-zinc-900">[구] 골목길 31, 1층</span>
+  </div>
+
+  <div class="flex items-end gap-3">
+    <span class="text-5xl font-bold leading-none text-primary-600 lg:text-6xl">7</span>
+    <span class="pb-1 text-xs leading-relaxed text-zinc-600 lg:text-sm">
+      이 자리를 거쳐 간 가게 수<br>지금 가게가 7번째예요
+    </span>
+  </div>
+
+  <div class="grid grid-cols-3 gap-1-5 lg:gap-2">
+    <div class="stat-card">
+      <span class="text-2xs text-zinc-500">
+        <th:block th:if="${compact}">평균 영업</th:block>
+        <th:block th:unless="${compact}">평균 영업 기간</th:block>
+      </span>
+      <span class="text-xs font-bold lg:text-sm">1년 1개월</span>
+    </div>
+    <div class="stat-card">
+      <span class="text-2xs text-zinc-500">가장 오래</span>
+      <span class="text-xs font-bold lg:text-sm">3년 5개월</span>
+    </div>
+    <div class="stat-card">
+      <span class="text-2xs text-zinc-500">지금 상태</span>
+      <span class="text-xs font-bold lg:text-sm">영업 중</span>
+    </div>
+  </div>
+
+  <div class="flex flex-col gap-1-5">
+    <span class="text-2xs font-semibold text-zinc-500">연도별 타임라인</span>
+    <div class="relative h-7 overflow-hidden rounded-lg bg-zinc-100 lg:h-8">
+      <div class="absolute bottom-1-5 top-1-5 rounded-sm bg-green-600" style="left:0.9%;width:10.6%"></div>
+      <div class="absolute bottom-1-5 top-1-5 rounded-sm bg-amber-400" style="left:12.5%;width:10.2%"></div>
+      <div class="absolute bottom-1-5 top-1-5 rounded-sm bg-amber-800" style="left:23.6%;width:7.4%"></div>
+      <div class="absolute bottom-1-5 top-1-5 rounded-sm bg-amber-800" style="left:31.9%;width:7.9%"></div>
+      <div class="absolute bottom-1-5 top-1-5 rounded-sm bg-slate-500" style="left:40.7%;width:9.3%"></div>
+      <div class="absolute bottom-1-5 top-1-5 rounded-sm bg-amber-800" style="left:51.9%;width:13.9%"></div>
+      <div class="absolute bottom-1-5 top-1-5 rounded-sm bg-green-600" style="left:68.1%;width:31.9%"></div>
+    </div>
+    <div class="flex justify-between text-2xs text-zinc-500">
+      <span>2016</span>
+      <span th:if="${compact}">2021</span>
+      <span th:unless="${compact}" class="max-lg:hidden">2019</span>
+      <span th:unless="${compact}" class="max-lg:hidden">2022</span>
+      <span>2026</span>
+    </div>
+  </div>
+
+  <div class="flex flex-col gap-2">
+    <span class="text-2xs font-semibold text-zinc-500">간판 변천사 · 최근 순</span>
+
+    <div class="sign-row">
+      <span class="h-3 w-3 shrink-0 rounded-xs bg-green-600"></span>
+      <div class="flex min-w-0 flex-1 flex-col">
+        <span class="text-sm font-semibold">할매손국수</span>
+        <span class="text-2xs text-zinc-500">
+          <th:block th:unless="${compact}">한식 · </th:block>2023.05 – 영업 중
+        </span>
+      </div>
+      <span class="shrink-0 text-2xs font-semibold">3년 5개월째</span>
+    </div>
+
+    <div class="sign-row">
+      <span class="h-3 w-3 shrink-0 rounded-xs bg-amber-800"></span>
+      <div class="flex min-w-0 flex-1 flex-col">
+        <span class="text-sm font-semibold">오후세시 카페</span>
+        <span class="text-2xs text-zinc-500">
+          <th:block th:unless="${compact}">커피숍 · </th:block>2021.08 – 2023.02
+        </span>
+      </div>
+      <span class="shrink-0 text-2xs font-semibold">1년 6개월</span>
+    </div>
+
+    <div class="sign-row">
+      <span class="h-3 w-3 shrink-0 rounded-xs bg-slate-500"></span>
+      <div class="flex min-w-0 flex-1 flex-col">
+        <span class="text-sm font-semibold">초록볼 샐러드</span>
+        <span class="text-2xs text-zinc-500">
+          <th:block th:unless="${compact}">기타 휴게음식점 · </th:block>2020.06 – 2021.05
+        </span>
+      </div>
+      <span class="shrink-0 text-2xs font-semibold">11개월</span>
+    </div>
+
+    <div th:unless="${compact}" class="sign-row">
+      <span class="h-3 w-3 shrink-0 rounded-xs bg-amber-800"></span>
+      <div class="flex min-w-0 flex-1 flex-col">
+        <span class="text-sm font-semibold">달콤상자</span>
+        <span class="text-2xs text-zinc-500">아이스크림 · 2019.06 – 2020.04</span>
+      </div>
+      <span class="shrink-0 text-2xs font-semibold">10개월</span>
+    </div>
+
+    <button type="button"
+      th:class="${compact}
+        ? 'min-h-0 py-1 text-center text-2xs font-semibold text-primary-600'
+        : 'min-h-10 rounded-xl border border-dashed border-zinc-300 bg-white text-xs text-zinc-600'"
+      th:text="${compact} ? '이전 가게 4곳 더 보기' : '이전 가게 3곳 더 보기'">
+      이전 가게 더 보기
+    </button>
+  </div>
+
+  <div th:unless="${compact}" class="grid grid-cols-2 gap-2">
+    <button type="button" class="btn-secondary">카카오맵 길찾기</button>
+    <button type="button" class="btn-primary">공유 카드 만들기</button>
+  </div>
+  <span th:unless="${compact}" class="text-2xs text-zinc-500">음식점 인허가 데이터 기준 · 매일 갱신</span>
+</div>

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" data-sheet="ranking" data-search="closed">
+<head th:replace="~{fragments/head :: head('이 자리, 몇 번째 가게?')}"></head>
+<body class="flex h-full flex-col">
+
+  <header th:replace="~{fragments/header :: header}"></header>
+
+  <main class="relative flex min-h-0 flex-1">
+
+    <!-- ========== PC 좌측 패널 ========== -->
+    <aside class="hidden w-full max-w-md shrink-0 flex-col border-r border-zinc-200 bg-white lg:flex" aria-label="자리 정보 패널">
+      <div class="grid grid-cols-2 border-b border-zinc-200">
+        <button type="button" class="panel-tab panel-tab-active" data-pc-tab="detail">자리 상세</button>
+        <button type="button" class="panel-tab panel-tab-idle" data-pc-tab="ranking">회전문 랭킹</button>
+      </div>
+
+      <div class="min-h-0 flex-1 overflow-y-auto p-5" data-pc-pane="detail">
+        <div th:replace="~{fragments/place-detail :: placeDetail(compact=false)}"></div>
+      </div>
+
+      <div class="hidden min-h-0 flex-1 overflow-y-auto p-4" data-pc-pane="ranking">
+        <div class="mb-3 flex items-baseline justify-between px-1">
+          <span class="text-base font-bold text-zinc-900">이 범위 회전문 자리</span>
+          <span class="text-2xs text-zinc-500">상위 20곳 · 예시</span>
+        </div>
+        <div th:replace="~{fragments/ranking-list :: rankingList}"></div>
+      </div>
+    </aside>
+
+    <!-- ========== 지도 영역 ========== -->
+    <section class="relative min-h-0 min-w-0 flex-1 bg-slate-200" aria-label="지도" id="map" th:attr="data-kakao-key=${kakaoMapKey}">
+
+      <!-- 카카오 지도가 그려지는 컨테이너 (가장 아래 레이어) -->
+      <div id="kakao-map" class="absolute inset-0 z-0"></div>
+
+      <!-- 지도 로드 전 자리표시 목업 (지도가 뜨면 kakaoMap.js 가 숨김) -->
+      <div data-map-placeholder class="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+        <div class="map-faux-road-h top-[30%] h-4-5 max-lg:top-[34%] max-lg:h-4"></div>
+        <div class="map-faux-road-h top-[62%] h-3 max-lg:top-[55%] max-lg:h-2-5"></div>
+        <div class="map-faux-road-h top-[82%] h-2-5 max-lg:hidden"></div>
+        <div class="map-faux-road-v left-[24%] w-[22px] max-lg:left-[30%] max-lg:w-4-5"></div>
+        <div class="map-faux-road-v left-[58%] w-3 max-lg:left-[72%] max-lg:w-2-5"></div>
+        <div class="map-faux-road-v left-[80%] w-2-5 max-lg:hidden"></div>
+
+        <span class="map-pin left-[12%] top-[29%] h-2-5 w-2-5 bg-zinc-400 max-lg:top-[33%]"></span>
+        <span class="map-pin left-[18%] top-[32%] h-4 w-4 bg-primary-500 max-lg:left-[22%] max-lg:top-[36%]"></span>
+        <span class="map-pin left-[35%] top-[32%] h-[22px] w-[22px] bg-orange-500 max-lg:left-[40%] max-lg:top-[33.5%]"></span>
+        <span class="map-pin left-[47%] top-[28.8%] h-4 w-4 bg-primary-500"></span>
+        <span class="map-pin left-[64%] top-[29%] h-[22px] w-[22px] bg-orange-500 max-lg:left-[48%] max-lg:top-[54%]"></span>
+        <span class="map-pin left-[38%] top-[63.5%] h-[22px] w-[22px] bg-orange-500 max-lg:left-[34%] max-lg:top-[46%]"></span>
+        <span class="map-pin left-[60%] top-[40%] h-4 w-4 bg-primary-500 max-lg:left-[60%] max-lg:top-[33.5%]"></span>
+        <span class="map-pin left-[26%] top-[45%] h-4 w-4 bg-primary-500 max-lg:left-[70%] max-lg:top-[46%]"></span>
+        <span class="map-pin left-[78%] top-[70%] h-4 w-4 bg-primary-500 max-lg:left-[88%] max-lg:top-[54%]"></span>
+        <span class="map-pin left-[48%] top-[83.5%] h-4 w-4 bg-primary-500 max-lg:hidden"></span>
+
+        <div class="absolute left-[41%] top-[30.6%] hidden -translate-x-1/2 -translate-y-1/2 lg:block">
+          <div class="h-10 w-10 rounded-full border-3 border-zinc-900"></div>
+        </div>
+        <div class="absolute left-[41%] top-[30.6%] hidden -translate-x-1/2 -translate-y-[calc(100%+26px)] whitespace-nowrap rounded-lg bg-zinc-900 px-2-5 py-1 text-2xs font-semibold text-white lg:block">
+          골목길 31 · 7곳
+        </div>
+
+        <div class="absolute left-[70%] top-1/2 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full border-2 border-zinc-400 bg-white leading-tight max-lg:left-[78%] max-lg:top-[24%] max-lg:h-12 max-lg:w-12">
+          <span class="text-base font-bold max-lg:text-md">24</span>
+          <span class="text-2xs text-zinc-600">자리</span>
+        </div>
+        <div class="absolute left-[14%] top-[48%] flex h-11 w-11 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full border-2 border-zinc-400 bg-white leading-tight lg:hidden">
+          <span class="text-sm font-bold">9</span>
+          <span class="text-2xs text-zinc-600">자리</span>
+        </div>
+      </div>
+
+      <!-- MO 상단 검색 / 필터 -->
+      <div class="mo-top-bar">
+        <button type="button" data-open-search
+          class="flex h-12 items-center gap-2-5 rounded-xl border border-zinc-300 bg-white px-3-5 text-left text-sm text-zinc-500 shadow-sm">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+          주소, 장소, 가게 이름으로 찾기
+        </button>
+        <div class="flex gap-1-5 overflow-x-auto pb-0-5 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" data-filter-chips>
+          <button type="button" class="chip chip-active shrink-0" data-chip="all">전체</button>
+          <button type="button" class="chip chip-idle shrink-0" data-chip="cafe">카페</button>
+          <button type="button" class="chip chip-idle shrink-0" data-chip="korean">한식</button>
+          <button type="button" class="chip chip-idle shrink-0" data-chip="chicken">치킨</button>
+          <button type="button" class="chip chip-idle shrink-0" data-chip="empty">빈 자리만</button>
+        </div>
+      </div>
+
+      <!-- PC 지도 컨트롤 -->
+      <div class="absolute right-4 top-4 z-10 hidden flex-col gap-1-5 lg:flex">
+        <button type="button" data-map-zoom-in aria-label="확대" class="flex h-10 w-10 items-center justify-center rounded-lg border border-zinc-300 bg-white text-xl text-zinc-900 shadow-sm">+</button>
+        <button type="button" data-map-zoom-out aria-label="축소" class="flex h-10 w-10 items-center justify-center rounded-lg border border-zinc-300 bg-white text-xl text-zinc-900 shadow-sm">−</button>
+        <button type="button" data-map-locate aria-label="내 위치" class="flex h-10 w-10 items-center justify-center rounded-lg border border-zinc-300 bg-white text-zinc-900 shadow-sm">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>
+        </button>
+      </div>
+
+      <button type="button" data-map-locate aria-label="내 위치" class="mo-map-fab">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>
+      </button>
+
+      <div class="absolute bottom-4 left-4 z-10 hidden flex-wrap items-center gap-x-4 gap-y-2 rounded-xl border border-zinc-200 bg-white px-3-5 py-2-5 text-2xs text-zinc-600 shadow-sm lg:flex">
+        <span class="inline-flex items-center gap-1-5"><span class="h-2-5 w-2-5 rounded-full bg-zinc-400"></span>한 가게</span>
+        <span class="inline-flex items-center gap-1-5"><span class="h-3-5 w-3-5 rounded-full bg-primary-500"></span>2–3곳</span>
+        <span class="inline-flex items-center gap-1-5"><span class="h-4-5 w-4-5 rounded-full bg-orange-500"></span>4곳 이상</span>
+        <span class="inline-flex items-center gap-1-5"><span class="h-4-5 w-4-5 rounded-full border-2 border-zinc-400 bg-white"></span>묶음(클러스터)</span>
+      </div>
+      <span data-map-placeholder class="absolute bottom-4 right-4 z-10 hidden rounded-md border border-dashed border-zinc-400 bg-white px-2-5 py-1 text-2xs text-zinc-600 lg:inline">[카카오맵 영역]</span>
+      <span data-map-placeholder class="mo-map-badge">[카카오맵 영역]</span>
+    </section>
+
+    <!-- ========== MO 바텀시트: 랭킹 ========== -->
+    <div class="mo-sheet-ranking" role="dialog" aria-label="회전문 랭킹">
+      <div class="mx-auto h-1-5 w-10 rounded-full bg-zinc-300"></div>
+      <div class="flex items-baseline justify-between">
+        <span class="text-base font-bold text-zinc-900">이 범위 회전문 자리</span>
+        <span class="text-2xs text-zinc-500">상위 20곳 · 예시</span>
+      </div>
+      <div class="min-h-0 flex-1 overflow-y-auto">
+        <div th:replace="~{fragments/ranking-list :: rankingList}"></div>
+      </div>
+    </div>
+
+    <!-- ========== MO 바텀시트: 자리 상세 ========== -->
+    <div class="mo-sheet-detail" role="dialog" aria-label="자리 상세">
+      <div class="flex min-h-0 flex-1 flex-col gap-3-5 overflow-y-auto px-4 pb-2 pt-2-5">
+        <div class="mx-auto h-1-5 w-10 shrink-0 rounded-full bg-zinc-300"></div>
+        <div th:replace="~{fragments/place-detail :: placeDetail(compact=true)}"></div>
+      </div>
+      <div class="grid shrink-0 grid-cols-2 gap-2 border-t border-zinc-100 px-4 pb-7 pt-3">
+        <button type="button" class="btn-secondary min-h-12">길찾기</button>
+        <button type="button" class="btn-primary min-h-12">공유 카드</button>
+      </div>
+    </div>
+
+    <button type="button" data-open-ranking aria-label="지도로 돌아가기" class="mo-back-detail">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+
+    <!-- ========== MO 검색 오버레이 ========== -->
+    <div class="mo-search" role="dialog" aria-label="검색">
+      <div class="flex items-center gap-2 border-b border-zinc-200 px-3 pb-3 pt-[max(12px,env(safe-area-inset-top))]">
+        <button type="button" data-close-search aria-label="뒤로" class="flex h-11 w-11 shrink-0 items-center justify-center text-zinc-900">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <label for="m-search" class="sr-only">검색어</label>
+        <input id="m-search" type="search" value="골목길"
+          class="h-11 min-w-0 flex-1 rounded-xl border-2 border-primary-600 bg-white px-3-5 text-md text-zinc-900 outline-none"
+          readonly>
+      </div>
+
+      <div class="grid grid-cols-2 border-b border-zinc-200" data-search-tabs>
+        <button type="button" class="panel-tab panel-tab-active" data-search-tab="place">주소·장소</button>
+        <button type="button" class="panel-tab panel-tab-idle" data-search-tab="store">가게 이름</button>
+      </div>
+
+      <div class="flex min-h-0 flex-1 flex-col gap-1 overflow-y-auto px-4 py-2">
+        <span class="px-0 py-2 text-2xs font-semibold text-zinc-500">주소 검색 결과 · 카카오 주소 검색</span>
+
+        <a href="#" data-close-search class="flex min-h-14 items-center gap-3 border-b border-zinc-100 text-zinc-900 no-underline">
+          <svg width="18" height="18" class="text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+          <div class="flex min-w-0 flex-1 flex-col">
+            <span class="text-sm font-semibold">[구] 골목길</span>
+            <span class="text-2xs text-zinc-500">도로명 · 예시</span>
+          </div>
+          <span class="text-2xs font-semibold text-primary-600">지도 이동</span>
+        </a>
+        <a href="#" data-close-search class="flex min-h-14 items-center gap-3 border-b border-zinc-100 text-zinc-900 no-underline">
+          <svg width="18" height="18" class="text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+          <div class="flex min-w-0 flex-1 flex-col">
+            <span class="text-sm font-semibold">골목길 공영주차장</span>
+            <span class="text-2xs text-zinc-500">장소 · 예시</span>
+          </div>
+          <span class="text-2xs font-semibold text-primary-600">지도 이동</span>
+        </a>
+
+        <span class="px-0 pb-1 pt-4 text-2xs font-semibold text-zinc-500">이 주소의 가게 자리 · 자체 DB</span>
+
+        <a href="#" data-open-detail class="flex min-h-14 items-center gap-3 border-b border-zinc-100 text-zinc-900 no-underline">
+          <span class="h-4-5 w-4-5 shrink-0 rounded-full border-2 border-white bg-orange-500"></span>
+          <div class="flex min-w-0 flex-1 flex-col">
+            <span class="text-sm font-semibold">골목길 31, 1층</span>
+            <span class="text-2xs text-zinc-500">영업 중 · 할매손국수</span>
+          </div>
+          <span class="text-md font-bold">7곳</span>
+        </a>
+        <a href="#" data-open-detail class="flex min-h-14 items-center gap-3 border-b border-zinc-100 text-zinc-900 no-underline">
+          <span class="h-4-5 w-4-5 shrink-0 rounded-full border-2 border-white bg-orange-500"></span>
+          <div class="flex min-w-0 flex-1 flex-col">
+            <span class="text-sm font-semibold">골목길 12, 1층</span>
+            <span class="text-2xs text-zinc-500">빈 자리 2년 6개월째</span>
+          </div>
+          <span class="text-md font-bold">6곳</span>
+        </a>
+        <a href="#" data-open-detail class="flex min-h-14 items-center gap-3 border-b border-zinc-100 text-zinc-900 no-underline">
+          <span class="h-3-5 w-3-5 shrink-0 rounded-full border-2 border-white bg-primary-500"></span>
+          <div class="flex min-w-0 flex-1 flex-col">
+            <span class="text-sm font-semibold">골목길 23, 2층</span>
+            <span class="text-2xs text-zinc-500">빈 자리 3년 4개월째</span>
+          </div>
+          <span class="text-md font-bold">4곳</span>
+        </a>
+        <a href="#" data-open-detail class="flex min-h-14 items-center gap-3 border-b border-zinc-100 text-zinc-900 no-underline">
+          <span class="h-2-5 w-2-5 shrink-0 rounded-full border-2 border-white bg-zinc-400"></span>
+          <div class="flex min-w-0 flex-1 flex-col">
+            <span class="text-sm font-semibold">골목길 15, 1층</span>
+            <span class="text-2xs text-zinc-500">영업 중 · 오래된 밥집</span>
+          </div>
+          <span class="text-md font-bold">1곳</span>
+        </a>
+
+        <span class="px-0 pb-1 pt-4 text-2xs font-semibold text-zinc-500">최근 검색</span>
+        <div class="flex flex-wrap gap-1-5 pb-6">
+          <span class="rounded-full bg-zinc-100 px-3 py-1-5 text-xs text-zinc-700">시장길</span>
+          <span class="rounded-full bg-zinc-100 px-3 py-1-5 text-xs text-zinc-700">할매손국수</span>
+          <span class="rounded-full bg-zinc-100 px-3 py-1-5 text-xs text-zinc-700">큰길로 3</span>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer th:replace="~{fragments/footer :: footer}"></footer>
+  <script th:src="@{/js/ui.js}"></script>
+  <script th:src="@{/js/kakaoMap.js}"></script>
+</body>
+</html>
