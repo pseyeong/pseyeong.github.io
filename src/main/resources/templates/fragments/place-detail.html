@@ -3,15 +3,15 @@
   <div class="flex flex-col gap-1-5">
     <div class="flex flex-wrap items-center gap-1-5">
       <span class="rounded-md bg-zinc-900 px-2 py-0-5 text-2xs font-bold text-white">회전문 자리</span>
-      <span class="rounded-md bg-zinc-100 px-2 py-0-5 text-2xs text-zinc-500">예시 데이터</span>
+      <span data-detail-sample class="rounded-md bg-zinc-100 px-2 py-0-5 text-2xs text-zinc-500"></span>
     </div>
-    <span class="text-base font-semibold text-zinc-900">[구] 골목길 31, 1층</span>
+    <span data-detail-title class="text-base font-semibold text-zinc-900"></span>
   </div>
 
   <div class="flex items-end gap-3">
-    <span class="text-5xl font-bold leading-none text-primary-600 lg:text-6xl">7</span>
+    <span data-detail-count class="text-5xl font-bold leading-none text-primary-600 lg:text-6xl"></span>
     <span class="pb-1 text-xs leading-relaxed text-zinc-600 lg:text-sm">
-      이 자리를 거쳐 간 가게 수<br>지금 가게가 7번째예요
+      이 자리를 거쳐 간 가게 수<br><span data-detail-nth></span>
     </span>
   </div>
 
@@ -55,56 +55,7 @@
 
   <div class="flex flex-col gap-2">
     <span class="text-2xs font-semibold text-zinc-500">간판 변천사 · 최근 순</span>
-
-    <div class="sign-row">
-      <span class="h-3 w-3 shrink-0 rounded-xs bg-green-600"></span>
-      <div class="flex min-w-0 flex-1 flex-col">
-        <span class="text-sm font-semibold">할매손국수</span>
-        <span class="text-2xs text-zinc-500">
-          <th:block th:unless="${compact}">한식 · </th:block>2023.05 – 영업 중
-        </span>
-      </div>
-      <span class="shrink-0 text-2xs font-semibold">3년 5개월째</span>
-    </div>
-
-    <div class="sign-row">
-      <span class="h-3 w-3 shrink-0 rounded-xs bg-amber-800"></span>
-      <div class="flex min-w-0 flex-1 flex-col">
-        <span class="text-sm font-semibold">오후세시 카페</span>
-        <span class="text-2xs text-zinc-500">
-          <th:block th:unless="${compact}">커피숍 · </th:block>2021.08 – 2023.02
-        </span>
-      </div>
-      <span class="shrink-0 text-2xs font-semibold">1년 6개월</span>
-    </div>
-
-    <div class="sign-row">
-      <span class="h-3 w-3 shrink-0 rounded-xs bg-slate-500"></span>
-      <div class="flex min-w-0 flex-1 flex-col">
-        <span class="text-sm font-semibold">초록볼 샐러드</span>
-        <span class="text-2xs text-zinc-500">
-          <th:block th:unless="${compact}">기타 휴게음식점 · </th:block>2020.06 – 2021.05
-        </span>
-      </div>
-      <span class="shrink-0 text-2xs font-semibold">11개월</span>
-    </div>
-
-    <div th:unless="${compact}" class="sign-row">
-      <span class="h-3 w-3 shrink-0 rounded-xs bg-amber-800"></span>
-      <div class="flex min-w-0 flex-1 flex-col">
-        <span class="text-sm font-semibold">달콤상자</span>
-        <span class="text-2xs text-zinc-500">아이스크림 · 2019.06 – 2020.04</span>
-      </div>
-      <span class="shrink-0 text-2xs font-semibold">10개월</span>
-    </div>
-
-    <button type="button"
-      th:class="${compact}
-        ? 'min-h-0 py-1 text-center text-2xs font-semibold text-primary-600'
-        : 'min-h-10 rounded-xl border border-dashed border-zinc-300 bg-white text-xs text-zinc-600'"
-      th:text="${compact} ? '이전 가게 4곳 더 보기' : '이전 가게 3곳 더 보기'">
-      이전 가게 더 보기
-    </button>
+    <div data-detail-list class="flex flex-col gap-2"></div>
   </div>
 
   <div th:unless="${compact}" class="grid grid-cols-2 gap-2">

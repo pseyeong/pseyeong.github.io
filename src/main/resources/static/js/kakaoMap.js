@@ -77,9 +77,18 @@
     document.querySelectorAll('[data-map-zoom-out]').forEach((el) => el.addEventListener('click', api.zoomOut));
     document.querySelectorAll('[data-map-locate]').forEach((el) => el.addEventListener('click', api.locate));
 
-    maps.event.addListener(map, 'idle', () => {
+    function notifyIdle() {
       document.dispatchEvent(new CustomEvent('map:idle', { detail: api.bounds() }));
+    }
+
+    maps.event.addListener(map, 'idle', notifyIdle);
+
+    // 처음 타일 로딩이 끝났을 때 한 번 알려서, 움직이지 않아도 첫 화면에 점이 찍히게 한다.
+    maps.event.addListener(map, 'tilesloaded', function once() {
+      maps.event.removeListener(map, 'tilesloaded', once);
+      notifyIdle();
     });
+
 
     // 레이아웃(바텀시트/패널 등)이 바뀌어 컨테이너 크기가 달라지면 지도를 다시 맞춘다.
     new ResizeObserver(() => map.relayout()).observe(container);
