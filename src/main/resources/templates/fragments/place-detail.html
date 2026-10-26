@@ -21,35 +21,24 @@
         <th:block th:if="${compact}">평균 영업</th:block>
         <th:block th:unless="${compact}">평균 영업 기간</th:block>
       </span>
-      <span class="text-xs font-bold lg:text-sm">1년 1개월</span>
+      <span data-stat-avg class="text-xs font-bold lg:text-sm">1년 1개월</span>
     </div>
     <div class="stat-card">
       <span class="text-2xs text-zinc-500">가장 오래</span>
-      <span class="text-xs font-bold lg:text-sm">3년 5개월</span>
+      <span data-stat-max class="text-xs font-bold lg:text-sm">3년 5개월</span>
     </div>
     <div class="stat-card">
       <span class="text-2xs text-zinc-500">지금 상태</span>
-      <span class="text-xs font-bold lg:text-sm">영업 중</span>
+      <span data-stat-state class="text-xs font-bold lg:text-sm">영업 중</span>
     </div>
   </div>
 
   <div class="flex flex-col gap-1-5">
     <span class="text-2xs font-semibold text-zinc-500">연도별 타임라인</span>
-    <div class="relative h-7 overflow-hidden rounded-lg bg-zinc-100 lg:h-8">
-      <div class="absolute bottom-1-5 top-1-5 rounded-sm bg-green-600" style="left:0.9%;width:10.6%"></div>
-      <div class="absolute bottom-1-5 top-1-5 rounded-sm bg-amber-400" style="left:12.5%;width:10.2%"></div>
-      <div class="absolute bottom-1-5 top-1-5 rounded-sm bg-amber-800" style="left:23.6%;width:7.4%"></div>
-      <div class="absolute bottom-1-5 top-1-5 rounded-sm bg-amber-800" style="left:31.9%;width:7.9%"></div>
-      <div class="absolute bottom-1-5 top-1-5 rounded-sm bg-slate-500" style="left:40.7%;width:9.3%"></div>
-      <div class="absolute bottom-1-5 top-1-5 rounded-sm bg-amber-800" style="left:51.9%;width:13.9%"></div>
-      <div class="absolute bottom-1-5 top-1-5 rounded-sm bg-green-600" style="left:68.1%;width:31.9%"></div>
-    </div>
+    <div data-detail-timeline class="relative h-7 overflow-hidden rounded-lg bg-zinc-100 lg:h-8"></div>
     <div class="flex justify-between text-2xs text-zinc-500">
-      <span>2016</span>
-      <span th:if="${compact}">2021</span>
-      <span th:unless="${compact}" class="max-lg:hidden">2019</span>
-      <span th:unless="${compact}" class="max-lg:hidden">2022</span>
-      <span>2026</span>
+      <span data-timeline-start>2016</span>
+      <span data-timeline-end>2026</span>
     </div>
   </div>
 

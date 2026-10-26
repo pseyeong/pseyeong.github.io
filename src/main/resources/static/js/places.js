@@ -40,7 +40,7 @@
         row.className = 'sign-row';
     
         const dot = document.createElement('span');
-        dot.className = 'h-3 w-3 shrink-0 rounded-xs ' + (isOpen ? 'bg-green-600' : 'bg-amber-800');
+        dot.className = 'h-3 w-3 shrink-0 rounded-xs ' + (isOpen ? 'bg-blue-600/30' : 'bg-zinc-800/30');
     
         const info = document.createElement('div');
         info.className = 'flex min-w-0 flex-1 flex-col';
@@ -71,10 +71,121 @@
     }
     
 
+      // 개업일~폐업일(없으면 오늘) 사이의 개월 수
+    function monthsBetween(openedAt, closedAt) {
+        if (!openedAt) return null;
+        const from = new Date(openedAt);
+        const to = closedAt ? new Date(closedAt) : new Date();
+        return Math.max(0, (to.getFullYear() - from.getFullYear()) * 12 + (to.getMonth() - from.getMonth()));
+    }
+
+    // 개월 수를 "3년 5개월" 형태로
+    function fmtMonths(months) {
+        const y = Math.floor(months / 12);
+        const m = months % 12;
+        return ((y ? y + '년 ' : '') + (m || !y ? m + '개월' : '')).trim();
+    }
+
+    function renderStats(stores) {
+        const spans = stores
+        .map((s) => {
+            const isOpen = s.status === '영업/정상';
+            if (!isOpen && !s.closedAt) return null; // 폐업인데 폐업일이 없으면 계산 불가
+            return monthsBetween(s.openedAt, isOpen ? null : s.closedAt);
+        })
+        .filter((v) => v !== null);
+
+        const avg = spans.length ? Math.round(spans.reduce((a, b) => a + b, 0) / spans.length) : null;
+        const max = spans.length ? Math.max(...spans) : null;
+        const isOpenNow = stores.some((s) => s.status === '영업/정상');
+
+        setText('[data-stat-avg]', avg === null ? '-' : fmtMonths(avg));
+        setText('[data-stat-max]', max === null ? '-' : fmtMonths(max));
+        setText('[data-stat-state]', isOpenNow ? '영업 중' : '빈 자리');
+    }
+
+    function renderTimeline(stores) {
+        const dated = stores.filter((s) => s.openedAt);
+        if (!dated.length) return;
+    
+        const start = Math.min(...dated.map((s) => new Date(s.openedAt).getTime()));
+        const end = Date.now();
+        const total = Math.max(end - start, 1);
+    
+        const bars = dated.map((s) => {
+          const isOpen = s.status === '영업/정상';
+          const from = new Date(s.openedAt).getTime();
+          const to = isOpen ? end : (s.closedAt ? new Date(s.closedAt).getTime() : from);
+    
+          const bar = document.createElement('div');
+          bar.className = 'absolute bottom-1-5 top-1-5 rounded-sm ring-1 ring-white ' + (isOpen ? 'bg-blue-600/30' : 'bg-zinc-800/30');
+          bar.style.left = ((from - start) / total * 100) + '%';
+          bar.style.width = Math.max((to - from) / total * 100, 0.8) + '%';
+          bar.title = s.name;
+          return bar;
+        });
+    
+        document.querySelectorAll('[data-detail-timeline]').forEach((box) => {
+          box.replaceChildren(...bars.map((b) => b.cloneNode(true)));
+        });
+        setText('[data-timeline-start]', new Date(start).getFullYear());
+        setText('[data-timeline-end]', new Date(end).getFullYear());
+    }
+    
+    function makeRankRow(spot, index) {
+        const row = document.createElement('a');
+        row.href = '#';
+        row.className = 'flex min-h-[50px] items-center gap-3 border-b border-zinc-100 py-2 text-zinc-900 no-underline';
+    
+        const rank = document.createElement('span');
+        rank.className = 'w-5 text-xs text-zinc-500';
+        rank.textContent = index + 1;
+    
+        const info = document.createElement('div');
+        info.className = 'flex min-w-0 flex-1 flex-col gap-1';
+        const title = document.createElement('span');
+        title.className = 'truncate text-sm font-semibold';
+        title.textContent = spot.address.replace('서울특별시 ', '') + ', ' + spot.floor;
+        const sub = document.createElement('span');
+        sub.className = 'text-2xs text-zinc-500';
+        sub.textContent = '폐업 ' + spot.closed + '곳';
+        info.append(title, sub);
+    
+        const count = document.createElement('span');
+        count.className = 'text-base font-bold';
+        count.textContent = spot.count + '곳';
+    
+        row.append(rank, info, count);
+        row.addEventListener('click', (e) => {
+          e.preventDefault();
+          window.PlaceMap.map.setLevel(3);
+          window.PlaceMap.panTo(spot.lat, spot.lng);
+          selectSpot(spot);
+        });
+        return row;
+      }
+    
+      function renderRanking(spots) {
+        const top = spots.slice(0, 20);
+        document.querySelectorAll('[data-ranking-list]').forEach((box) => {
+          if (top.length === 0) {
+            const empty = document.createElement('p');
+            empty.className = 'py-6 text-center text-xs text-zinc-500';
+            empty.textContent = '이 영역에는 회전문 자리가 없어요';
+            box.replaceChildren(empty);
+            return;
+          }
+          box.replaceChildren(...top.map(makeRankRow));
+        });
+      }
+    
+
     function showDetail(spot, stores) {
         setText('[data-detail-title]', spot.address.replace('서울특별시 ', '') + ', ' + spot.floor);
         setText('[data-detail-count]', stores.length);
         renderList(stores);
+        renderStats(stores);
+        renderTimeline(stores);
 
         const isOpen = stores.some((s) => s.status === '영업/정상');
         setText('[data-detail-nth]', isOpen
@@ -124,6 +235,7 @@
         overlay.setMap(map);
         overlays.push(overlay);
       });
+      renderRanking(spots);
     }
   
     document.addEventListener('map:idle', async (e) => {
