@@ -251,5 +251,9 @@
         if (err.name !== 'AbortError') console.error('[places]', err);
       }
     });
+
+      // 다른 스크립트(search.js 등)에서 상세 패널을 열 수 있게 노출한다.
+    window.PlaceDetail = { open: selectSpot };
+
   })();
   

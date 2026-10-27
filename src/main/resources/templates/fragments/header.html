@@ -1,15 +1,11 @@
 <header th:fragment="header" xmlns:th="http://www.thymeleaf.org" class="hidden lg:flex flex-wrap items-center gap-x-5 gap-y-3 border-b border-zinc-200 bg-white px-5 py-3">
   <h1 class="shrink-0 text-lg font-bold tracking-tight text-zinc-900">이 자리, 몇 번째 가게?</h1>
 
-  <div class="flex min-w-0 flex-1 basis-80 max-w-xl flex-col">
+  <div class="flex min-w-0 flex-1 basis-80 max-w-[280px] flex-col relative">
     <label for="pc-search" class="sr-only">주소나 가게 이름 검색</label>
-    <input
-      id="pc-search"
-      type="search"
-      placeholder="주소, 장소, 가게 이름으로 찾기"
-      class="h-11 w-full rounded-xl border border-zinc-300 bg-zinc-50 px-3-5 text-sm text-zinc-900 outline-none placeholder:text-zinc-500 focus:border-primary-600"
-      readonly
-    >
+    <input id="pc-search" type="search" placeholder="주소, 장소, 가게 이름으로 찾기" class="h-11 w-full rounded-xl border border-zinc-300 bg-zinc-50 px-3-5 text-sm text-zinc-900 outline-none placeholder:text-zinc-500 focus:border-primary-600">
+    <div data-search-results class="absolute left-0 right-0 top-full z-50 mt-1 hidden max-h-96 overflow-y-auto rounded-xl border border-zinc-200 bg-white shadow-lg scrollBar"></div>
+
   </div>
 
   <div class="flex flex-wrap items-center gap-2" data-filter-chips>

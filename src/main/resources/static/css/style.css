@@ -66,6 +66,9 @@
   .btn-secondary {
     @apply min-h-11 rounded-xl border border-zinc-300 bg-white text-sm font-semibold text-zinc-900;
   }
+
+  .scrollBar::-webkit-scrollbar {@apply w-1 bg-transparent rounded-full}
+  .scrollBar::-webkit-scrollbar-thumb {@apply bg-zinc-800/10 rounded-full cursor-pointer}
 }
 
 @layer utilities {

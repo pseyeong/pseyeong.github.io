@@ -31,4 +31,14 @@ public class PlaceApiController {
         return repository.findStores(address, floor);
     }
 
+    @GetMapping("/api/search")
+    public List<StoreSearch> search(
+            @RequestParam String q,
+            @RequestParam(defaultValue = "8") int limit) {
+        if (q.trim().length() < 2) {
+            return List.of();
+        }
+        return repository.searchStores(q, Math.min(limit, 20));
+    }
+
 }

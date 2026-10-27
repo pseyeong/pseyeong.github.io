@@ -5,20 +5,20 @@
 
   <header th:replace="~{fragments/header :: header}"></header>
 
-  <main class="relative flex min-h-0 flex-1">
+  <main class="relative flex min-h-0 flex-1 h-[calc(100vh-69px)]">
 
     <!-- ========== PC 좌측 패널 ========== -->
-    <aside class="hidden w-full max-w-md shrink-0 flex-col border-r border-zinc-200 bg-white lg:flex" aria-label="자리 정보 패널">
+    <aside class="hidden w-[480px] shrink-0 flex-col border-r border-zinc-200 bg-white lg:flex" aria-label="자리 정보 패널">
       <div class="grid grid-cols-2 border-b border-zinc-200">
         <button type="button" class="panel-tab panel-tab-active" data-pc-tab="detail">자리 상세</button>
         <button type="button" class="panel-tab panel-tab-idle" data-pc-tab="ranking">회전문 랭킹</button>
       </div>
 
-      <div class="min-h-0 flex-1 overflow-y-auto p-5" data-pc-pane="detail">
+      <div class="min-h-0 flex-1 overflow-y-auto p-5 scrollBar" data-pc-pane="detail">
         <div th:replace="~{fragments/place-detail :: placeDetail(compact=false)}"></div>
       </div>
 
-      <div class="hidden min-h-0 flex-1 overflow-y-auto p-4" data-pc-pane="ranking">
+      <div class="hidden min-h-0 flex-1 overflow-y-auto p-4 scrollBar" data-pc-pane="ranking">
         <div class="mb-3 flex items-baseline justify-between px-1">
           <span class="text-base font-bold text-zinc-900">이 범위 회전문 자리</span>
           <span class="text-2xs text-zinc-500">상위 20곳 · 예시</span>
@@ -224,5 +224,7 @@
   <script th:src="@{/js/ui.js}"></script>
   <script th:src="@{/js/kakaoMap.js}"></script>
   <script th:src="@{/js/places.js}"></script>
+  <script th:src="@{/js/search.js}"></script>
+
 </body>
 </html>
