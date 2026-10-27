@@ -31,14 +31,16 @@ public class PlaceRepository {
 
 
     private static final String SQL = """
-            select id, base, fl, n, closed, last_closed_at, lat, lng
-            from place_spot
-            where lat between ? and ?
-              and lng between ? and ?
-              and n <= ?
-            order by n desc, last_closed_at desc nulls last
-            limit ?
-            """;
+        select id, base, fl, n, closed, open_n, last_closed_at, lat, lng
+        from place_spot
+        where lat between ? and ?
+            and lng between ? and ?
+            and n <= ?
+            and open_n <= ?
+        order by n desc, last_closed_at desc nulls last
+        limit ?
+        """;
+
 
     private static final String STORES_SQL = """
         select name, category, status, opened_at, closed_at
@@ -56,20 +58,23 @@ public class PlaceRepository {
     }
 
     public List<PlaceSpot> findInBounds(double swLat, double swLng, double neLat, double neLng,
-                                        int maxCount, int limit) {
+        int maxCount, boolean vacantOnly, int limit) {
+        int maxOpen = vacantOnly ? 0 : Integer.MAX_VALUE;
         return jdbc.query(SQL, (rs, i) -> {
             Date closedAt = rs.getDate("last_closed_at");
             return new PlaceSpot(
-                    rs.getLong("id"),
-                    rs.getString("base"),
-                    rs.getString("fl"),
-                    rs.getInt("n"),
-                    rs.getInt("closed"),
-                    closedAt == null ? null : closedAt.toLocalDate(),
-                    rs.getDouble("lat"),
-                    rs.getDouble("lng"));
-        }, swLat, neLat, swLng, neLng, maxCount, limit);
+            rs.getLong("id"),
+            rs.getString("base"),
+            rs.getString("fl"),
+            rs.getInt("n"),
+            rs.getInt("closed"),
+            rs.getInt("open_n"),
+            closedAt == null ? null : closedAt.toLocalDate(),
+            rs.getDouble("lat"),
+            rs.getDouble("lng"));
+        }, swLat, neLat, swLng, neLng, maxCount, maxOpen, limit);
     }
+
 
     public List<StoreView> findStores(String address, String floor) {
         return jdbc.query(STORES_SQL, (rs, i) -> {

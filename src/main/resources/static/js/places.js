@@ -2,10 +2,49 @@
 (function () {
     let overlays = [];
     let controller = null;
+    let vacantOnly = false; // "빈 자리만" 필터 상태
   
-    function sizeClass(count) {
-      return count >= 6 ? 'size-[22px] bg-orange-500' : 'size-4 bg-primary-500';
-    }
+    // 점 모양 정의: 위에서부터 먼저 맞는 단계가 적용된다. 범례도 이 배열로 그린다.
+    const LEVELS = [
+        { label: '빈 자리', cls: 'size-[18px] border-2 border-rose-900 bg-white', match: (s) => s.openCount === 0 },
+        { label: '8~10곳', cls: 'size-[26px] border-2 border-white bg-red-500', match: (s) => s.count >= 8 },
+        { label: '6~7곳', cls: 'size-[22px] border-2 border-white bg-orange-500', match: (s) => s.count >= 6 },
+        { label: '4~5곳', cls: 'size-[18px] border-2 border-white bg-yellow-400', match: (s) => s.count >= 4 },
+        { label: '3곳', cls: 'size-4 border-2 border-white bg-primary-500', match: () => true },
+        ];
+    
+        function markerClass(spot) {
+        return LEVELS.find((l) => l.match(spot)).cls;
+        }
+    
+        function renderLegend() {
+        const root = document.getElementById('map');
+        if (!root) return;
+    
+        const box = document.createElement('div');
+        box.className = 'absolute bottom-3 left-3 z-10 flex flex-col gap-1 rounded-lg bg-white/90 px-3 py-2 text-2xs text-zinc-700 shadow';
+    
+        LEVELS.forEach((l) => {
+            const row = document.createElement('div');
+            row.className = 'flex items-center gap-2';
+    
+            const slot = document.createElement('span');
+            slot.className = 'flex w-[26px] justify-center'; // 크기가 달라도 글자 줄이 맞도록 고정 폭
+            const dot = document.createElement('span');
+            dot.className = 'rounded-full shadow ' + l.cls;
+            slot.append(dot);
+    
+            const label = document.createElement('span');
+            label.textContent = l.label;
+    
+            row.append(slot, label);
+            box.append(row);
+        });
+    
+        root.append(box);
+        }
+      
+
   
     function clear() {
       overlays.forEach((o) => o.setMap(null));
@@ -221,8 +260,8 @@
   
       spots.forEach((s) => {
         const el = document.createElement('div');
-        el.className = 'rounded-full border-2 border-white shadow ' + sizeClass(s.count);
-        el.title = s.address + ' ' + s.floor + ' · ' + s.count + '곳';
+        el.className = 'rounded-full shadow ' + markerClass(s);
+        el.title = s.address + ' ' + s.floor + ' · ' + s.count + '곳' + (s.openCount === 0 ? ' · 빈 자리' : '');
         el.classList.add('cursor-pointer');
         el.addEventListener('click', () => selectSpot(s));  
   
@@ -238,11 +277,12 @@
       renderRanking(spots);
     }
   
-    document.addEventListener('map:idle', async (e) => {
+    // 현재 지도 영역(bounds)의 자리를 불러와 그린다. 필터 상태(vacantOnly)도 함께 보낸다.
+    async function load(bounds) {
       if (controller) controller.abort();
       controller = new AbortController();
-  
-      const params = new URLSearchParams({ ...e.detail, limit: 200 });
+
+      const params = new URLSearchParams({ ...bounds, limit: 200, vacantOnly });
       try {
         const res = await fetch('/api/places?' + params, { signal: controller.signal });
         if (!res.ok) throw new Error('HTTP ' + res.status);
@@ -250,10 +290,31 @@
       } catch (err) {
         if (err.name !== 'AbortError') console.error('[places]', err);
       }
-    });
+    }
 
-      // 다른 스크립트(search.js 등)에서 상세 패널을 열 수 있게 노출한다.
+    // PC 체크박스와 모바일 칩의 모양을 상태에 맞추고, 지도를 다시 조회한다.
+    function setVacantOnly(value) {
+      vacantOnly = value;
+      document.querySelectorAll('[data-vacant-toggle]').forEach((el) => {
+        if (el.type === 'checkbox') {
+          el.checked = value;
+        } else {
+          el.classList.toggle('chip-active', value);
+          el.classList.toggle('chip-idle', !value);
+        }
+      });
+      if (window.PlaceMap) load(window.PlaceMap.bounds());
+    }
+
+    document.addEventListener('map:idle', (e) => load(e.detail));
+
+    document.querySelectorAll('[data-vacant-toggle]').forEach((el) => {
+      el.addEventListener('click', () => setVacantOnly(!vacantOnly));
+    });
+    
+
     window.PlaceDetail = { open: selectSpot };
+    renderLegend();
 
   })();
   

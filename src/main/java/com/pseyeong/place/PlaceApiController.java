@@ -22,9 +22,11 @@ public class PlaceApiController {
             @RequestParam double neLat,
             @RequestParam double neLng,
             @RequestParam(defaultValue = "10") int maxCount,
+            @RequestParam(defaultValue = "false") boolean vacantOnly,
             @RequestParam(defaultValue = "200") int limit) {
-        return repository.findInBounds(swLat, swLng, neLat, neLng, maxCount, Math.min(limit, 500));
+        return repository.findInBounds(swLat, swLng, neLat, neLng, maxCount, vacantOnly, Math.min(limit, 500));
     }
+
 
     @GetMapping("/api/places/stores")
     public List<StoreView> stores(@RequestParam String address, @RequestParam String floor) {
