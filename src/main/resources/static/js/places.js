@@ -6,27 +6,46 @@
   
     // 점 모양 정의: 위에서부터 먼저 맞는 단계가 적용된다. 범례도 이 배열로 그린다.
     const LEVELS = [
-        { label: '빈 자리', cls: 'size-[18px] border-2 border-rose-900 bg-white', match: (s) => s.openCount === 0 },
-        { label: '8~10곳', cls: 'size-[26px] border-2 border-white bg-red-500', match: (s) => s.count >= 8 },
-        { label: '6~7곳', cls: 'size-[22px] border-2 border-white bg-orange-500', match: (s) => s.count >= 6 },
-        { label: '4~5곳', cls: 'size-[18px] border-2 border-white bg-yellow-400', match: (s) => s.count >= 4 },
-        { label: '3곳', cls: 'size-4 border-2 border-white bg-primary-500', match: () => true },
+      { label: '빈 자리', cls: 'size-4 border-1 border-white bg-zinc-800/30 hover:scale-110', match: (s) => s.openCount === 0 },
+      { label: '8~10곳', cls: 'size-4 border-1 border-white bg-[#0e334f]/80 hover:scale-110', match: (s) => s.count >= 8 },
+      { label: '6~7곳', cls: 'size-4 border-1 border-white bg-[#1199b7]/80 hover:scale-110', match: (s) => s.count >= 6 },
+      { label: '4~5곳', cls: 'size-4 border-1 border-white bg-[#d0e9e8]/80 hover:scale-110', match: (s) => s.count >= 4 },
+      { label: '3곳', cls: 'size-4 border-1 border-white bg-primary-500/80 hover:scale-110', match: () => true },
         ];
     
-        function markerClass(spot) {
-        return LEVELS.find((l) => l.match(spot)).cls;
+        const shown = new Set(LEVELS); // 범례에서 켜 둔 단계 (처음엔 전부)
+        let lastSpots = [];            // 마지막으로 받아 온 점 (범례를 누르면 이걸로 다시 그린다)
+    
+        function levelOf(spot) {
+          return LEVELS.find((l) => l.match(spot));
         }
     
+        function markerClass(spot) {
+          return levelOf(spot).cls;
+        }
+    
+    
         function renderLegend() {
-        const root = document.getElementById('map');
-        if (!root) return;
+          const root = document.getElementById('map');
+          if (!root) return;
     
-        const box = document.createElement('div');
-        box.className = 'absolute bottom-3 left-3 z-10 flex flex-col gap-1 rounded-lg bg-white/90 px-3 py-2 text-2xs text-zinc-700 shadow';
+          const box = document.createElement('div');
+          box.className = 'absolute bottom-3 right-3 z-10 flex gap-1 rounded-lg bg-white/90 p-2 text-2xs text-zinc-700 shadow';
     
-        LEVELS.forEach((l) => {
-            const row = document.createElement('div');
-            row.className = 'flex items-center gap-2';
+          // 범례는 빈 자리를 맨 뒤에 보여 준다 (판정 순서와 별개)
+          [...LEVELS.slice(1), LEVELS[0]].forEach((l) => {
+            const row = document.createElement('button');
+            row.type = 'button';
+            row.className = 'flex items-center gap-1 rounded px-1 hover:bg-zinc-100';
+            row.setAttribute('aria-pressed', 'true');
+            row.addEventListener('click', () => {
+              if (shown.has(l)) shown.delete(l);
+              else shown.add(l);
+              const on = shown.has(l);
+              row.setAttribute('aria-pressed', String(on));
+              row.classList.toggle('opacity-40', !on); // 꺼진 항목은 흐리게
+              draw(lastSpots);
+            });
     
             const slot = document.createElement('span');
             slot.className = 'flex w-[26px] justify-center'; // 크기가 달라도 글자 줄이 맞도록 고정 폭
@@ -39,10 +58,11 @@
     
             row.append(slot, label);
             box.append(row);
-        });
+          });
     
-        root.append(box);
+          root.append(box);
         }
+    
       
 
   
@@ -338,17 +358,21 @@
     
   
     function draw(spots) {
+      if (!window.PlaceMap) return; // 지도가 준비되기 전에 범례를 누른 경우
       const { maps } = window.kakao;
       const map = window.PlaceMap.map;
+      lastSpots = spots;
       clear();
-  
-      spots.forEach((s) => {
+
+      const visible = spots.filter((s) => shown.has(levelOf(s))); // 범례에서 켠 단계만
+
+      visible.forEach((s) => {
         const el = document.createElement('div');
         el.className = 'rounded-full shadow ' + markerClass(s);
         el.title = s.address + ' ' + s.floor + ' · ' + s.count + '곳' + (s.openCount === 0 ? ' · 빈 자리' : '');
         el.classList.add('cursor-pointer');
-        el.addEventListener('click', () => selectSpot(s));  
-  
+        el.addEventListener('click', () => selectSpot(s));
+
         const overlay = new maps.CustomOverlay({
           position: new maps.LatLng(s.lat, s.lng),
           content: el,
@@ -358,8 +382,9 @@
         overlay.setMap(map);
         overlays.push(overlay);
       });
-      renderRanking(spots);
+      renderRanking(visible);
     }
+
   
     // 현재 지도 영역(bounds)의 자리를 불러와 그린다. 필터 상태(vacantOnly)도 함께 보낸다.
     async function load(bounds) {

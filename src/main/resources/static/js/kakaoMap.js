@@ -38,6 +38,7 @@
     document.querySelectorAll('[data-map-placeholder]').forEach((el) => el.classList.add('!hidden'));
 
     let myMarker = null;
+    let searchMarker = null; // 검색한 위치 표시 (검은 점, 하나만)
 
     const api = {
       map,
@@ -69,6 +70,20 @@
           () => console.warn('[kakaoMap] 위치 정보를 가져오지 못했습니다.'),
           { enableHighAccuracy: true, timeout: 8000 }
         );
+      },
+       // 검색한 위치에 검은 점을 찍는다. 이미 있으면 위치만 옮긴다.
+       mark(lat, lng) {
+        const position = new maps.LatLng(lat, lng);
+        if (!searchMarker) {
+          const el = document.createElement('div');
+          el.className = 'size-3-5 rounded-full border-2 border-white bg-rose-600 shadow-lg';
+          searchMarker = new maps.CustomOverlay({ position, content: el, xAnchor: 0.5, yAnchor: 0.5, zIndex: 10 });
+        }
+        searchMarker.setPosition(position);
+        searchMarker.setMap(map);
+      },
+      unmark() {
+        if (searchMarker) searchMarker.setMap(null);
       },
     };
     window.PlaceMap = api;

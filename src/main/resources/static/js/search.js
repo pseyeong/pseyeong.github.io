@@ -27,6 +27,7 @@
     function moveTo(lat, lng) {
       window.PlaceMap.map.setLevel(3);
       window.PlaceMap.panTo(lat, lng);
+      window.PlaceMap.mark(lat, lng);
       close();
     }
   

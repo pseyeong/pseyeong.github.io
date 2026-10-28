@@ -815,6 +815,10 @@ button,
   pointer-events: none;
 }
 
+.visible {
+  visibility: visible;
+}
+
 .absolute {
   position: absolute;
 }
@@ -991,6 +995,10 @@ button,
   left: 12px;
 }
 
+.right-3 {
+  right: 12px;
+}
+
 .z-0 {
   z-index: 0;
 }
@@ -1062,6 +1070,16 @@ button,
 .size-\[26px\] {
   width: 26px;
   height: 26px;
+}
+
+.size-5 {
+  width: 20px;
+  height: 20px;
+}
+
+.size-3-5 {
+  width: 14px;
+  height: 14px;
 }
 
 .h-1-5 {
@@ -1363,6 +1381,10 @@ button,
   border-radius: 2px;
 }
 
+.rounded {
+  border-radius: 0.25rem;
+}
+
 .border {
   border-width: 1px;
 }
@@ -1373,6 +1395,10 @@ button,
 
 .border-3 {
   border-width: 3px;
+}
+
+.border-1 {
+  border-width: 1px;
 }
 
 .border-b {
@@ -1498,12 +1524,70 @@ button,
   background-color: rgb(252 200 0 / var(--tw-bg-opacity, 1));
 }
 
+.bg-black {
+  --tw-bg-opacity: 1;
+  background-color: rgb(0 0 0 / var(--tw-bg-opacity, 1));
+}
+
+.bg-orange-500\/20 {
+  background-color: rgb(255 105 0 / 0.2);
+}
+
+.bg-primary-500\/20 {
+  background-color: rgb(43 127 255 / 0.2);
+}
+
+.bg-red-500\/20 {
+  background-color: rgb(251 44 54 / 0.2);
+}
+
+.bg-yellow-400\/20 {
+  background-color: rgb(252 200 0 / 0.2);
+}
+
+.bg-orange-500\/80 {
+  background-color: rgb(255 105 0 / 0.8);
+}
+
+.bg-primary-500\/80 {
+  background-color: rgb(43 127 255 / 0.8);
+}
+
+.bg-red-500\/80 {
+  background-color: rgb(251 44 54 / 0.8);
+}
+
+.bg-yellow-400\/80 {
+  background-color: rgb(252 200 0 / 0.8);
+}
+
+.bg-rose-600 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(236 0 63 / var(--tw-bg-opacity, 1));
+}
+
+.bg-\[\#0e334f\]\/80 {
+  background-color: rgb(14 51 79 / 0.8);
+}
+
+.bg-\[\#1199b7\]\/80 {
+  background-color: rgb(17 153 183 / 0.8);
+}
+
+.bg-\[\#d0e9e8\]\/80 {
+  background-color: rgb(208 233 232 / 0.8);
+}
+
 .p-4 {
   padding: 16px;
 }
 
 .p-5 {
   padding: 20px;
+}
+
+.p-2 {
+  padding: 8px;
 }
 
 .px-0 {
@@ -1731,6 +1815,10 @@ button,
 
 .accent-primary-600 {
   accent-color: #155dfc;
+}
+
+.opacity-40 {
+  opacity: 0.4;
 }
 
 .shadow {
@@ -2011,9 +2099,26 @@ html[data-search='open'] .mo-search {
   color: rgb(106 114 130 / var(--tw-text-opacity, 1));
 }
 
+.hover\:scale-105:hover {
+  --tw-scale-x: 1.05;
+  --tw-scale-y: 1.05;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.hover\:scale-110:hover {
+  --tw-scale-x: 1.1;
+  --tw-scale-y: 1.1;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
 .hover\:bg-zinc-50:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(249 250 251 / var(--tw-bg-opacity, 1));
+}
+
+.hover\:bg-zinc-100:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(243 244 246 / var(--tw-bg-opacity, 1));
 }
 
 .focus\:border-primary-600:focus {
