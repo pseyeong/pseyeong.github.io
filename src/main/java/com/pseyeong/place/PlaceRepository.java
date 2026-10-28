@@ -51,10 +51,11 @@ public class PlaceRepository {
         """;
     
     private static final String HISTORY_SQL = """
-        select name, license_type, category, status, opened_at, closed_at
+        select name, license_type, category, status, unit, opened_at, closed_at
         from store
         where building = ? and floor = ?
         """;
+
 
     private static final String HISTORY_ORDER = " order by opened_at nulls last, closed_at nulls last";
     
@@ -107,12 +108,14 @@ public class PlaceRepository {
             Date openedAt = rs.getDate("opened_at");
             Date closedAt = rs.getDate("closed_at");
             return new PlaceHistory.Row(
-                    rs.getString("name"),
-                    rs.getString("license_type"),
-                    rs.getString("category"),
-                    rs.getString("status"),
-                    openedAt == null ? null : openedAt.toLocalDate(),
-                    closedAt == null ? null : closedAt.toLocalDate());
+                rs.getString("name"),
+                rs.getString("license_type"),
+                rs.getString("category"),
+                rs.getString("status"),
+                rs.getString("unit"),
+                openedAt == null ? null : openedAt.toLocalDate(),
+                closedAt == null ? null : closedAt.toLocalDate());
+
         }, args);
     }
     

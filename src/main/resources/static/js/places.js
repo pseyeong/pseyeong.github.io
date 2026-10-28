@@ -88,9 +88,11 @@
       name.textContent = store.name;
       const sub = document.createElement('span');
       sub.className = 'text-2xs text-zinc-500';
-      sub.textContent = (store.category ? store.category + ' · ' : '')
+      sub.textContent = (store.unit ? store.unit + ' · ' : '')
+      + (store.category ? store.category + ' · ' : '')
       + ym(store.openedAt) + ' – ' + (isOpen ? '영업 중' : ym(store.closedAt))
       + (store.ownerChanged ? ' · 영업자 변경 추정' : '');
+
 
       info.append(name, sub);
   
@@ -252,8 +254,8 @@
       }
     
 
-      function showDetail(spot, stores, gaps) {
-        setText('[data-detail-title]', spot.address.replace('서울특별시 ', '') + ', ' + spot.floor);
+      function showDetail(spot, stores, gaps, unit) {
+        setText('[data-detail-title]', spot.address.replace('서울특별시 ', '') + ', ' + spot.floor + (unit ? ' ' + unit : ''));
         setText('[data-detail-count]', stores.length);
         renderList(stores, gaps);
         renderStats(stores);
@@ -273,17 +275,57 @@
     }
     
 
+    let currentSpot = null;  // 지금 상세에 열린 자리
+    let currentUnits = [];   // 그 층에서 확인된 호 목록
+
+    async function loadHistory(spot, unit) {
+        const params = new URLSearchParams({ building: spot.address, floor: spot.floor });
+        if (unit) params.set('unit', unit);
+        const res = await fetch('/api/places/history?' + params);
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return res.json();
+    }
+
+    // 호 칩: "전체" + 호 목록. 호가 없는 층이면 숨긴다.
+    function renderUnits(active) {
+        document.querySelectorAll('[data-detail-units]').forEach((box) => {
+            box.classList.toggle('hidden', currentUnits.length === 0);
+            const chips = [null, ...currentUnits].map((u) => {
+                const chip = document.createElement('button');
+                chip.type = 'button';
+                chip.className = 'chip ' + (u === active ? 'chip-active' : 'chip-idle');
+                chip.textContent = u || '전체';
+                chip.addEventListener('click', () => selectUnit(u));
+                return chip;
+            });
+            box.replaceChildren(...chips);
+        });
+    }
+
     async function selectSpot(spot) {
-      const params = new URLSearchParams({ building: spot.address, floor: spot.floor });
-      try {
-            const res = await fetch('/api/places/history?' + params);
-            if (!res.ok) throw new Error('HTTP ' + res.status);
-            const history = await res.json();
-            showDetail(spot, history.records, history.gaps);
+        try {
+            const history = await loadHistory(spot);
+            currentSpot = spot;
+            currentUnits = [...new Set(history.records.map((r) => r.unit).filter(Boolean))]
+                .sort((a, b) => parseInt(a, 10) - parseInt(b, 10)); // 101호, 102호 ... 숫자 순
+            renderUnits(null);
+            showDetail(spot, history.records, history.gaps, null);
         } catch (err) {
             console.error('[places]', err);
         }
     }
+
+    async function selectUnit(unit) {
+        if (!currentSpot) return;
+        try {
+            const history = await loadHistory(currentSpot, unit);
+            renderUnits(unit);
+            showDetail(currentSpot, history.records, history.gaps, unit);
+        } catch (err) {
+            console.error('[places]', err);
+        }
+    }
+
 
     
   

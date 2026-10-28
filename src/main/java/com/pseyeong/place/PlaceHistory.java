@@ -14,14 +14,15 @@ public record PlaceHistory(String building, String floor, String unit, List<Item
     private static final int OWNER_CHANGE_DAYS = 60;  // 폐업과 재인허가가 이 안이면 영업자 변경 추정
 
     // DB 에서 읽은 그대로의 한 줄
-    public record Row(String name, String licenseType, String category, String status,
-                      LocalDate openedAt, LocalDate closedAt) {
+    public record Row(String name, String licenseType, String category, String status, String unit,
+        LocalDate openedAt, LocalDate closedAt) {
     }
 
     // 응답용 한 줄: Row + 영업 기간(개월) + 영업자 변경 추정 여부
-    public record Item(String name, String licenseType, String category, String status,
-                       LocalDate openedAt, LocalDate closedAt, Integer months, boolean ownerChanged) {
+    public record Item(String name, String licenseType, String category, String status, String unit,
+        LocalDate openedAt, LocalDate closedAt, Integer months, boolean ownerChanged) {
     }
+
 
     // 가게 사이의 빈 기간
     public record Gap(LocalDate from, LocalDate to, int months) {
@@ -64,8 +65,9 @@ public record PlaceHistory(String building, String floor, String unit, List<Item
                 }
             }
 
-            items.add(new Item(r.name(), r.licenseType(), r.category(), r.status(),
-                    r.openedAt(), r.closedAt(), months, ownerChanged));
+            items.add(new Item(r.name(), r.licenseType(), r.category(), r.status(), r.unit(),
+            r.openedAt(), r.closedAt(), months, ownerChanged));
+
             prev = r;
         }
         return new PlaceHistory(building, floor, unit, items, gaps);
