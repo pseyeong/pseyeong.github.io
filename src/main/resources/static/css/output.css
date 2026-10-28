@@ -1578,6 +1578,30 @@ button,
   background-color: rgb(208 233 232 / 0.8);
 }
 
+.bg-\[\#0e334f\]\/90 {
+  background-color: rgb(14 51 79 / 0.9);
+}
+
+.bg-\[\#1199b7\]\/90 {
+  background-color: rgb(17 153 183 / 0.9);
+}
+
+.bg-\[\#d0e9e8\]\/90 {
+  background-color: rgb(208 233 232 / 0.9);
+}
+
+.bg-primary-500\/90 {
+  background-color: rgb(43 127 255 / 0.9);
+}
+
+.bg-zinc-800\/40 {
+  background-color: rgb(30 41 57 / 0.4);
+}
+
+.bg-\[\#76c9c6e6\]\/90 {
+  background-color: rgb(118 201 198 / 0.9);
+}
+
 .p-4 {
   padding: 16px;
 }

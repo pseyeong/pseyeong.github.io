@@ -6,11 +6,11 @@
   
     // 점 모양 정의: 위에서부터 먼저 맞는 단계가 적용된다. 범례도 이 배열로 그린다.
     const LEVELS = [
-      { label: '빈 자리', cls: 'size-4 border-1 border-white bg-zinc-800/30 hover:scale-110', match: (s) => s.openCount === 0 },
-      { label: '8~10곳', cls: 'size-4 border-1 border-white bg-[#0e334f]/80 hover:scale-110', match: (s) => s.count >= 8 },
-      { label: '6~7곳', cls: 'size-4 border-1 border-white bg-[#1199b7]/80 hover:scale-110', match: (s) => s.count >= 6 },
-      { label: '4~5곳', cls: 'size-4 border-1 border-white bg-[#d0e9e8]/80 hover:scale-110', match: (s) => s.count >= 4 },
-      { label: '3곳', cls: 'size-4 border-1 border-white bg-primary-500/80 hover:scale-110', match: () => true },
+      { label: '빈 자리', cls: 'size-4 border-1 border-white bg-zinc-800/40 hover:scale-110', match: (s) => s.openCount === 0 },
+      { label: '8~10곳', cls: 'size-4 border-1 border-white bg-[#0e334f]/90 hover:scale-110', match: (s) => s.count >= 8 },
+      { label: '6~7곳', cls: 'size-4 border-1 border-white bg-[#1199b7]/90 hover:scale-110', match: (s) => s.count >= 6 },
+      { label: '4~5곳', cls: 'size-4 border-1 border-white bg-[#76c9c6e6]/90 hover:scale-110', match: (s) => s.count >= 4 },
+      { label: '3곳', cls: 'size-4 border-1 border-white bg-primary-500/90 hover:scale-110', match: () => true },
         ];
     
         const shown = new Set(LEVELS); // 범례에서 켜 둔 단계 (처음엔 전부)
