@@ -259,10 +259,14 @@
         row.append(rank, info, count);
         row.addEventListener('click', (e) => {
           e.preventDefault();
+          const search = document.getElementById('pc-search');
+          if (search) search.value = ''; // 랭킹으로 고르면 검색어는 지운다
           window.PlaceMap.map.setLevel(3);
           window.PlaceMap.panTo(spot.lat, spot.lng);
+          window.PlaceMap.mark(spot.lat, spot.lng);
           selectSpot(spot);
-        });
+        });    
+    
         return row;
       }
     
@@ -371,7 +375,10 @@
         el.className = 'rounded-full shadow ' + markerClass(s);
         el.title = s.address + ' ' + s.floor + ' · ' + s.count + '곳' + (s.openCount === 0 ? ' · 빈 자리' : '');
         el.classList.add('cursor-pointer');
-        el.addEventListener('click', () => selectSpot(s));
+        el.addEventListener('click', () => {
+          window.PlaceMap.unmark(); // 다른 자리를 고르면 검색 점은 지운다
+          selectSpot(s);
+        });
 
         const overlay = new maps.CustomOverlay({
           position: new maps.LatLng(s.lat, s.lng),

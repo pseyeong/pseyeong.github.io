@@ -76,7 +76,7 @@
         const position = new maps.LatLng(lat, lng);
         if (!searchMarker) {
           const el = document.createElement('div');
-          el.className = 'size-3-5 rounded-full border-2 border-white bg-rose-600 shadow-lg';
+          el.className = 'size-3-5 rounded-full border-2 border-white bg-rose-600 shadow-lg pointer-events-none';
           searchMarker = new maps.CustomOverlay({ position, content: el, xAnchor: 0.5, yAnchor: 0.5, zIndex: 10 });
         }
         searchMarker.setPosition(position);
@@ -97,6 +97,9 @@
     }
 
     maps.event.addListener(map, 'idle', notifyIdle);
+    // 지도 빈 곳을 클릭하면 검색 점을 지운다
+    maps.event.addListener(map, 'click', () => api.unmark());
+
 
     // 처음 타일 로딩이 끝났을 때 한 번 알려서, 움직이지 않아도 첫 화면에 점이 찍히게 한다.
     maps.event.addListener(map, 'tilesloaded', function once() {
