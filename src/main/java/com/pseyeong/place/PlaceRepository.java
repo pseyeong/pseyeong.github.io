@@ -51,7 +51,7 @@ public class PlaceRepository {
         """;
     
     private static final String HISTORY_SQL = """
-        select name, license_type, category, status, unit, opened_at, closed_at
+        select name, license_type, category, status, unit, units, opened_at, closed_at
         from store
         where building = ? and floor = ?
         """;
@@ -98,26 +98,28 @@ public class PlaceRepository {
         }, address, floor);
     }
 
-    // unit 이 비어 있으면 층 전체, 있으면 그 호만
+    // unit 이 비어 있으면 층 전체, 있으면 그 호를 쓰는 가게(여러 호를 쓴 가게 포함)
     public List<PlaceHistory.Row> findHistory(String building, String floor, String unit) {
         boolean byUnit = unit != null && !unit.isBlank();
-        String sql = HISTORY_SQL + (byUnit ? " and unit = ?" : "") + HISTORY_ORDER;
+        String sql = HISTORY_SQL + (byUnit ? " and ? = any(units)" : "") + HISTORY_ORDER;
         Object[] args = byUnit ? new Object[] { building, floor, unit } : new Object[] { building, floor };
 
         return jdbc.query(sql, (rs, i) -> {
             Date openedAt = rs.getDate("opened_at");
             Date closedAt = rs.getDate("closed_at");
+            java.sql.Array units = rs.getArray("units");
             return new PlaceHistory.Row(
-                rs.getString("name"),
-                rs.getString("license_type"),
-                rs.getString("category"),
-                rs.getString("status"),
-                rs.getString("unit"),
-                openedAt == null ? null : openedAt.toLocalDate(),
-                closedAt == null ? null : closedAt.toLocalDate());
-
+                    rs.getString("name"),
+                    rs.getString("license_type"),
+                    rs.getString("category"),
+                    rs.getString("status"),
+                    rs.getString("unit"),
+                    units == null ? null : List.of((String[]) units.getArray()),
+                    openedAt == null ? null : openedAt.toLocalDate(),
+                    closedAt == null ? null : closedAt.toLocalDate());
         }, args);
     }
+    
     
 
     private static String escapeLike(String s) {

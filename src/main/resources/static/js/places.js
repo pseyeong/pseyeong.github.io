@@ -72,6 +72,12 @@
       return ((y ? y + '년 ' : '') + (m || !y ? m + '개월' : '')).trim();
     }
   
+     // ["105호","106호"] -> "105·106호"
+    function unitLabel(units) {
+      if (!units || !units.length) return '';
+      return units.map((u) => u.replace(/호$/, '')).join('·') + '호';
+    }
+    
     function makeRow(store) {
       const isOpen = store.status === '영업/정상';
   
@@ -88,10 +94,11 @@
       name.textContent = store.name;
       const sub = document.createElement('span');
       sub.className = 'text-2xs text-zinc-500';
-      sub.textContent = (store.unit ? store.unit + ' · ' : '')
+      sub.textContent = (store.units ? unitLabel(store.units) + ' · ' : '')
       + (store.category ? store.category + ' · ' : '')
       + ym(store.openedAt) + ' – ' + (isOpen ? '영업 중' : ym(store.closedAt))
       + (store.ownerChanged ? ' · 영업자 변경 추정' : '');
+
 
 
       info.append(name, sub);
@@ -306,8 +313,9 @@
         try {
             const history = await loadHistory(spot);
             currentSpot = spot;
-            currentUnits = [...new Set(history.records.map((r) => r.unit).filter(Boolean))]
-                .sort((a, b) => parseInt(a, 10) - parseInt(b, 10)); // 101호, 102호 ... 숫자 순
+            currentUnits = [...new Set(history.records.flatMap((r) => r.units || []))]
+            .sort((a, b) => a.localeCompare(b, 'ko', { numeric: true }));
+
             renderUnits(null);
             showDetail(spot, history.records, history.gaps, null);
         } catch (err) {
