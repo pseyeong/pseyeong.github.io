@@ -50,6 +50,14 @@ public class PlaceRepository {
         order by opened_at nulls last
         """;
     
+    private static final String HISTORY_SQL = """
+        select name, license_type, category, status, opened_at, closed_at
+        from store
+        where building = ? and floor = ?
+        """;
+
+    private static final String HISTORY_ORDER = " order by opened_at nulls last, closed_at nulls last";
+    
 
     private final JdbcTemplate jdbc;
 
@@ -88,6 +96,26 @@ public class PlaceRepository {
                     closedAt == null ? null : closedAt.toLocalDate());
         }, address, floor);
     }
+
+    // unit 이 비어 있으면 층 전체, 있으면 그 호만
+    public List<PlaceHistory.Row> findHistory(String building, String floor, String unit) {
+        boolean byUnit = unit != null && !unit.isBlank();
+        String sql = HISTORY_SQL + (byUnit ? " and unit = ?" : "") + HISTORY_ORDER;
+        Object[] args = byUnit ? new Object[] { building, floor, unit } : new Object[] { building, floor };
+
+        return jdbc.query(sql, (rs, i) -> {
+            Date openedAt = rs.getDate("opened_at");
+            Date closedAt = rs.getDate("closed_at");
+            return new PlaceHistory.Row(
+                    rs.getString("name"),
+                    rs.getString("license_type"),
+                    rs.getString("category"),
+                    rs.getString("status"),
+                    openedAt == null ? null : openedAt.toLocalDate(),
+                    closedAt == null ? null : closedAt.toLocalDate());
+        }, args);
+    }
+    
 
     private static String escapeLike(String s) {
         return s.replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_");

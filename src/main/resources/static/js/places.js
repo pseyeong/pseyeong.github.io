@@ -59,55 +59,88 @@
 
     function ym(date) {
         return date ? date.slice(0, 4) + '.' + date.slice(5, 7) : '?';
-      }
-    
-      // 개업일~폐업일(없으면 오늘) 사이를 "3년 5개월" 형태로
-      function duration(openedAt, closedAt) {
-        if (!openedAt) return '';
-        const from = new Date(openedAt);
-        const to = closedAt ? new Date(closedAt) : new Date();
-        const months = Math.max(0, (to.getFullYear() - from.getFullYear()) * 12 + (to.getMonth() - from.getMonth()));
-        const y = Math.floor(months / 12);
-        const m = months % 12;
-        return ((y ? y + '년 ' : '') + (m || !y ? m + '개월' : '')).trim();
-      }
-    
-      function makeRow(store) {
-        const isOpen = store.status === '영업/정상';
-    
-        const row = document.createElement('div');
-        row.className = 'sign-row';
-    
-        const dot = document.createElement('span');
-        dot.className = 'h-3 w-3 shrink-0 rounded-xs ' + (isOpen ? 'bg-blue-600/30' : 'bg-zinc-800/30');
-    
-        const info = document.createElement('div');
-        info.className = 'flex min-w-0 flex-1 flex-col';
-        const name = document.createElement('span');
-        name.className = 'text-sm font-semibold';
-        name.textContent = store.name;
-        const sub = document.createElement('span');
-        sub.className = 'text-2xs text-zinc-500';
-        sub.textContent = (store.category ? store.category + ' · ' : '')
-          + ym(store.openedAt) + ' – ' + (isOpen ? '영업 중' : ym(store.closedAt));
-        info.append(name, sub);
-    
-        const term = document.createElement('span');
-        term.className = 'shrink-0 text-2xs font-semibold';
-        term.textContent = isOpen
-          ? duration(store.openedAt, null) + '째'
-          : (store.closedAt ? duration(store.openedAt, store.closedAt) : '');
-    
-        row.append(dot, info, term);
-        return row;
-      }
-    
-      function renderList(stores) {
-        const rows = [...stores].reverse().map(makeRow); // API는 오래된 순 → 최근 순으로 뒤집기
-        document.querySelectorAll('[data-detail-list]').forEach((box) => {
-          box.replaceChildren(...rows.map((r) => r.cloneNode(true)));
-        });
     }
+  
+    // 개업일~폐업일(없으면 오늘) 사이를 "3년 5개월" 형태로
+    function duration(openedAt, closedAt) {
+      if (!openedAt) return '';
+      const from = new Date(openedAt);
+      const to = closedAt ? new Date(closedAt) : new Date();
+      const months = Math.max(0, (to.getFullYear() - from.getFullYear()) * 12 + (to.getMonth() - from.getMonth()));
+      const y = Math.floor(months / 12);
+      const m = months % 12;
+      return ((y ? y + '년 ' : '') + (m || !y ? m + '개월' : '')).trim();
+    }
+  
+    function makeRow(store) {
+      const isOpen = store.status === '영업/정상';
+  
+      const row = document.createElement('div');
+      row.className = 'sign-row';
+  
+      const dot = document.createElement('span');
+      dot.className = 'h-3 w-3 shrink-0 rounded-xs ' + (isOpen ? 'bg-blue-600/30' : 'bg-zinc-800/30');
+  
+      const info = document.createElement('div');
+      info.className = 'flex min-w-0 flex-1 flex-col';
+      const name = document.createElement('span');
+      name.className = 'text-sm font-semibold';
+      name.textContent = store.name;
+      const sub = document.createElement('span');
+      sub.className = 'text-2xs text-zinc-500';
+      sub.textContent = (store.category ? store.category + ' · ' : '')
+      + ym(store.openedAt) + ' – ' + (isOpen ? '영업 중' : ym(store.closedAt))
+      + (store.ownerChanged ? ' · 영업자 변경 추정' : '');
+
+      info.append(name, sub);
+  
+      const term = document.createElement('span');
+      term.className = 'shrink-0 text-2xs font-semibold';
+      term.textContent = isOpen
+        ? duration(store.openedAt, null) + '째'
+        : (store.closedAt ? duration(store.openedAt, store.closedAt) : '');
+  
+      row.append(dot, info, term);
+      return row;
+    }
+    
+    function makeGapRow(gap) {
+      const row = document.createElement('div');
+      row.className = 'sign-row';
+
+      const dot = document.createElement('span');
+      dot.className = 'h-3 w-3 shrink-0 rounded-xs border border-dashed border-zinc-400';
+
+      const info = document.createElement('div');
+      info.className = 'flex min-w-0 flex-1 flex-col';
+      const name = document.createElement('span');
+      name.className = 'text-sm text-zinc-500';
+      name.textContent = '기록 없음';
+      const sub = document.createElement('span');
+      sub.className = 'text-2xs text-zinc-500';
+      sub.textContent = ym(gap.from) + ' – ' + ym(gap.to) + ' · 인허가 대상이 아닌 업종이었을 수 있어요';
+      info.append(name, sub);
+
+      const term = document.createElement('span');
+      term.className = 'shrink-0 text-2xs font-semibold text-zinc-500';
+      term.textContent = fmtMonths(gap.months);
+
+      row.append(dot, info, term);
+      return row;
+    }
+
+    // 가게와 빈 기간을 시간 순으로 합쳐 최근 것이 위로 오게 보여 준다.
+    function renderList(stores, gaps) {
+      const entries = [
+        ...stores.map((s) => ({ key: (s.openedAt || '') + '1', node: makeRow(s) })),
+        ...gaps.map((g) => ({ key: g.to + '0', node: makeGapRow(g) })), // 같은 날이면 가게 아래에
+      ].sort((a, b) => (a.key < b.key ? 1 : -1));
+
+      document.querySelectorAll('[data-detail-list]').forEach((box) => {
+        box.replaceChildren(...entries.map((e) => e.node.cloneNode(true)));
+      });
+    }
+
     
 
       // 개업일~폐업일(없으면 오늘) 사이의 개월 수
@@ -219,10 +252,10 @@
       }
     
 
-    function showDetail(spot, stores) {
+      function showDetail(spot, stores, gaps) {
         setText('[data-detail-title]', spot.address.replace('서울특별시 ', '') + ', ' + spot.floor);
         setText('[data-detail-count]', stores.length);
-        renderList(stores);
+        renderList(stores, gaps);
         renderStats(stores);
         renderTimeline(stores);
 
@@ -241,16 +274,17 @@
     
 
     async function selectSpot(spot) {
-        const params = new URLSearchParams({ address: spot.address, floor: spot.floor });
-        try {
-            const res = await fetch('/api/places/stores?' + params);
+      const params = new URLSearchParams({ building: spot.address, floor: spot.floor });
+      try {
+            const res = await fetch('/api/places/history?' + params);
             if (!res.ok) throw new Error('HTTP ' + res.status);
-            const stores = await res.json();
-            showDetail(spot, stores);
+            const history = await res.json();
+            showDetail(spot, history.records, history.gaps);
         } catch (err) {
             console.error('[places]', err);
         }
     }
+
     
   
     function draw(spots) {

@@ -33,6 +33,14 @@ public class PlaceApiController {
         return repository.findStores(address, floor);
     }
 
+    @GetMapping("/api/places/history")
+    public PlaceHistory history(
+            @RequestParam String building,
+            @RequestParam String floor,
+            @RequestParam(required = false) String unit) {
+        return PlaceHistory.of(building, floor, unit, repository.findHistory(building, floor, unit));
+    }
+
     @GetMapping("/api/search")
     public List<StoreSearch> search(
             @RequestParam String q,
