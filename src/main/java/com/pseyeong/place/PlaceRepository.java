@@ -31,12 +31,13 @@ public class PlaceRepository {
 
 
     private static final String SQL = """
-        select id, base, fl, n, closed, open_n, last_closed_at, lat, lng
+        select id, base, fl, n, closed, open_n, last_closed_at, lat, lng, grp
         from place_spot
         where lat between ? and ?
             and lng between ? and ?
             and n <= ?
             and open_n <= ?
+            and (?::text is null or grp = ?)
         order by n desc, last_closed_at desc nulls last
         limit ?
         """;
@@ -67,8 +68,9 @@ public class PlaceRepository {
     }
 
     public List<PlaceSpot> findInBounds(double swLat, double swLng, double neLat, double neLng,
-        int maxCount, boolean vacantOnly, int limit) {
+        int maxCount, boolean vacantOnly, String group, int limit) {
         int maxOpen = vacantOnly ? 0 : Integer.MAX_VALUE;
+        String grp = "all".equals(group) ? null : group; // 전체면 업종 조건을 끈다
         return jdbc.query(SQL, (rs, i) -> {
             Date closedAt = rs.getDate("last_closed_at");
             return new PlaceSpot(
@@ -80,9 +82,11 @@ public class PlaceRepository {
             rs.getInt("open_n"),
             closedAt == null ? null : closedAt.toLocalDate(),
             rs.getDouble("lat"),
-            rs.getDouble("lng"));
-        }, swLat, neLat, swLng, neLng, maxCount, maxOpen, limit);
+            rs.getDouble("lng"),
+            rs.getString("grp"));
+        }, swLat, neLat, swLng, neLng, maxCount, maxOpen, grp, grp, limit);
     }
+
 
 
     public List<StoreView> findStores(String address, String floor) {

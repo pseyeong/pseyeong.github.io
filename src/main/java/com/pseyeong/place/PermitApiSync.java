@@ -21,17 +21,22 @@ import org.springframework.web.client.RestClientResponseException;
 import org.springframework.scheduling.annotation.Scheduled;
 
 
-// 행안부 일반음식점 API 에서 "마지막으로 본 시각 이후 바뀐 서울 가게"를 받아 store 에 저장한다.
+// 행안부 인허가 API 에서 업종별로 "마지막으로 본 시각 이후 바뀐 서울 가게"를 받아 store 에 저장한다.
 @Component
 public class PermitApiSync implements CommandLineRunner {
 
-    private static final String NAME = "general_restaurants";
-    private static final String LICENSE_TYPE = "일반음식점";
-    private static final int PAGE_SIZE = 100;   // API 한 번에 최대 100건
-    private static final int MAX_PAGES = 200;   // 안전장치: 한 번에 최대 2만 건
+    // API 경로 이름(sync_state 의 name 으로도 쓴다) + store 에 넣을 업종 이름
+    private record Service(String path, String licenseType) {}
 
-    @Value("${permit.api.url}")
-    private String url;
+    private static final List<Service> SERVICES = List.of(
+            new Service("general_restaurants", "일반음식점"),
+            new Service("rest_cafes", "휴게음식점"));    // 요청주소 확인 후 채우기
+
+    private static final int PAGE_SIZE = 100;   // API 한 번에 최대 100건
+    private static final int MAX_PAGES = 2000;  // 안전장치: 업종당 한 번에 최대 20만 건
+
+    @Value("${permit.api.base}")
+    private String base;
 
     @Value("${permit.api.key}")
     private String key;
@@ -65,24 +70,32 @@ public class PermitApiSync implements CommandLineRunner {
     }
 
     private void syncAndRefresh() {
+        for (Service s : SERVICES) {
+            try {
+                sync(s);
+            } catch (RuntimeException e) {
+                System.out.println(">>> sync failed [" + s.path() + "]: " + e.getMessage()); // 한 업종이 실패해도 다음 업종은 계속
+            }
+        }
         try {
-            sync();
             jdbc.execute("refresh materialized view place_spot"); // 지도 집계를 최신으로
             System.out.println(">>> place_spot refreshed");
         } catch (RuntimeException e) {
-            System.out.println(">>> sync failed: " + e.getMessage());
+            System.out.println(">>> refresh failed: " + e.getMessage());
         }
     }
 
-    public void sync() {
-        String since = loadSince();
+    public void sync(Service s) {
+        String since = loadSince(s);
         String maxSeen = since;
         int total = 0;
+        boolean finished = false;
         Map<String, Integer> kinds = new TreeMap<>(); // DAT_UPDT_SE 값별 건수 (I, U, D ...)
 
         for (int page = 1; page <= MAX_PAGES; page++) {
-            List<Map<String, Object>> items = fetch(page, since);
+            List<Map<String, Object>> items = fetch(s, page, since);
             if (items.isEmpty()) {
+                finished = true;
                 break;
             }
 
@@ -95,7 +108,7 @@ public class PermitApiSync implements CommandLineRunner {
                     maxSeen = updated;
                 }
 
-                Object[] row = upserter.toRow(LICENSE_TYPE,
+                Object[] row = upserter.toRow(s.licenseType(),
                         str(it, "MNG_NO"), str(it, "BPLC_NM"), str(it, "BZSTAT_SE_NM"), str(it, "SALS_STTS_NM"),
                         str(it, "LCPMT_YMD"), str(it, "CLSBIZ_YMD"),
                         str(it, "ROAD_NM_ADDR"), str(it, "LOTNO_ADDR"),
@@ -106,19 +119,25 @@ public class PermitApiSync implements CommandLineRunner {
             }
             upserter.upsert(rows);
             total += items.size();
-            System.out.println(">>> sync page " + page + ": " + items.size() + " rows");
+            System.out.println(">>> sync [" + s.path() + "] page " + page + ": " + items.size() + " rows");
 
             if (items.size() < PAGE_SIZE) {
+                finished = true;
                 break;
             }
         }
 
-        saveSince(maxSeen);
-        System.out.println(">>> sync done: " + total + " rows, kinds=" + kinds + ", since=" + maxSeen);
+        // 중간에 멈췄으면 못 받은 행이 있으니 since 를 그대로 둔다 (다음 실행에서 처음부터 다시)
+        if (finished) {
+            saveSince(s, maxSeen);
+        } else {
+            System.out.println(">>> sync [" + s.path() + "] stopped at MAX_PAGES, since not saved");
+        }
+        System.out.println(">>> sync [" + s.path() + "] done: " + total + " rows, kinds=" + kinds + ", since=" + maxSeen);
     }
 
     @SuppressWarnings("unchecked")
-    private List<Map<String, Object>> fetch(int page, String since) {
+    private List<Map<String, Object>> fetch(Service s, int page, String since) {
         Map<String, String> params = new LinkedHashMap<>();
         params.put("serviceKey", key);
         params.put("pageNo", String.valueOf(page));
@@ -133,7 +152,7 @@ public class PermitApiSync implements CommandLineRunner {
 
         Map<String, Object> res;
         try {
-            res = RestClient.create().get().uri(URI.create(url + "?" + query))
+            res = RestClient.create().get().uri(URI.create(base + "/" + s.path() + "/info?" + query))
                     .accept(MediaType.APPLICATION_JSON)
                     .retrieve().body(new ParameterizedTypeReference<Map<String, Object>>() {});
         } catch (RestClientResponseException e) {
@@ -147,7 +166,9 @@ public class PermitApiSync implements CommandLineRunner {
                 || !(response.get("body") instanceof Map<?, ?> body)) {
             throw new IllegalStateException("unexpected response: " + (res == null ? "null" : res.keySet()));
         }
-        System.out.println(">>> totalCount=" + body.get("totalCount") + " page=" + body.get("pageNo"));
+        if (page == 1) {
+            System.out.println(">>> [" + s.path() + "] totalCount=" + body.get("totalCount"));
+        }
 
         if (!(body.get("items") instanceof Map<?, ?> items)) {
             return List.of(); // 결과가 없으면 items 가 빈 문자열로 올 수 있다
@@ -162,17 +183,17 @@ public class PermitApiSync implements CommandLineRunner {
         return List.of();
     }
 
-    private String loadSince() {
+    private String loadSince(Service s) {
         String last = jdbc.query("select since from sync_state where name = ?",
-                rs -> rs.next() ? rs.getString(1) : null, NAME);
+                rs -> rs.next() ? rs.getString(1) : null, s.path());
         return last != null ? last : initialSince;
     }
 
-    private void saveSince(String since) {
+    private void saveSince(Service s, String since) {
         jdbc.update("""
                 insert into sync_state (name, since) values (?, ?)
                 on conflict (name) do update set since = excluded.since, updated_at = now()
-                """, NAME, since);
+                """, s.path(), since);
     }
 
     private static String str(Map<String, Object> m, String k) {

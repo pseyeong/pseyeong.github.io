@@ -3,6 +3,7 @@
     let overlays = [];
     let controller = null;
     let vacantOnly = false; // "빈 자리만" 필터 상태
+    let group = 'all';      // 업종 칩 필터 상태
   
     // 점 모양 정의: 위에서부터 먼저 맞는 단계가 적용된다. 범례도 이 배열로 그린다.
     const LEVELS = [
@@ -422,10 +423,26 @@
       if (window.PlaceMap) load(window.PlaceMap.bounds());
     }
 
+    // PC·모바일 업종 칩을 같은 상태로 맞추고, 지도를 다시 조회한다.
+    function setGroup(value) {
+      group = value;
+      document.querySelectorAll('[data-filter-chips]').forEach((group) => {
+        const on = el.dataset.chip === value;
+        el.classList.toggle('chip-active', on);
+        el.classList.toggle('chip-idle', !on);
+      });
+      if (window.PlaceMap) load(window.PlaceMap.bounds());
+    }
+    
+
     document.addEventListener('map:idle', (e) => load(e.detail));
 
     document.querySelectorAll('[data-vacant-toggle]').forEach((el) => {
       el.addEventListener('click', () => setVacantOnly(!vacantOnly));
+    });
+
+    document.querySelectorAll('[data-chip]').forEach((el) => {
+      el.addEventListener('click', () => setGroup(el.dataset.chip));
     });
     
 

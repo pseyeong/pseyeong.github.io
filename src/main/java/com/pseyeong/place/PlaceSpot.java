@@ -11,5 +11,6 @@ public record PlaceSpot(
     int openCount,
     LocalDate lastClosedAt,
     double lat,
-    double lng) {
+    double lng,
+    String group) {
 }
