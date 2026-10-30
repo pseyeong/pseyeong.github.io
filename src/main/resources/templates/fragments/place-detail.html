@@ -1,12 +1,12 @@
 <div th:fragment="placeDetail(compact)" xmlns:th="http://www.thymeleaf.org" class="flex flex-col gap-4">
 
   <div class="flex flex-col gap-1-5">
-    <div class="flex justify-between items-center h-7">
+    <div class="flex justify-between items-center">
+      <p class="text-xs text-zinc-500 h-[22px]">자주 들어온 업종 · <span data-detail-top></span></p>      
       <div class="flex flex-wrap items-center gap-1-5">
         <span data-detail-badge class="hidden rounded-md bg-zinc-900 px-2 py-0-5 text-2xs font-bold text-white">회전문 자리</span>
         <span data-detail-sample class="rounded-md bg-zinc-100 px-2 py-0-5 text-2xs text-zinc-500"></span>
       </div>
-      <span data-detail-top class="text-xs text-zinc-500"></span>      
     </div>
     <div class="flex items-end gap-3">
       <span data-detail-count class="text-5xl font-bold leading-none text-primary-600 lg:text-6xl"></span>

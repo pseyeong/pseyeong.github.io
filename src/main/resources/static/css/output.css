@@ -822,8 +822,9 @@ button,
   position: absolute;
   bottom: -8px;
   left: 144px;
+  z-index: 1;
   height: auto;
-  width: 320px;
+  width: 380px;
   border-radius: 6px;
   border-width: 1px;
   --tw-border-opacity: 1;
@@ -1062,10 +1063,6 @@ button,
   margin-top: 4px;
 }
 
-.ml-auto {
-  margin-left: auto;
-}
-
 .inline-block {
   display: inline-block;
 }
@@ -1089,6 +1086,11 @@ button,
 .size-4 {
   width: 16px;
   height: 16px;
+}
+
+.size-4-5 {
+  width: 18px;
+  height: 18px;
 }
 
 .h-1-5 {

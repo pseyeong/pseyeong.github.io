@@ -107,7 +107,7 @@
       row.className = 'sign-row';
   
       const dot = document.createElement('span');
-      dot.className = 'h-3 w-3 shrink-0 rounded-xs ' + (isOpen ? 'bg-blue-600/30' : 'bg-zinc-800/30');
+      dot.className = 'size-4-5 shrink-0 rounded-xs text-2xs' + (isOpen ? 'bg-blue-600/30' : 'bg-zinc-800/30');
   
       const info = document.createElement('div');
       info.className = 'flex min-w-0 flex-1 flex-col';
@@ -210,8 +210,10 @@
       const top = [...counts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 2);
 
       let text = '';
-      if (top.length && top[0][1] >= 2) {
-        text = '자주 들어온 업종 · ' + top
+      if (top.length === 1) {
+        text = top[0][0] + ' ' + top[0][1] + '곳';
+      } else if (top.length && top[0][1] >= 2) {
+        text = top
           .filter(([, n]) => n >= 2)
           .map(([category, n]) => category + ' ' + n + '곳')
           .join(', ');
@@ -363,9 +365,11 @@
         renderTimeline(stores);
 
         const isOpen = stores.some((s) => s.status === '영업/정상');
-        setText('[data-detail-nth]', isOpen
-          ? '지금 가게가 최소 ' + stores.length + '번째예요'
-          : '지금은 비어 있는 자리예요');
+        document.querySelectorAll('[data-detail-nth]').forEach((el) => {
+          el.innerHTML = isOpen
+            ? '지금 가게가 <span class="text-primary-600 font-medium"> 최소 ' + stores.length + '번째</span>예요'
+            : '지금은 비어 있는 자리예요';
+        });
 
 
         document.querySelectorAll('[data-detail-sample]').forEach((el) => el.classList.add('hidden'));
