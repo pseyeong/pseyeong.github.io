@@ -11,20 +11,20 @@
   <div class="flex items-end gap-3">
     <span data-detail-count class="text-5xl font-bold leading-none text-primary-600 lg:text-6xl"></span>
     <span class="pb-1 text-xs leading-relaxed text-zinc-600 lg:text-sm">
-      이 자리를 거쳐 간 가게 수<br><span data-detail-nth></span>
+      곳 이상 거쳐 간 자리<br><span data-detail-nth></span>
     </span>
   </div>
 
   <div class="grid grid-cols-3 gap-1-5 lg:gap-2">
     <div class="stat-card">
-      <span class="text-2xs text-zinc-500">
+      <span class="text-2xs text-zinc-500" title="인허가 기간 기준이에요. 같은 업종으로 인수한 가게는 합쳐서 계산될 수 있어요.">
         <th:block th:if="${compact}">평균 영업</th:block>
-        <th:block th:unless="${compact}">평균 영업 기간</th:block>
+        <th:block th:unless="${compact}">평균 영업 기간</th:block> ⓘ
       </span>
       <span data-stat-avg class="text-xs font-bold lg:text-sm">1년 1개월</span>
     </div>
     <div class="stat-card">
-      <span class="text-2xs text-zinc-500">가장 오래</span>
+      <span class="text-2xs text-zinc-500" title="인허가 기간 기준이에요. 같은 업종으로 인수한 가게는 합쳐서 계산될 수 있어요.">가장 오래 ⓘ</span>
       <span data-stat-max class="text-xs font-bold lg:text-sm">3년 5개월</span>
     </div>
     <div class="stat-card">
@@ -43,8 +43,43 @@
   </div>
 
   <div class="flex flex-col gap-2">
-    <span class="text-2xs font-semibold text-zinc-500">간판 변천사 · 최근 순</span>
+    <span class="text-2xs font-semibold text-zinc-500">가게 변천사 · 인허가 기준 · 최근 순</span>
     <div data-detail-list class="flex flex-col gap-2"></div>
   </div>
+
+  <!-- 사용자 제보: 저장 후 검토(승인)된 것만 변천사에 [제보]로 나간다 -->
+  <div class="flex flex-col gap-2">
+    <button type="button" data-report-toggle class="self-start text-xs font-semibold text-primary-600 underline underline-offset-2">실제와 다른가요? 알려 주세요</button>
+    <form data-report-form class="hidden flex-col gap-2 rounded-lg border border-zinc-200 p-3">
+      <input name="actualName" required maxlength="100" placeholder="실제 상호 (필수)"
+        class="h-10 rounded-lg border border-zinc-300 bg-zinc-50 px-3 text-sm outline-none focus:border-primary-600">
+      <div class="flex gap-2">
+        <label class="flex min-w-0 flex-1 flex-col gap-1 text-2xs text-zinc-500">언제부터 (대략)
+          <input type="month" name="periodFrom" class="h-10 rounded-lg border border-zinc-300 bg-zinc-50 px-2 text-sm outline-none focus:border-primary-600">
+        </label>
+        <label class="flex min-w-0 flex-1 flex-col gap-1 text-2xs text-zinc-500">언제까지 (비우면 지금까지)
+          <input type="month" name="periodTo" class="h-10 rounded-lg border border-zinc-300 bg-zinc-50 px-2 text-sm outline-none focus:border-primary-600">
+        </label>
+      </div>
+      <textarea name="memo" maxlength="500" rows="2" placeholder="메모 (선택) 예: 간판은 그대로인데 주인만 바뀌었어요"
+        class="rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm outline-none focus:border-primary-600"></textarea>
+      <!-- 허니팟: 사람에겐 안 보이는 칸. 봇이 채우면 저장하지 않는다 -->
+      <div aria-hidden="true" class="absolute -left-[9999px] h-px w-px overflow-hidden">
+        <input name="website" tabindex="-1" autocomplete="off">
+      </div>
+      <div class="flex items-center gap-2">
+        <button type="submit" class="rounded-lg bg-zinc-900 px-3 py-1-5 text-xs font-semibold text-white">보내기</button>
+        <span data-report-message class="text-2xs text-zinc-500">검토 후 반영돼요.</span>
+      </div>
+    </form>
+  </div>
   <span th:unless="${compact}" class="text-2xs text-zinc-500">음식점 인허가 데이터 기준</span>
+  <details class="text-2xs text-zinc-500">
+    <summary class="cursor-pointer select-none">음식점·카페 인허가 데이터 기준 · 데이터 안내</summary>
+    <ul class="mt-1-5 flex list-disc flex-col gap-1 pl-4 leading-relaxed">
+      <li>상호는 각 인허가의 현재(최종) 이름 기준이에요. 실제 간판이 바뀐 시점과 다를 수 있어요.</li>
+      <li>같은 업종으로 인수한 가게는 이전 가게와 하나로 표시될 수 있어요.</li>
+      <li>그래서 가게 수는 실제보다 적게 나올 수 있어요(최솟값).</li>
+    </ul>
+  </details>
 </div>

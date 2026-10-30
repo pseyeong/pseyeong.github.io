@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class PlaceApiController {
 
     private final PlaceRepository repository;
+    private final ReportRepository reportRepository;
 
-    public PlaceApiController(PlaceRepository repository) {
+    public PlaceApiController(PlaceRepository repository, ReportRepository reportRepository) {
         this.repository = repository;
+        this.reportRepository = reportRepository;
     }
 
     @GetMapping("/api/places")
@@ -40,7 +42,9 @@ public class PlaceApiController {
             @RequestParam String building,
             @RequestParam String floor,
             @RequestParam(required = false) String unit) {
-        return PlaceHistory.of(building, floor, unit, repository.findHistory(building, floor, unit));
+        return PlaceHistory.of(building, floor, unit,
+                repository.findHistory(building, floor, unit),
+                reportRepository.findApproved(building, floor, unit));
     }
 
     @GetMapping("/api/search")

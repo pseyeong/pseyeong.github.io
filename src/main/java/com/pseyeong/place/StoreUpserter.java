@@ -1,7 +1,9 @@
 package com.pseyeong.place;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -14,8 +16,9 @@ public class StoreUpserter {
 
     private static final String UPSERT_SQL = """
             insert into store (license_type, mgmt_no, name, category, status, opened_at, closed_at,
-                               road_addr, jibun_addr, lat, lng, building, floor, unit, units)
-            values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?::text[])
+                               road_addr, jibun_addr, lat, lng, building, floor, unit, units,
+                               modified_at, detail_status)
+            values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?::text[], ?, ?)
             on conflict (license_type, mgmt_no) do update set
                 name = excluded.name,
                 category = excluded.category,
@@ -29,10 +32,14 @@ public class StoreUpserter {
                 building = excluded.building,
                 floor = excluded.floor,
                 unit = excluded.unit,
-                units = excluded.units
-            where (store.name, store.category, store.status, store.opened_at, store.closed_at, store.road_addr)
+                units = excluded.units,
+                modified_at = excluded.modified_at,
+                detail_status = excluded.detail_status
+            where (store.name, store.category, store.status, store.opened_at, store.closed_at, store.road_addr,
+                   store.modified_at, store.detail_status)
                   is distinct from
-                  (excluded.name, excluded.category, excluded.status, excluded.opened_at, excluded.closed_at, excluded.road_addr)
+                  (excluded.name, excluded.category, excluded.status, excluded.opened_at, excluded.closed_at, excluded.road_addr,
+                   excluded.modified_at, excluded.detail_status)
             """;
 
     private final CoordConverter converter;
@@ -46,9 +53,10 @@ public class StoreUpserter {
     }
 
     // 관리번호나 이름이 없으면 null (건너뛴다). 좌표 x, y 는 TM(EPSG:5174) 문자열.
+    // modifiedAt 은 최종수정시점(LAST_MDFCN_PNT), detailStatus 는 상세영업상태명(DTL_SALS_STTS_NM).
     public Object[] toRow(String licenseType, String mgmtNo, String name, String category, String status,
                           String openedAt, String closedAt, String roadAddr, String jibunAddr,
-                          String x, String y) {
+                          String x, String y, String modifiedAt, String detailStatus) {
         if (mgmtNo == null || mgmtNo.isBlank() || name == null || name.isBlank()) {
             return null;
         }
@@ -83,7 +91,9 @@ public class StoreUpserter {
                 parts.building(),
                 parts.floor(),
                 parts.unit(),
-                toArray(parts.units())
+                toArray(parts.units()),
+                toTimestamp(modifiedAt),
+                cut(detailStatus, 30)
         };
     }
 
@@ -118,6 +128,25 @@ public class StoreUpserter {
             }
             if (t.length() >= 8 && t.substring(0, 8).chars().allMatch(Character::isDigit)) {
                 return Date.valueOf(LocalDate.parse(t.substring(0, 8), DateTimeFormatter.BASIC_ISO_DATE));
+            }
+        } catch (Exception e) {
+            // 형식이 다르면 아래에서 null
+        }
+        return null;
+    }
+
+    // "2026-10-27 11:52:04", "20261027115204" 처리 (숫자만 남겨 읽는다). 날짜만 있으면 0시. 못 읽으면 null.
+    private static Timestamp toTimestamp(String s) {
+        if (s == null) {
+            return null;
+        }
+        String d = s.replaceAll("[^0-9]", "");
+        try {
+            if (d.length() >= 14) {
+                return Timestamp.valueOf(LocalDateTime.parse(d.substring(0, 14), DateTimeFormatter.ofPattern("yyyyMMddHHmmss")));
+            }
+            if (d.length() >= 8) {
+                return Timestamp.valueOf(LocalDate.parse(d.substring(0, 8), DateTimeFormatter.BASIC_ISO_DATE).atStartOfDay());
             }
         } catch (Exception e) {
             // 형식이 다르면 아래에서 null

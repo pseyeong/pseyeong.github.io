@@ -6,22 +6,26 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-// 한 자리(건물+층, 필요하면 호)의 변천사: 가게 목록 + 가게 사이의 빈 기간.
-public record PlaceHistory(String building, String floor, String unit, List<Item> records, List<Gap> gaps) {
+// 한 자리(건물+층, 필요하면 호)의 변천사: 가게 목록 + 가게 사이의 빈 기간 + 승인된 사용자 제보.
+public record PlaceHistory(String building, String floor, String unit, List<Item> records, List<Gap> gaps,
+                           List<PlaceReport> reports) {
 
     private static final String OPEN = "영업/정상";
     private static final int GAP_MIN_DAYS = 30;       // 이 이상 비어 있으면 공백으로 본다
     private static final int OWNER_CHANGE_DAYS = 60;  // 폐업과 재인허가가 이 안이면 영업자 변경 추정
+    private static final int MODIFIED_MIN_DAYS = 30;  // 인허가 직후 수정은 보여 주지 않는다
 
     // DB 에서 읽은 그대로의 한 줄
     public record Row(String name, String licenseType, String category, String status,
-        String unit, List<String> units, LocalDate openedAt, LocalDate closedAt) {
+        String unit, List<String> units, LocalDate openedAt, LocalDate closedAt,
+        LocalDate modifiedAt, List<String> nameChanges) {
     }
 
     // 응답용 한 줄: Row + 영업 기간(개월) + 영업자 변경 추정 여부
+    // modifiedAt 은 영업 중이고 인허가 뒤 한참 지나 수정된 경우에만 (폐업 건은 폐업 처리일로 덮여서 뺀다)
     public record Item(String name, String licenseType, String category, String status,
                 String unit, List<String> units, LocalDate openedAt, LocalDate closedAt,
-                Integer months, boolean ownerChanged) {
+                Integer months, boolean ownerChanged, LocalDate modifiedAt, List<String> nameChanges) {
     }
 
 
@@ -31,7 +35,7 @@ public record PlaceHistory(String building, String floor, String unit, List<Item
     }
 
     // rows 는 개업일 순(없으면 맨 뒤)으로 정렬되어 있어야 한다.
-    public static PlaceHistory of(String building, String floor, String unit, List<Row> rows) {
+    public static PlaceHistory of(String building, String floor, String unit, List<Row> rows, List<PlaceReport> reports) {
         LocalDate today = LocalDate.now();
         List<Item> items = new ArrayList<>();
         List<Gap> gaps = new ArrayList<>();
@@ -67,12 +71,16 @@ public record PlaceHistory(String building, String floor, String unit, List<Item
                 }
             }
 
+            boolean showModified = isOpen && r.modifiedAt() != null && r.openedAt() != null
+                    && ChronoUnit.DAYS.between(r.openedAt(), r.modifiedAt()) >= MODIFIED_MIN_DAYS;
+
             items.add(new Item(r.name(), r.licenseType(), r.category(), r.status(), r.unit(), r.units(),
-            r.openedAt(), r.closedAt(), months, ownerChanged));
+            r.openedAt(), r.closedAt(), months, ownerChanged,
+            showModified ? r.modifiedAt() : null, r.nameChanges()));
 
 
             prev = r;
         }
-        return new PlaceHistory(building, floor, unit, items, gaps);
+        return new PlaceHistory(building, floor, unit, items, gaps, reports);
     }
 }

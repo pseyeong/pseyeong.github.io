@@ -52,7 +52,10 @@ public class PlaceRepository {
         """;
     
     private static final String HISTORY_SQL = """
-        select name, license_type, category, status, unit, units, opened_at, closed_at
+        select name, license_type, category, status, unit, units, opened_at, closed_at, modified_at,
+            (select array_agg(coalesce(l.old_name, '?') || ' → ' || coalesce(l.new_name, '?')
+                              || ' (' || to_char(l.changed_at, 'YYYY.MM') || ')' order by l.changed_at)
+             from store_name_log l where l.store_id = store.id) as name_changes
         from store
         where building = ? and floor = ?
         """;
@@ -111,7 +114,9 @@ public class PlaceRepository {
         return jdbc.query(sql, (rs, i) -> {
             Date openedAt = rs.getDate("opened_at");
             Date closedAt = rs.getDate("closed_at");
+            java.sql.Timestamp modifiedAt = rs.getTimestamp("modified_at");
             java.sql.Array units = rs.getArray("units");
+            java.sql.Array nameChanges = rs.getArray("name_changes");
             return new PlaceHistory.Row(
                     rs.getString("name"),
                     rs.getString("license_type"),
@@ -120,7 +125,9 @@ public class PlaceRepository {
                     rs.getString("unit"),
                     units == null ? null : List.of((String[]) units.getArray()),
                     openedAt == null ? null : openedAt.toLocalDate(),
-                    closedAt == null ? null : closedAt.toLocalDate());
+                    closedAt == null ? null : closedAt.toLocalDate(),
+                    modifiedAt == null ? null : modifiedAt.toLocalDateTime().toLocalDate(),
+                    nameChanges == null ? List.of() : List.of((String[]) nameChanges.getArray()));
         }, args);
     }
     

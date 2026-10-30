@@ -66,19 +66,6 @@
       tab.addEventListener('click', () => activatePcTab(tab.dataset.pcTab));
     });
 
-    document.querySelectorAll('[data-filter-chips]').forEach((group) => {
-      group.querySelectorAll('[data-chip]').forEach((chip) => {
-        chip.addEventListener('click', () => {
-          group.querySelectorAll('[data-chip]').forEach((c) => {
-            c.classList.remove('chip-active');
-            c.classList.add('chip-idle');
-          });
-          chip.classList.add('chip-active');
-          chip.classList.remove('chip-idle');
-        });
-      });
-    });
-
     document.querySelectorAll('[data-search-tabs]').forEach((group) => {
       const tabsEl = group.querySelectorAll('[data-search-tab]');
       tabsEl.forEach((tab) => {

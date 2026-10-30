@@ -113,16 +113,29 @@
       const name = document.createElement('span');
       name.className = 'text-sm font-semibold';
       name.textContent = store.name;
+      if (store.licenseType) {
+        const badge = document.createElement('span');
+        badge.className = 'ml-1-5 rounded bg-zinc-100 px-1-5 py-0-5 align-middle text-2xs font-medium text-zinc-500';
+        badge.textContent = store.licenseType.replace('음식점', ''); // 일반음식점 -> 일반, 휴게음식점 -> 휴게
+        name.append(badge);
+      }
       const sub = document.createElement('span');
       sub.className = 'text-2xs text-zinc-500';
       sub.textContent = (store.units ? unitLabel(store.units) + ' · ' : '')
       + (store.category ? store.category + ' · ' : '')
-      + ym(store.openedAt) + ' – ' + (isOpen ? '영업 중' : ym(store.closedAt))
-      + (store.ownerChanged ? ' · 영업자 변경 추정' : '');
-
-
+      + '인허가 ' + ym(store.openedAt) + ' – ' + (isOpen ? '영업 중' : ym(store.closedAt))
+      + (store.ownerChanged ? ' · 영업자 변경 추정' : '')
+      + (store.modifiedAt ? ' · 정보 수정 ' + ym(store.modifiedAt) : '');
 
       info.append(name, sub);
+
+      // 동기화 중에 실제로 잡힌 상호 변경 (같은 인허가에서 이름만 바뀐 경우)
+      (store.nameChanges || []).forEach((text) => {
+        const change = document.createElement('span');
+        change.className = 'text-2xs text-primary-600';
+        change.textContent = '상호 변경: ' + text;
+        info.append(change);
+      });
   
       const term = document.createElement('span');
       term.className = 'shrink-0 text-2xs font-semibold';
@@ -159,11 +172,40 @@
       return row;
     }
 
-    // 가게와 빈 기간을 시간 순으로 합쳐 최근 것이 위로 오게 보여 준다.
-    function renderList(stores, gaps) {
+    // 승인된 사용자 제보 한 줄 (인허가 기록과 구분되게 점선 + [제보] 배지)
+    function makeReportRow(report) {
+      const row = document.createElement('div');
+      row.className = 'sign-row';
+
+      const dot = document.createElement('span');
+      dot.className = 'h-3 w-3 shrink-0 rounded-xs border border-dashed border-primary-600';
+
+      const info = document.createElement('div');
+      info.className = 'flex min-w-0 flex-1 flex-col';
+      const name = document.createElement('span');
+      name.className = 'text-sm font-semibold';
+      name.textContent = report.actualName;
+      const badge = document.createElement('span');
+      badge.className = 'ml-1-5 rounded bg-primary-600/10 px-1-5 py-0-5 align-middle text-2xs font-medium text-primary-600';
+      badge.textContent = '제보';
+      name.append(badge);
+      const sub = document.createElement('span');
+      sub.className = 'text-2xs text-zinc-500';
+      sub.textContent = '사용자 제보 · '
+        + (report.periodFrom ? report.periodFrom.replace('-', '.') : '?') + ' – '
+        + (report.periodTo ? report.periodTo.replace('-', '.') : '지금');
+      info.append(name, sub);
+
+      row.append(dot, info);
+      return row;
+    }
+
+    // 가게, 빈 기간, 승인된 제보를 시간 순으로 합쳐 최근 것이 위로 오게 보여 준다.
+    function renderList(stores, gaps, reports = []) {
       const entries = [
         ...stores.map((s) => ({ key: (s.openedAt || '') + '1', node: makeRow(s) })),
         ...gaps.map((g) => ({ key: g.to + '0', node: makeGapRow(g) })), // 같은 날이면 가게 아래에
+        ...reports.map((r) => ({ key: (r.periodFrom ? r.periodFrom + '-01' : '') + '2', node: makeReportRow(r) })),
       ].sort((a, b) => (a.key < b.key ? 1 : -1));
 
       document.querySelectorAll('[data-detail-list]').forEach((box) => {
@@ -286,17 +328,19 @@
       }
     
 
-      function showDetail(spot, stores, gaps, unit) {
+      function showDetail(spot, stores, gaps, unit, reports) {
         setText('[data-detail-title]', spot.address.replace('서울특별시 ', '') + ', ' + spot.floor + (unit ? ' ' + unit : ''));
         setText('[data-detail-count]', stores.length);
-        renderList(stores, gaps);
+        renderList(stores, gaps, reports);
+        resetReportForms();
         renderStats(stores);
         renderTimeline(stores);
 
         const isOpen = stores.some((s) => s.status === '영업/정상');
         setText('[data-detail-nth]', isOpen
-            ? '지금 가게가 ' + stores.length + '번째예요'
-            : '지금은 비어 있는 자리예요');
+          ? '지금 가게가 최소 ' + stores.length + '번째예요'
+          : '지금은 비어 있는 자리예요');
+
 
         document.querySelectorAll('[data-detail-sample]').forEach((el) => el.classList.add('hidden'));
 
@@ -309,6 +353,7 @@
 
     let currentSpot = null;  // 지금 상세에 열린 자리
     let currentUnits = [];   // 그 층에서 확인된 호 목록
+    let currentUnit = null;  // 지금 고른 호 (없으면 층 전체)
 
     async function loadHistory(spot, unit) {
         const params = new URLSearchParams({ building: spot.address, floor: spot.floor });
@@ -341,8 +386,9 @@
             currentUnits = [...new Set(history.records.flatMap((r) => r.units || []))]
             .sort((a, b) => a.localeCompare(b, 'ko', { numeric: true }));
 
+            currentUnit = null;
             renderUnits(null);
-            showDetail(spot, history.records, history.gaps, null);
+            showDetail(spot, history.records, history.gaps, null, history.reports);
         } catch (err) {
             console.error('[places]', err);
         }
@@ -352,8 +398,9 @@
         if (!currentSpot) return;
         try {
             const history = await loadHistory(currentSpot, unit);
+            currentUnit = unit;
             renderUnits(unit);
-            showDetail(currentSpot, history.records, history.gaps, unit);
+            showDetail(currentSpot, history.records, history.gaps, unit, history.reports);
         } catch (err) {
             console.error('[places]', err);
         }
@@ -399,7 +446,7 @@
       if (controller) controller.abort();
       controller = new AbortController();
 
-      const params = new URLSearchParams({ ...bounds, limit: 200, vacantOnly });
+      const params = new URLSearchParams({ ...bounds, limit: 200, vacantOnly, group });
       try {
         const res = await fetch('/api/places?' + params, { signal: controller.signal });
         if (!res.ok) throw new Error('HTTP ' + res.status);
@@ -426,7 +473,7 @@
     // PC·모바일 업종 칩을 같은 상태로 맞추고, 지도를 다시 조회한다.
     function setGroup(value) {
       group = value;
-      document.querySelectorAll('[data-filter-chips]').forEach((group) => {
+      document.querySelectorAll('[data-chip]').forEach((el) => {
         const on = el.dataset.chip === value;
         el.classList.toggle('chip-active', on);
         el.classList.toggle('chip-idle', !on);
@@ -445,6 +492,63 @@
       el.addEventListener('click', () => setGroup(el.dataset.chip));
     });
     
+
+    // ----- 사용자 제보 폼 (PC 탭과 모바일 시트에 하나씩 있다) -----
+    const REPORT_HINT = '검토 후 반영돼요.';
+
+    function resetReportForms() {
+      document.querySelectorAll('[data-report-form]').forEach((form) => {
+        form.reset();
+        form.classList.add('hidden');
+        form.classList.remove('flex');
+        form.querySelector('[data-report-message]').textContent = REPORT_HINT;
+      });
+    }
+
+    document.querySelectorAll('[data-report-toggle]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const form = btn.nextElementSibling;
+        const open = form.classList.contains('hidden');
+        form.classList.toggle('hidden', !open);
+        form.classList.toggle('flex', open);
+      });
+    });
+
+    document.querySelectorAll('[data-report-form]').forEach((form) => {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (!currentSpot) return;
+        const message = form.querySelector('[data-report-message]');
+        const submit = form.querySelector('[type="submit"]');
+        const data = Object.fromEntries(new FormData(form));
+
+        submit.disabled = true;
+        message.textContent = '보내는 중...';
+        try {
+          const res = await fetch('/api/reports', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              ...data,
+              building: currentSpot.address,
+              floor: currentSpot.floor,
+              unit: currentUnit,
+            }),
+          });
+          const body = await res.json().catch(() => ({}));
+          if (!res.ok) {
+            message.textContent = body.error || '보내지 못했어요. 잠시 후 다시 시도해 주세요.';
+            return;
+          }
+          form.reset();
+          message.textContent = '고마워요! 검토 후 반영할게요.';
+        } catch (err) {
+          message.textContent = '보내지 못했어요. 잠시 후 다시 시도해 주세요.';
+        } finally {
+          submit.disabled = false;
+        }
+      });
+    });
 
     window.PlaceDetail = { open: selectSpot };
     renderLegend();

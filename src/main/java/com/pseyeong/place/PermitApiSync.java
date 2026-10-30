@@ -30,10 +30,12 @@ public class PermitApiSync implements CommandLineRunner {
 
     private static final List<Service> SERVICES = List.of(
             new Service("general_restaurants", "일반음식점"),
-            new Service("rest_cafes", "휴게음식점"));    // 요청주소 확인 후 채우기
+            new Service("rest_cafes", "휴게음식점"));
 
-    private static final int PAGE_SIZE = 100;   // API 한 번에 최대 100건
-    private static final int MAX_PAGES = 2000;  // 안전장치: 업종당 한 번에 최대 20만 건
+    private static final int PAGE_SIZE = 100;     // API 한 번에 최대 100건
+    private static final int MAX_PAGES = 4000;    // 안전장치: 업종당 한 번에 최대 40만 건 (서울 일반음식점 전체 약 29만)
+    private static final int MAX_TRIES = 3;       // API 일시 오류(5xx, 네트워크) 때 최대 시도 횟수
+    private static final int VACUUM_EVERY = 100;  // 전체 재수집 때 1만 건마다 vacuum (update 로 테이블이 부풀지 않게)
 
     @Value("${permit.api.base}")
     private String base;
@@ -112,7 +114,8 @@ public class PermitApiSync implements CommandLineRunner {
                         str(it, "MNG_NO"), str(it, "BPLC_NM"), str(it, "BZSTAT_SE_NM"), str(it, "SALS_STTS_NM"),
                         str(it, "LCPMT_YMD"), str(it, "CLSBIZ_YMD"),
                         str(it, "ROAD_NM_ADDR"), str(it, "LOTNO_ADDR"),
-                        str(it, "CRD_INFO_X"), str(it, "CRD_INFO_Y"));
+                        str(it, "CRD_INFO_X"), str(it, "CRD_INFO_Y"),
+                        str(it, "LAST_MDFCN_PNT"), str(it, "DTL_SALS_STTS_NM"));
                 if (row != null) {
                     rows.add(row);
                 }
@@ -120,6 +123,10 @@ public class PermitApiSync implements CommandLineRunner {
             upserter.upsert(rows);
             total += items.size();
             System.out.println(">>> sync [" + s.path() + "] page " + page + ": " + items.size() + " rows");
+
+            if (page % VACUUM_EVERY == 0) {
+                vacuum();
+            }
 
             if (items.size() < PAGE_SIZE) {
                 finished = true;
@@ -150,16 +157,32 @@ public class PermitApiSync implements CommandLineRunner {
                 .map(e -> enc(e.getKey()) + "=" + enc(e.getValue()))
                 .collect(Collectors.joining("&"));
 
-        Map<String, Object> res;
-        try {
-            res = RestClient.create().get().uri(URI.create(base + "/" + s.path() + "/info?" + query))
-                    .accept(MediaType.APPLICATION_JSON)
-                    .retrieve().body(new ParameterizedTypeReference<Map<String, Object>>() {});
-        } catch (RestClientResponseException e) {
-            throw new IllegalStateException("API HTTP " + e.getStatusCode() + " " + e.getResponseBodyAsString());
-        } catch (Exception e) {
-            // 예외 메시지에 키가 든 주소가 섞일 수 있어 클래스 이름만 남긴다
-            throw new IllegalStateException("API call failed: " + e.getClass().getSimpleName());
+        Map<String, Object> res = null;
+        for (int attempt = 1; res == null; attempt++) {
+            try {
+                res = RestClient.create().get().uri(URI.create(base + "/" + s.path() + "/info?" + query))
+                        .accept(MediaType.APPLICATION_JSON)
+                        .retrieve().body(new ParameterizedTypeReference<Map<String, Object>>() {});
+                if (res == null) {
+                    throw new IllegalStateException("unexpected response: null");
+                }
+            } catch (RestClientResponseException e) {
+                // 503 SERVICETIMEOUT 처럼 서버 쪽 일시 오류는 잠깐 쉬었다가 다시 시도한다
+                if (e.getStatusCode().is5xxServerError() && attempt < MAX_TRIES) {
+                    retryWait(page, attempt, "HTTP " + e.getStatusCode().value());
+                    continue;
+                }
+                throw new IllegalStateException("API HTTP " + e.getStatusCode() + " " + e.getResponseBodyAsString());
+            } catch (IllegalStateException e) {
+                throw e;
+            } catch (Exception e) {
+                // 예외 메시지에 키가 든 주소가 섞일 수 있어 클래스 이름만 남긴다
+                if (attempt < MAX_TRIES) {
+                    retryWait(page, attempt, e.getClass().getSimpleName());
+                    continue;
+                }
+                throw new IllegalStateException("API call failed: " + e.getClass().getSimpleName());
+            }
         }
 
         if (res == null || !(res.get("response") instanceof Map<?, ?> response)
@@ -181,6 +204,27 @@ public class PermitApiSync implements CommandLineRunner {
             return List.of((Map<String, Object>) one); // 한 건이면 배열이 아니라 객체로 올 수 있다
         }
         return List.of();
+    }
+
+    // 재시도 전 대기: 5초, 10초 ... 처럼 점점 길게
+    private static void retryWait(int page, int attempt, String reason) {
+        System.out.println(">>> retry page " + page + " (" + reason + "), attempt " + (attempt + 1) + "/" + MAX_TRIES);
+        try {
+            Thread.sleep(5000L * attempt);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new IllegalStateException("interrupted");
+        }
+    }
+
+    // update 는 새 버전의 행을 쓰고 옛 행을 죽은 행으로 남긴다. vacuum 으로 그 자리를 바로 재사용하게 한다.
+    private void vacuum() {
+        try {
+            jdbc.execute("vacuum store");
+            System.out.println(">>> vacuum store");
+        } catch (RuntimeException e) {
+            System.out.println(">>> vacuum failed: " + e.getMessage()); // 실패해도 수집은 계속
+        }
     }
 
     private String loadSince(Service s) {

@@ -91,7 +91,8 @@ public class StoreImporter implements CommandLineRunner {
                         r.get("관리번호"), r.get("사업장명"), r.get("업태구분명"), r.get("영업상태명"),
                         r.get("인허가일자"), r.get("폐업일자"),
                         r.get("도로명주소"), r.get("지번주소"),
-                        r.get("좌표정보(X)"), r.get("좌표정보(Y)"));
+                        r.get("좌표정보(X)"), r.get("좌표정보(Y)"),
+                        opt(r, "최종수정시점"), opt(r, "상세영업상태명"));
                 if (row == null) {
                     skipped++;
                     continue;
@@ -108,5 +109,10 @@ public class StoreImporter implements CommandLineRunner {
 
         upserter.upsert(batch);
         System.out.println(">>> " + file.getFileName() + " done: read " + read + ", skipped " + skipped);
+    }
+
+    // 필수가 아닌 컬럼: 파일에 없으면 null
+    private static String opt(CSVRecord r, String column) {
+        return r.isMapped(column) ? r.get(column) : null;
     }
 }
