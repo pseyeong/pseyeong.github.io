@@ -451,7 +451,7 @@
         el.title = s.address + ' ' + s.floor + ' · ' + s.count + '곳' + (s.openCount === 0 ? ' · 빈 자리' : '');
         el.classList.add('cursor-pointer');
         el.addEventListener('click', () => {
-          window.PlaceMap.unmark(); // 다른 자리를 고르면 검색 점은 지운다
+          window.PlaceMap.mark(s.lat, s.lng); // 고른 자리에 핀을 옮겨 꽂는다
           selectSpot(s);
         });
 
@@ -538,6 +538,15 @@
         const open = form.classList.contains('hidden');
         form.classList.toggle('hidden', !open);
         form.classList.toggle('flex', open);
+
+        if (open) {
+          const pane = document.querySelector('[data-pc-pane="detail"]');
+          if (pane) {
+            requestAnimationFrame(() => {
+              pane.scrollTo({ top: pane.scrollHeight, behavior: 'smooth' });
+            });
+          }
+        }
       });
     });
 

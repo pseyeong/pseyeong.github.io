@@ -52,7 +52,7 @@
   </div>
 
   <!-- 사용자 제보: 저장 후 검토(승인)된 것만 변천사에 [제보]로 나간다 -->
-  <div class="flex flex-col gap-2">
+  <div class="flex flex-col gap-2 ">
     <button type="button" data-report-toggle class="self-start text-xs font-semibold text-primary-600 underline underline-offset-2">실제와 다른가요? 알려 주세요</button>
     <form data-report-form class="hidden flex-col gap-2 rounded-lg border border-zinc-200 p-3">
       <input name="actualName" required maxlength="100" placeholder="실제 상호 (필수)"
@@ -77,13 +77,4 @@
       </div>
     </form>
   </div>
-  <span th:unless="${compact}" class="text-2xs text-zinc-500">음식점 인허가 데이터 기준</span>
-  <details class="text-2xs text-zinc-500">
-    <summary class="cursor-pointer select-none">음식점·카페 인허가 데이터 기준 · 데이터 안내</summary>
-    <ul class="mt-1-5 flex list-disc flex-col gap-1 pl-4 leading-relaxed">
-      <li>상호는 각 인허가의 현재(최종) 이름 기준이에요. 실제 간판이 바뀐 시점과 다를 수 있어요.</li>
-      <li>같은 업종으로 인수한 가게는 이전 가게와 하나로 표시될 수 있어요.</li>
-      <li>그래서 가게 수는 실제보다 적게 나올 수 있어요(최솟값).</li>
-    </ul>
-  </details>
 </div>

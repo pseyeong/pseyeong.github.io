@@ -25,6 +25,22 @@
         </div>
         <div th:replace="~{fragments/ranking-list :: rankingList}"></div>
       </div>
+
+      <div class="detailFooter">
+        <div class="flex items-center gap-1 infoClick">
+          <span th:unless="${compact}" class="text-2xs text-zinc-500">음식점 인허가 데이터 기준</span>
+          <span class="text-2xs text-zinc-500 cursor-pointer"><i class="fa-regular fa-circle-question"></i></span>
+
+          <div class="text-2xs text-zinc-500 infoBox hidden">
+            <p class="text-2xs/4 font-medium">음식점·카페 인허가 데이터 기준 · 데이터 안내</p>
+            <ul class="mt-1 flex list-disc flex-col gap-1 pl-4">
+              <li>상호는 각 인허가의 현재(최종) 이름 기준이에요. 실제 간판이 바뀐 시점과 다를 수 있어요.</li>
+              <li>같은 업종으로 인수한 가게는 이전 가게와 하나로 표시될 수 있어요.</li>
+              <li>그래서 가게 수는 실제보다 적게 나올 수 있어요(최솟값).</li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </aside>
 
     <!-- ========== 지도 영역 ========== -->

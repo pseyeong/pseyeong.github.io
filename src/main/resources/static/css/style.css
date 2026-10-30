@@ -69,6 +69,9 @@
 
   .scrollBar::-webkit-scrollbar {@apply w-1 bg-transparent rounded-full}
   .scrollBar::-webkit-scrollbar-thumb {@apply bg-zinc-800/10 rounded-full cursor-pointer}
+  .detailFooter {@apply h-[50px] bg-white py-2 px-4 items-center flex border-t-1 border-zinc-200}
+  .infoClick{@apply relative}
+  .infoBox {@apply absolute -bottom-2 left-[144px] w-[320px] h-auto bg-white p-4 rounded-md border-1 border-zinc-200}
 }
 
 @layer utilities {

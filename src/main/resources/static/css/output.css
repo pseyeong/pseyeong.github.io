@@ -799,6 +799,40 @@ button,
   background-color: rgb(30 41 57 / 0.1);
 }
 
+.detailFooter {
+  display: flex;
+  height: 50px;
+  align-items: center;
+  border-top-width: 1px;
+  --tw-border-opacity: 1;
+  border-color: rgb(229 231 235 / var(--tw-border-opacity, 1));
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.infoClick {
+  position: relative;
+}
+
+.infoBox {
+  position: absolute;
+  bottom: -8px;
+  left: 144px;
+  height: auto;
+  width: 320px;
+  border-radius: 6px;
+  border-width: 1px;
+  --tw-border-opacity: 1;
+  border-color: rgb(229 231 235 / var(--tw-border-opacity, 1));
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
+  padding: 16px;
+}
+
 .sr-only {
   position: absolute;
   width: 1px;
@@ -829,6 +863,10 @@ button,
 
 .inset-0 {
   inset: 0;
+}
+
+.-left-\[9999px\] {
+  left: -9999px;
 }
 
 .bottom-1-5 {
@@ -991,10 +1029,6 @@ button,
   top: 100%;
 }
 
-.-left-\[9999px\] {
-  left: -9999px;
-}
-
 .z-0 {
   z-index: 0;
 }
@@ -1020,16 +1054,16 @@ button,
   margin-left: 4px;
 }
 
+.ml-1-5 {
+  margin-left: 6px;
+}
+
 .mt-1 {
   margin-top: 4px;
 }
 
-.mt-1-5 {
-  margin-top: 6px;
-}
-
-.ml-1-5 {
-  margin-left: 6px;
+.ml-auto {
+  margin-left: auto;
 }
 
 .inline-block {
@@ -1052,19 +1086,9 @@ button,
   display: none;
 }
 
-.size-3-5 {
-  width: 14px;
-  height: 14px;
-}
-
 .size-4 {
   width: 16px;
   height: 16px;
-}
-
-.size-full {
-  width: 100%;
-  height: 100%;
 }
 
 .h-1-5 {
@@ -1207,10 +1231,6 @@ button,
   width: 1px;
 }
 
-.w-6 {
-  width: 24px;
-}
-
 .min-w-0 {
   min-width: 0;
 }
@@ -1248,12 +1268,6 @@ button,
 
 .cursor-pointer {
   cursor: pointer;
-}
-
-.select-none {
-  -webkit-user-select: none;
-     -moz-user-select: none;
-          user-select: none;
 }
 
 .list-disc {
@@ -1484,9 +1498,8 @@ button,
   background-color: rgb(43 127 255 / 0.9);
 }
 
-.bg-rose-600 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(236 0 63 / var(--tw-bg-opacity, 1));
+.bg-primary-600\/10 {
+  background-color: rgb(21 93 252 / 0.1);
 }
 
 .bg-slate-200 {
@@ -1536,12 +1549,12 @@ button,
   background-color: rgb(16 24 40 / var(--tw-bg-opacity, 1));
 }
 
-.bg-primary-600\/10 {
-  background-color: rgb(21 93 252 / 0.1);
-}
-
 .p-2 {
   padding: 8px;
+}
+
+.p-3 {
+  padding: 12px;
 }
 
 .p-4 {
@@ -1552,10 +1565,6 @@ button,
   padding: 20px;
 }
 
-.p-3 {
-  padding: 12px;
-}
-
 .px-0 {
   padding-left: 0;
   padding-right: 0;
@@ -1564,6 +1573,11 @@ button,
 .px-1 {
   padding-left: 4px;
   padding-right: 4px;
+}
+
+.px-1-5 {
+  padding-left: 6px;
+  padding-right: 6px;
 }
 
 .px-2 {
@@ -1631,11 +1645,6 @@ button,
   padding-bottom: 24px;
 }
 
-.px-1-5 {
-  padding-left: 6px;
-  padding-right: 6px;
-}
-
 .pb-0-5 {
   padding-bottom: 2px;
 }
@@ -1692,8 +1701,17 @@ button,
   vertical-align: middle;
 }
 
+.text-2xl {
+  font-size: 1.5rem;
+}
+
 .text-2xs {
   font-size: 0.75rem;
+}
+
+.text-2xs\/4 {
+  font-size: 0.75rem;
+  line-height: 1.0rem;
 }
 
 .text-5xl {
@@ -1724,20 +1742,16 @@ button,
   font-size: 0.8125rem;
 }
 
-.text-2xl {
-  font-size: 1.5rem;
-}
-
 .font-bold {
   font-weight: 700;
 }
 
-.font-semibold {
-  font-weight: 600;
-}
-
 .font-medium {
   font-weight: 500;
+}
+
+.font-semibold {
+  font-weight: 600;
 }
 
 .leading-none {
@@ -1759,6 +1773,11 @@ button,
 .text-blue-600 {
   --tw-text-opacity: 1;
   color: rgb(21 93 252 / var(--tw-text-opacity, 1));
+}
+
+.text-orange-600 {
+  --tw-text-opacity: 1;
+  color: rgb(245 74 0 / var(--tw-text-opacity, 1));
 }
 
 .text-primary-600 {
@@ -1789,46 +1808,6 @@ button,
 .text-zinc-900 {
   --tw-text-opacity: 1;
   color: rgb(16 24 40 / var(--tw-text-opacity, 1));
-}
-
-.text-rose-600 {
-  --tw-text-opacity: 1;
-  color: rgb(236 0 63 / var(--tw-text-opacity, 1));
-}
-
-.text-rose-500 {
-  --tw-text-opacity: 1;
-  color: rgb(255 32 86 / var(--tw-text-opacity, 1));
-}
-
-.text-red-500 {
-  --tw-text-opacity: 1;
-  color: rgb(251 44 54 / var(--tw-text-opacity, 1));
-}
-
-.text-blue-500 {
-  --tw-text-opacity: 1;
-  color: rgb(43 127 255 / var(--tw-text-opacity, 1));
-}
-
-.text-orange-500 {
-  --tw-text-opacity: 1;
-  color: rgb(255 105 0 / var(--tw-text-opacity, 1));
-}
-
-.text-orange-600 {
-  --tw-text-opacity: 1;
-  color: rgb(245 74 0 / var(--tw-text-opacity, 1));
-}
-
-.text-orange-300 {
-  --tw-text-opacity: 1;
-  color: rgb(255 184 106 / var(--tw-text-opacity, 1));
-}
-
-.text-orange-400 {
-  --tw-text-opacity: 1;
-  color: rgb(255 137 4 / var(--tw-text-opacity, 1));
 }
 
 .underline {

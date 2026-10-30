@@ -78,5 +78,11 @@
         });
       });
     });
+
+    document.querySelectorAll('.infoClick').forEach((el) => {
+      el.addEventListener('click', () => {
+        el.querySelector('.infoBox')?.classList.toggle('hidden');
+      });
+    });
   });
 })();
