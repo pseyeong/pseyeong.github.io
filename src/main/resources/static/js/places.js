@@ -3,6 +3,7 @@
     let overlays = [];
     let controller = null;
     let vacantOnly = false; // "빈 자리만" 필터 상태
+    const ROTATING_MIN = 8;  // 이 이상 거쳐 간 자리만 '회전문 자리' 배지
     let group = 'all';      // 업종 칩 필터 상태
   
     // 점 모양 정의: 위에서부터 먼저 맞는 단계가 적용된다. 범례도 이 배열로 그린다.
@@ -200,6 +201,26 @@
       return row;
     }
 
+    // 이 자리를 가장 많이 거쳐 간 업종 (상위 2개). 업종이 없는 가게는 빼고 센다.
+    function renderTopCategory(stores) {
+      const counts = new Map();
+      stores.forEach((s) => {
+        if (s.category) counts.set(s.category, (counts.get(s.category) || 0) + 1);
+      });
+      const top = [...counts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 2);
+
+      let text = '';
+      if (top.length && top[0][1] >= 2) {
+        text = '자주 들어온 업종 · ' + top
+          .filter(([, n]) => n >= 2)
+          .map(([category, n]) => category + ' ' + n + '곳')
+          .join(', ');
+      } else if (top.length > 1) {
+        text = '매번 다른 업종이 들어왔어요';
+      }
+      setText('[data-detail-top]', text);
+    }
+
     // 가게, 빈 기간, 승인된 제보를 시간 순으로 합쳐 최근 것이 위로 오게 보여 준다.
     function renderList(stores, gaps, reports = []) {
       const entries = [
@@ -328,10 +349,15 @@
       }
     
 
-      function showDetail(spot, stores, gaps, unit, reports) {
+      // open: 모바일 시트/PC 탭을 상세로 바꿀지 (첫 화면 무작위 자리는 바꾸지 않는다)
+      function showDetail(spot, stores, gaps, unit, reports, open = true) {
         setText('[data-detail-title]', spot.address.replace('서울특별시 ', '') + ', ' + spot.floor + (unit ? ' ' + unit : ''));
         setText('[data-detail-count]', stores.length);
+        // 범례의 '8~10곳' 단계 이상일 때만 회전문 자리 배지
+        document.querySelectorAll('[data-detail-badge]').forEach((el) =>
+          el.classList.toggle('hidden', stores.length < ROTATING_MIN));
         renderList(stores, gaps, reports);
+        renderTopCategory(stores);
         resetReportForms();
         renderStats(stores);
         renderTimeline(stores);
@@ -345,6 +371,7 @@
         document.querySelectorAll('[data-detail-sample]').forEach((el) => el.classList.add('hidden'));
 
         // 상세 화면 열기 (모바일: 시트, PC: 탭)
+        if (!open) return;
         document.documentElement.dataset.sheet = 'detail';
         const pcTab = document.querySelector('[data-pc-tab="detail"]');
         if (pcTab) pcTab.click();
@@ -379,7 +406,7 @@
         });
     }
 
-    async function selectSpot(spot) {
+    async function selectSpot(spot, { open = true } = {}) {
         try {
             const history = await loadHistory(spot);
             currentSpot = spot;
@@ -388,7 +415,7 @@
 
             currentUnit = null;
             renderUnits(null);
-            showDetail(spot, history.records, history.gaps, null, history.reports);
+            showDetail(spot, history.records, history.gaps, null, history.reports, open);
         } catch (err) {
             console.error('[places]', err);
         }
@@ -549,6 +576,23 @@
         }
       });
     });
+
+    // 첫 화면: 하드코딩 샘플 대신 회전문 자리 하나를 무작위로 골라 지도와 상세에 보여 준다.
+    // 지도가 처음 준비됐을 때(map:idle) 한 번만 실행한다.
+    async function showRandomSpot() {
+      try {
+        const res = await fetch('/api/places/random');
+        if (res.status !== 200) return; // 204: 고를 자리가 없음
+        const spot = await res.json();
+        window.PlaceMap.map.setLevel(3);
+        window.PlaceMap.panTo(spot.lat, spot.lng);
+        window.PlaceMap.mark(spot.lat, spot.lng);
+        selectSpot(spot, { open: false }); // 모바일은 랭킹 시트를 그대로 두고, PC 는 원래 상세 탭이 열려 있다
+      } catch (err) {
+        console.error('[places]', err);
+      }
+    }
+    document.addEventListener('map:idle', showRandomSpot, { once: true });
 
     window.PlaceDetail = { open: selectSpot };
     renderLegend();

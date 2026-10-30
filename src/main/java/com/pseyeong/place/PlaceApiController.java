@@ -2,6 +2,7 @@ package com.pseyeong.place;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,6 +32,15 @@ public class PlaceApiController {
     }
 
 
+
+    // 첫 화면에 보여 줄 회전문 자리 하나 (지도에 찍히는 범위 안에서: 기본 8~10곳)
+    @GetMapping("/api/places/random")
+    public ResponseEntity<PlaceSpot> random(
+            @RequestParam(defaultValue = "8") int minCount,
+            @RequestParam(defaultValue = "10") int maxCount) {
+        PlaceSpot spot = repository.findRandom(minCount, maxCount);
+        return spot == null ? ResponseEntity.noContent().build() : ResponseEntity.ok(spot);
+    }
 
     @GetMapping("/api/places/stores")
     public List<StoreView> stores(@RequestParam String address, @RequestParam String floor) {

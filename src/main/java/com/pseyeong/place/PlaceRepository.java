@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.List;
 
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -42,6 +43,15 @@ public class PlaceRepository {
         limit ?
         """;
 
+    // 3만 곳 안팎이라 order by random() 으로 충분하다
+    private static final String RANDOM_SQL = """
+        select id, base, fl, n, closed, open_n, last_closed_at, lat, lng, grp
+        from place_spot
+        where n between ? and ?
+        order by random()
+        limit 1
+        """;
+
 
     private static final String STORES_SQL = """
         select name, category, status, opened_at, closed_at
@@ -74,9 +84,18 @@ public class PlaceRepository {
         int maxCount, boolean vacantOnly, String group, int limit) {
         int maxOpen = vacantOnly ? 0 : Integer.MAX_VALUE;
         String grp = "all".equals(group) ? null : group; // 전체면 업종 조건을 끈다
-        return jdbc.query(SQL, (rs, i) -> {
-            Date closedAt = rs.getDate("last_closed_at");
-            return new PlaceSpot(
+        return jdbc.query(SQL, SPOT_MAPPER, swLat, neLat, swLng, neLng, maxCount, maxOpen, grp, grp, limit);
+    }
+
+    // 가게 수가 min~max 인 자리 중 하나를 무작위로 (첫 화면용). 없으면 null.
+    public PlaceSpot findRandom(int minCount, int maxCount) {
+        List<PlaceSpot> spots = jdbc.query(RANDOM_SQL, SPOT_MAPPER, minCount, maxCount);
+        return spots.isEmpty() ? null : spots.get(0);
+    }
+
+    private static final RowMapper<PlaceSpot> SPOT_MAPPER = (rs, i) -> {
+        Date closedAt = rs.getDate("last_closed_at");
+        return new PlaceSpot(
             rs.getLong("id"),
             rs.getString("base"),
             rs.getString("fl"),
@@ -87,8 +106,7 @@ public class PlaceRepository {
             rs.getDouble("lat"),
             rs.getDouble("lng"),
             rs.getString("grp"));
-        }, swLat, neLat, swLng, neLng, maxCount, maxOpen, grp, grp, limit);
-    }
+    };
 
 
 

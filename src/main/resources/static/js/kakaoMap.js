@@ -76,8 +76,10 @@
         const position = new maps.LatLng(lat, lng);
         if (!searchMarker) {
           const el = document.createElement('div');
-          el.className = 'size-3-5 rounded-full border-2 border-white bg-rose-600 shadow-lg pointer-events-none';
-          searchMarker = new maps.CustomOverlay({ position, content: el, xAnchor: 0.5, yAnchor: 0.5, zIndex: 10 });
+          el.className = 'pointer-events-none text-2xl leading-none text-orange-600 drop-shadow';
+          el.innerHTML = '<i class="fa-solid fa-location-dot"></i>';
+          // 핀 끝이 좌표를 가리키도록 yAnchor=1
+          searchMarker = new maps.CustomOverlay({ position, content: el, xAnchor: 0.5, yAnchor: 1, zIndex: 10 });
         }
         searchMarker.setPosition(position);
         searchMarker.setMap(map);
