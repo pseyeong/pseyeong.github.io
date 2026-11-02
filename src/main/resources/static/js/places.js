@@ -9,10 +9,10 @@
     // 점 모양 정의: 위에서부터 먼저 맞는 단계가 적용된다. 범례도 이 배열로 그린다.
     const LEVELS = [
       { label: '빈 자리', cls: 'size-4 border-1 border-white bg-zinc-800/40 hover:scale-110', match: (s) => s.openCount === 0 },
-      { label: '8~10곳', cls: 'size-4 border-1 border-white bg-[#0e334f]/90 hover:scale-110', match: (s) => s.count >= 8 },
-      { label: '6~7곳', cls: 'size-4 border-1 border-white bg-[#1199b7]/90 hover:scale-110', match: (s) => s.count >= 6 },
-      { label: '4~5곳', cls: 'size-4 border-1 border-white bg-[#76c9c6e6]/90 hover:scale-110', match: (s) => s.count >= 4 },
-      { label: '3곳', cls: 'size-4 border-1 border-white bg-primary-500/90 hover:scale-110', match: () => true },
+      { label: '8~10곳', cls: 'size-4 border-1 border-white bg-[#004e91] hover:scale-110', match: (s) => s.count >= 8 },
+      { label: '6~7곳', cls: 'size-4 border-1 border-white bg-[#4076a9] hover:scale-110', match: (s) => s.count >= 6 },
+      { label: '4~5곳', cls: 'size-4 border-1 border-white bg-[#809fc0] hover:scale-110', match: (s) => s.count >= 4 },
+      { label: '3곳', cls: 'size-4 border-1 border-white bg-[#bfcfe0] hover:scale-110', match: () => true },
         ];
     
         const shown = new Set(LEVELS); // 범례에서 켜 둔 단계 (처음엔 전부)
@@ -108,7 +108,7 @@
   
       const dot = document.createElement('span');
       dot.className = 'inline-flex size-4-5 shrink-0 items-center justify-center rounded-full text-2xs font-medium leading-none '
-        + (isOpen ? 'bg-blue-600/40 text-white' : 'bg-zinc-800/40 text-white');
+        + (isOpen ? 'bg-[#fcbf49] text-white' : 'bg-zinc-400 text-white');
       dot.textContent = isOpen ? '영' : '폐';
   
       const info = document.createElement('div');
@@ -287,7 +287,7 @@
           const to = isOpen ? end : (s.closedAt ? new Date(s.closedAt).getTime() : from);
     
           const bar = document.createElement('div');
-          bar.className = 'absolute bottom-1-5 top-1-5 rounded-sm ring-1 ring-white ' + (isOpen ? 'bg-blue-600/40' : 'bg-zinc-800/40');
+          bar.className = 'absolute bottom-1-5 top-1-5 rounded-sm ring-1 ring-white ' + (isOpen ? 'bg-[#fcbf49]' : 'bg-zinc-400');
           bar.style.left = ((from - start) / total * 100) + '%';
           bar.style.width = Math.max((to - from) / total * 100, 0.8) + '%';
           bar.title = s.name;

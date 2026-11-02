@@ -22,7 +22,7 @@
   }
 
   .chip-active {
-    @apply border-blue-600 bg-blue-600 text-white;
+    @apply border-[#004e91] bg-[#004e91] text-white;
   }
 
   .chip-idle {
@@ -54,7 +54,7 @@
   }
 
   .panel-tab-active {
-    @apply border-primary-600 font-semibold text-zinc-900 bg-white;
+    @apply border-[#004e91] font-semibold text-zinc-900 bg-white;
   }
 
   .panel-tab-idle {
