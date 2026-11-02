@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" data-sheet="ranking" data-search="closed">
 <head th:replace="~{fragments/head :: head('이 자리, 몇 번째 가게?')}"></head>
-<body class="flex h-full flex-col">
+<body class="">
 
   <header th:replace="~{fragments/header :: header}"></header>
 
-  <main class="relative flex min-h-0 flex-1 h-[calc(100vh-69px)]">
+  <main class="relative flex min-h-0 flex-1 h-[100vh]">
 
     <!-- ========== PC 좌측 패널 ========== -->
-    <aside class="hidden w-[480px] shrink-0 flex-col border-r border-zinc-200 bg-white lg:flex" aria-label="자리 정보 패널">
+    <aside class="hidden w-[480px] shrink-0 flex-col bg-white pt-[64px] shadow-lg lg:flex" aria-label="자리 정보 패널">
       <div class="grid grid-cols-2 border-b border-zinc-200">
         <button type="button" class="panel-tab panel-tab-active" data-pc-tab="detail">자리 상세</button>
         <button type="button" class="panel-tab panel-tab-idle" data-pc-tab="ranking">회전문 랭킹</button>

@@ -84,5 +84,14 @@
         el.querySelector('.infoBox')?.classList.toggle('hidden');
       });
     });
+
+    document.querySelectorAll('.filterBtn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const chips = btn.nextElementSibling;
+        if (!chips || !chips.hasAttribute('data-filter-chips')) return;
+        const open = chips.classList.toggle('hidden');
+        btn.setAttribute('aria-expanded', String(!open));
+      });
+    });
   });
 })();

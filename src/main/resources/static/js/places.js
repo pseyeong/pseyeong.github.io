@@ -107,7 +107,9 @@
       row.className = 'sign-row';
   
       const dot = document.createElement('span');
-      dot.className = 'size-4-5 shrink-0 rounded-xs text-2xs' + (isOpen ? 'bg-blue-600/30' : 'bg-zinc-800/30');
+      dot.className = 'inline-flex size-4-5 shrink-0 items-center justify-center rounded-full text-2xs font-medium leading-none '
+        + (isOpen ? 'bg-blue-600/40 text-white' : 'bg-zinc-800/40 text-white');
+      dot.textContent = isOpen ? '영' : '폐';
   
       const info = document.createElement('div');
       info.className = 'flex min-w-0 flex-1 flex-col';
@@ -285,7 +287,7 @@
           const to = isOpen ? end : (s.closedAt ? new Date(s.closedAt).getTime() : from);
     
           const bar = document.createElement('div');
-          bar.className = 'absolute bottom-1-5 top-1-5 rounded-sm ring-1 ring-white ' + (isOpen ? 'bg-blue-600/30' : 'bg-zinc-800/30');
+          bar.className = 'absolute bottom-1-5 top-1-5 rounded-sm ring-1 ring-white ' + (isOpen ? 'bg-blue-600/40' : 'bg-zinc-800/40');
           bar.style.left = ((from - start) / total * 100) + '%';
           bar.style.width = Math.max((to - from) / total * 100, 0.8) + '%';
           bar.title = s.name;
@@ -440,6 +442,20 @@
 
     
   
+    // 고른 점을 기준(anchor)으로 최대 단계까지 한 번에 애니메이션하며 확대한다
+    function zoomToSpot(s) {
+      const { maps } = window.kakao;
+      const map = window.PlaceMap.map;
+      if (map.getLevel() <= MAX_ZOOM_LEVEL) return;
+      map.setLevel(MAX_ZOOM_LEVEL, {
+        anchor: new maps.LatLng(s.lat, s.lng),
+        animate: { duration: ZOOM_MS },
+      });
+    }
+
+    const MAX_ZOOM_LEVEL = 1; // 카카오맵에서 가장 가까운 단계
+    const ZOOM_MS = 400; // 확대 애니메이션 시간
+
     function draw(spots) {
       if (!window.PlaceMap) return; // 지도가 준비되기 전에 범례를 누른 경우
       const { maps } = window.kakao;
@@ -456,6 +472,7 @@
         el.classList.add('cursor-pointer');
         el.addEventListener('click', () => {
           window.PlaceMap.mark(s.lat, s.lng); // 고른 자리에 핀을 옮겨 꽂는다
+          zoomToSpot(s);
           selectSpot(s);
         });
 
