@@ -2282,6 +2282,10 @@ html[data-search='open'] .mo-search {
     display: block;
   }
 
+  .lg\:inline-block {
+    display: inline-block;
+  }
+
   .lg\:inline {
     display: inline;
   }
@@ -2296,6 +2300,10 @@ html[data-search='open'] .mo-search {
 
   .lg\:h-8 {
     height: 32px;
+  }
+
+  .lg\:h-\[40px\] {
+    height: 40px;
   }
 
   .lg\:gap-2 {
@@ -2388,6 +2396,10 @@ html[data-search='open'] .mo-search {
     top: 55%;
   }
 
+  .max-lg\:inline-block {
+    display: inline-block;
+  }
+
   .max-lg\:hidden {
     display: none;
   }
@@ -2402,6 +2414,10 @@ html[data-search='open'] .mo-search {
 
   .max-lg\:h-4 {
     height: 16px;
+  }
+
+  .max-lg\:h-\[40px\] {
+    height: 40px;
   }
 
   .max-lg\:w-12 {
