@@ -69,6 +69,11 @@
     @apply min-h-11 rounded-xl border border-zinc-300 bg-white text-sm font-semibold text-zinc-900;
   }
 
+  /* 불러오는 중: 글자는 숨기고 그 크기만큼 회색 막대로 깜빡인다 */
+  .is-loading [data-skel] {
+    @apply animate-pulse rounded bg-zinc-200 text-transparent;
+  }
+
   .scrollBar::-webkit-scrollbar {@apply w-1 bg-transparent rounded-full}
   .scrollBar::-webkit-scrollbar-thumb {@apply bg-zinc-800/10 rounded-full cursor-pointer}
   .detailFooter {@apply h-[50px] bg-white py-2 px-4 items-center flex border-t-1 border-zinc-200}

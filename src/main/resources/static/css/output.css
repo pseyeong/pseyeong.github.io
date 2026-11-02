@@ -816,6 +816,22 @@ header {
   color: rgb(16 24 40 / var(--tw-text-opacity, 1));
 }
 
+/* 불러오는 중: 글자는 숨기고 그 크기만큼 회색 막대로 깜빡인다 */
+
+@keyframes pulse {
+  50% {
+    opacity: .5;
+  }
+}
+
+.is-loading [data-skel] {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  border-radius: 0.25rem;
+  --tw-bg-opacity: 1;
+  background-color: rgb(229 231 235 / var(--tw-bg-opacity, 1));
+  color: rgba(255, 255, 255, 0);
+}
+
 .scrollBar::-webkit-scrollbar {
   width: 4px;
   border-radius: 9999px;
@@ -1708,10 +1724,6 @@ header {
   padding-top: max(12px, env(safe-area-inset-top));
 }
 
-.pt-1 {
-  padding-top: 4px;
-}
-
 .text-left {
   text-align: left;
 }
@@ -1793,14 +1805,14 @@ header {
   letter-spacing: -0.025px;
 }
 
+.text-\[\#F37D5A\] {
+  --tw-text-opacity: 1;
+  color: rgb(243 125 90 / var(--tw-text-opacity, 1));
+}
+
 .text-blue-600 {
   --tw-text-opacity: 1;
   color: rgb(21 93 252 / var(--tw-text-opacity, 1));
-}
-
-.text-orange-600 {
-  --tw-text-opacity: 1;
-  color: rgb(245 74 0 / var(--tw-text-opacity, 1));
 }
 
 .text-primary-600 {
@@ -1831,11 +1843,6 @@ header {
 .text-zinc-900 {
   --tw-text-opacity: 1;
   color: rgb(16 24 40 / var(--tw-text-opacity, 1));
-}
-
-.text-\[\#F37D5A\] {
-  --tw-text-opacity: 1;
-  color: rgb(243 125 90 / var(--tw-text-opacity, 1));
 }
 
 .underline {

@@ -354,6 +354,21 @@
     
 
       // open: 모바일 시트/PC 탭을 상세로 바꿀지 (첫 화면 무작위 자리는 바꾸지 않는다)
+      // 스켈레톤(회색 막대)을 걷어 낸다
+      function stopLoading() {
+        document.querySelectorAll('[data-detail-root]').forEach((el) => el.classList.remove('is-loading'));
+      }
+
+      // 첫 화면에 보여 줄 자리를 못 가져왔을 때: 스켈레톤 대신 안내 문구
+      function showEmptyDetail() {
+        setText('[data-detail-title]', '지도에서 점을 눌러 보세요');
+        ['[data-detail-count]', '[data-detail-nth]', '[data-detail-top]',
+         '[data-timeline-start]', '[data-timeline-end]'].forEach((sel) => setText(sel, ''));
+        ['[data-stat-avg]', '[data-stat-max]', '[data-stat-state]'].forEach((sel) => setText(sel, '-'));
+        document.querySelectorAll('[data-detail-list]').forEach((box) => box.replaceChildren());
+        stopLoading();
+      }
+
       function showDetail(spot, stores, gaps, unit, reports, open = true) {
         setText('[data-detail-title]', spot.address.replace('서울특별시 ', '') + ', ' + spot.floor + (unit ? ' ' + unit : ''));
         setText('[data-detail-count]', stores.length);
@@ -375,6 +390,7 @@
 
 
         document.querySelectorAll('[data-detail-sample]').forEach((el) => el.classList.add('hidden'));
+        stopLoading();
 
         // 상세 화면 열기 (모바일: 시트, PC: 탭)
         if (!open) return;
@@ -612,14 +628,16 @@
     async function showRandomSpot() {
       try {
         const res = await fetch('/api/places/random');
-        if (res.status !== 200) return; // 204: 고를 자리가 없음
+        if (res.status !== 200) return showEmptyDetail(); // 204: 고를 자리가 없음
         const spot = await res.json();
         window.PlaceMap.map.setLevel(3);
         window.PlaceMap.panTo(spot.lat, spot.lng);
         window.PlaceMap.mark(spot.lat, spot.lng);
-        selectSpot(spot, { open: false }); // 모바일은 랭킹 시트를 그대로 두고, PC 는 원래 상세 탭이 열려 있다
+        await selectSpot(spot, { open: false }); // 모바일은 랭킹 시트를 그대로 두고, PC 는 원래 상세 탭이 열려 있다
+        if (!currentSpot) showEmptyDetail(); // 변천사를 못 불러왔으면 (selectSpot 이 오류를 삼킨다)
       } catch (err) {
         console.error('[places]', err);
+        showEmptyDetail();
       }
     }
     document.addEventListener('map:idle', showRandomSpot, { once: true });
