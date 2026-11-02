@@ -82,20 +82,46 @@
 }
 
 @layer utilities {
-  .mo-sheet-ranking {
-    @apply absolute inset-x-0 bottom-0 z-30 flex h-80 flex-col gap-2-5 rounded-t-3xl border-t border-zinc-200 bg-white px-4 pb-6 pt-2-5 shadow-xl lg:hidden;
+  /* 모바일 바텀시트: 화면 높이만큼 깔아 두고 translateY 로 1/4 · 1/2 · 전체 단계를 오간다 (sheet.js) */
+  .mo-sheet {
+    @apply absolute inset-x-0 top-0 bottom-0 z-30 flex flex-col rounded-t-3xl border-t border-zinc-200 bg-white shadow-xl lg:hidden;
+    transform: translateY(50%); /* 2단계 */
+    transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), border-radius 0.3s;
+    will-change: transform;
   }
 
-  .mo-sheet-detail {
-    @apply absolute inset-x-0 bottom-0 top-[190px] z-30 hidden flex-col rounded-t-3xl border-t border-zinc-200 bg-white shadow-xl lg:hidden;
+  .mo-sheet.is-dragging {
+    transition: none;
+  }
+
+  /* 3단계: 위까지 올라오면 모서리를 펴고 상태바만큼 띄운다 */
+  .mo-sheet.is-open {
+    @apply rounded-none pt-[env(safe-area-inset-top)];
+  }
+
+  .mo-sheet-handle {
+    @apply mx-auto my-2-5 h-1-5 w-10 shrink-0 rounded-full bg-zinc-300;
+  }
+
+  .mo-sheet.handleHide .mo-sheet-handle {
+    @apply invisible;
+  }
+
+  /* 본문은 3단계에서만 스크롤, 시트가 움직이는 중에는 터치를 막는다 */
+  .mo-sheet-body {
+    @apply min-h-0 flex-1 overflow-hidden overscroll-contain;
+  }
+
+  .mo-sheet.is-open .mo-sheet-body {
+    @apply overflow-y-auto;
+  }
+
+  .mo-sheet.is-moving .mo-sheet-body {
+    @apply pointer-events-none;
   }
 
   .mo-search {
     @apply absolute inset-0 z-50 hidden flex-col bg-white lg:hidden;
-  }
-
-  .mo-back-detail {
-    @apply absolute left-3 top-[max(12px,env(safe-area-inset-top))] z-40 hidden h-11 w-11 items-center justify-center rounded-xl border border-zinc-300 bg-white shadow-sm lg:hidden;
   }
 
   .mo-map-fab {
@@ -111,36 +137,11 @@
   }
 }
 
-html[data-sheet='detail'] .mo-top-bar,
 html[data-search='open'] .mo-top-bar {
   display: none;
 }
 
-html[data-sheet='detail'] .mo-sheet-ranking {
-  display: none;
-}
-
-html[data-sheet='detail'] .mo-sheet-detail {
-  display: flex;
-}
-
-html[data-sheet='detail'] .mo-back-detail {
-  display: flex;
-}
-
-html[data-sheet='detail'] .mo-map-fab,
-html[data-sheet='detail'] .mo-map-badge {
-  bottom: auto;
-  top: 148px;
-}
-
-html[data-sheet='detail'] .mo-map-badge {
-  top: 156px;
-}
-
-html[data-search='open'] .mo-sheet-ranking,
-html[data-search='open'] .mo-sheet-detail,
-html[data-search='open'] .mo-back-detail,
+html[data-search='open'] .mo-sheet,
 html[data-search='open'] .mo-map-fab,
 html[data-search='open'] .mo-map-badge {
   display: none !important;
@@ -151,8 +152,6 @@ html[data-search='open'] .mo-search {
 }
 
 @media (min-width: 1024px) {
-  html[data-sheet='detail'] .mo-sheet-detail,
-  html[data-sheet='detail'] .mo-back-detail,
   html[data-search='open'] .mo-search {
     display: none !important;
   }

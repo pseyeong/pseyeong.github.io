@@ -32,7 +32,9 @@
           if (!root) return;
     
           const box = document.createElement('div');
-          box.className = 'absolute bottom-3 right-3 z-10 flex gap-1 rounded-lg bg-white/90 p-2 text-2xs text-zinc-700 shadow';
+          // PC: 지도 오른쪽 아래 / 모바일: 바텀시트 1단계(화면 1/4, sheet.js STOPS[0]) 높이 + 20px 위
+          box.className = 'absolute bottom-3 right-3 z-10 flex gap-1 rounded-lg bg-white/90 p-2 text-2xs text-zinc-700 shadow'
+            + ' max-lg:bottom-[calc(25%+20px)] max-lg:gap-0 max-lg:p-1-5';
     
           // 범례는 빈 자리를 맨 뒤에 보여 준다 (판정 순서와 별개)
           [...LEVELS.slice(1), LEVELS[0]].forEach((l) => {
@@ -50,7 +52,7 @@
             });
     
             const slot = document.createElement('span');
-            slot.className = 'flex w-[26px] justify-center'; // 크기가 달라도 글자 줄이 맞도록 고정 폭
+            slot.className = 'flex w-[26px] justify-center max-lg:w-5'; // 크기가 달라도 글자 줄이 맞도록 고정 폭
             const dot = document.createElement('span');
             dot.className = 'rounded-full shadow ' + l.cls;
             slot.append(dot);
@@ -392,11 +394,11 @@
         document.querySelectorAll('[data-detail-sample]').forEach((el) => el.classList.add('hidden'));
         stopLoading();
 
-        // 상세 화면 열기 (모바일: 시트, PC: 탭)
+        // 상세 탭 열기 (PC 패널과 모바일 시트가 같은 탭을 쓴다) + 모바일 시트가 1단계면 2단계로
         if (!open) return;
-        document.documentElement.dataset.sheet = 'detail';
         const pcTab = document.querySelector('[data-pc-tab="detail"]');
         if (pcTab) pcTab.click();
+        document.dispatchEvent(new CustomEvent('sheet:show'));
     }
     
 
