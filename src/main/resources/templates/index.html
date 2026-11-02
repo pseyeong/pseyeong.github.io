@@ -113,20 +113,20 @@
       <div class="absolute right-4 bottom-[54px] z-10 hidden flex-col gap-1-5 lg:flex">
         <button type="button" data-map-zoom-in aria-label="확대" class="flex h-10 w-10 items-center justify-center rounded-full border border-zinc-300 bg-white text-xl text-zinc-900 shadow-sm">+</button>
         <button type="button" data-map-zoom-out aria-label="축소" class="flex h-10 w-10 items-center justify-center rounded-full border border-zinc-300 bg-white text-xl text-zinc-900 shadow-sm">−</button>
-        <!-- <button type="button" data-map-locate aria-label="내 위치" class="flex h-10 w-10 items-center justify-center rounded-lg border border-zinc-300 bg-white text-zinc-900 shadow-sm"> -->
-          <!-- <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>
-        </button> -->
+        <button type="button" data-map-locate aria-label="현 위치로 이동" class="mt-1 flex h-10 w-10 items-center justify-center rounded-full border border-zinc-300 bg-white text-zinc-900 shadow-sm">
+          <i class="fa-solid fa-location-crosshairs"></i>
+        </button>
       </div>
-
-      <!-- <button type="button" data-map-locate aria-label="내 위치" class="mo-map-fab">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>
-      </button> -->
 
       <span data-map-placeholder class="absolute bottom-4 right-4 z-10 hidden rounded-md border border-dashed border-zinc-400 bg-white px-2-5 py-1 text-2xs text-zinc-600 lg:inline">[카카오맵 영역]</span>
       <span data-map-placeholder class="mo-map-badge">[카카오맵 영역]</span>
 
-      <!-- MO 데이터 안내 버튼: places.js 의 renderLegend 가 범례 위로 옮겨 세운다 -->
-      <button type="button" data-map-info data-info-open aria-label="데이터 안내"
+      <!-- MO 지도 버튼(현 위치, 데이터 안내): places.js 의 renderLegend 가 범례 위로 이 순서대로 옮겨 세운다 -->
+      <button type="button" data-legend-stack data-map-locate aria-label="현 위치로 이동"
+        class="flex size-10 items-center justify-center rounded-full bg-white text-zinc-900 shadow lg:hidden">
+        <i class="fa-solid fa-location-crosshairs"></i>
+      </button>
+      <button type="button" data-legend-stack data-info-open aria-label="데이터 안내"
         class="flex size-7 items-center justify-center rounded-full bg-white/90 text-zinc-600 shadow lg:hidden">
         <i class="fa-regular fa-circle-question"></i>
       </button>
@@ -150,6 +150,7 @@
         </ul>
       </div>
     </div>
+
 
     <!-- ========== MO 바텀시트: 랭킹 ========== -->
     <!-- ========== MO 바텀시트: PC 좌측 패널과 같은 탭 구성 ========== -->

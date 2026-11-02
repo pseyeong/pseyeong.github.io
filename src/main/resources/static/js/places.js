@@ -32,11 +32,16 @@
           if (!root) return;
     
           // 범례 자리: PC 는 지도 오른쪽 아래 / 모바일은 바텀시트 1단계(화면 1/4, sheet.js STOPS[0]) 높이 + 20px 위.
-          // 모바일 안내 버튼([data-map-info])을 범례 오른쪽 위 20px(gap-5) 에 같이 세운다.
+          // 모바일 지도 버튼([data-legend-stack]: 현 위치, 안내)을 범례 오른쪽 위에 세운다 (버튼끼리 8px, 범례와 20px).
           const wrap = document.createElement('div');
           wrap.className = 'absolute bottom-3 right-3 z-10 flex flex-col items-end gap-5 max-lg:bottom-[calc(25%+20px)]';
-          const info = root.querySelector('[data-map-info]');
-          if (info) wrap.append(info);
+          const stack = [...root.querySelectorAll('[data-legend-stack]')];
+          if (stack.length) {
+            const buttons = document.createElement('div');
+            buttons.className = 'flex flex-col items-end gap-2 lg:hidden';
+            buttons.append(...stack);
+            wrap.append(buttons);
+          }
 
           const box = document.createElement('div');
           box.className = 'flex gap-1 rounded-lg bg-white/90 p-2 text-2xs text-zinc-700 shadow max-lg:gap-0 max-lg:p-1-5';

@@ -5,6 +5,7 @@
 (function () {
   const DEFAULT_CENTER = { lat: 37.5665, lng: 126.978 }; // 서울시청
   const DEFAULT_LEVEL = 4;
+  const SEOUL = { south: 37.41, north: 37.72, west: 126.73, east: 127.27 }; // 데이터가 있는 범위 (현 위치 버튼용)
 
   const root = document.getElementById('map');
   const container = document.getElementById('kakao-map');
@@ -37,7 +38,6 @@
 
     document.querySelectorAll('[data-map-placeholder]').forEach((el) => el.classList.add('!hidden'));
 
-    let myMarker = null;
     let searchMarker = null; // 검색한 위치 표시 (검은 점, 하나만)
 
     const api = {
@@ -57,17 +57,31 @@
         const ne = b.getNorthEast();
         return { swLat: sw.getLat(), swLng: sw.getLng(), neLat: ne.getLat(), neLng: ne.getLng() };
       },
+      // 현 위치로 중심만 옮긴다 (확대 단계·마커는 그대로).
+      // PC 는 IP 로 위치를 추정해서 해외로 잡히기도 하는데, 카카오맵은 국외를 그리지 못해 지도가 사라져 보인다.
+      // 그래서 서비스 지역(서울) 밖이면 옮기지 않고 안내만 한다.
       locate() {
-        if (!navigator.geolocation) return;
+        if (!navigator.geolocation) {
+          alert('이 브라우저에서는 현재 위치를 쓸 수 없어요.');
+          return;
+        }
         navigator.geolocation.getCurrentPosition(
           (pos) => {
-            const here = new maps.LatLng(pos.coords.latitude, pos.coords.longitude);
-            if (!myMarker) myMarker = new maps.Marker({ map, position: here });
-            else myMarker.setPosition(here);
-            map.setLevel(3);
-            map.panTo(here);
+            const { latitude: lat, longitude: lng } = pos.coords;
+            const inSeoul = lat >= SEOUL.south && lat <= SEOUL.north && lng >= SEOUL.west && lng <= SEOUL.east;
+            if (!inSeoul) {
+              alert('현재 위치가 서비스 지역(서울) 밖으로 잡혔어요.');
+              return;
+            }
+            map.panTo(new maps.LatLng(lat, lng));
           },
-          () => console.warn('[kakaoMap] 위치 정보를 가져오지 못했습니다.'),
+          (err) => {
+            console.warn('[kakaoMap] 위치 정보를 가져오지 못했습니다.', err.code);
+            // 1: 권한 거부, 그 외: 시간 초과·위치 못 찾음
+            alert(err.code === 1
+              ? '위치 권한이 꺼져 있어요. 브라우저 설정에서 위치 권한을 허용해 주세요.'
+              : '현재 위치를 찾지 못했어요. 잠시 후 다시 시도해 주세요.');
+          },
           { enableHighAccuracy: true, timeout: 8000 }
         );
       },
