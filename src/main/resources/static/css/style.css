@@ -69,6 +69,13 @@
     @apply min-h-11 rounded-xl border border-zinc-300 bg-white text-sm font-semibold text-zinc-900;
   }
 
+  /* 화면 높이: 모바일 100vh 는 주소창에 가려지는 부분까지 포함해서 아래가 잘린다.
+     100dvh 는 주소창이 보이거나 숨는 것에 맞춰 실제 보이는 높이가 된다 (지원 안 하면 100vh) */
+  .app-main {
+    height: 100vh;
+    height: 100dvh;
+  }
+
   /* 월 선택 달력 (monthPicker.js) */
   .month-trigger {
     @apply flex h-10 items-center justify-between gap-2 rounded-lg border border-zinc-300 bg-zinc-50 px-3 text-sm text-zinc-900 outline-none focus:border-primary-600;
@@ -138,7 +145,8 @@
 
   /* 본문은 3단계에서만 스크롤, 시트가 움직이는 중에는 터치를 막는다 */
   .mo-sheet-body {
-    @apply min-h-0 flex-1 overflow-hidden overscroll-contain;
+    /* 아이폰 홈 바(safe-area) 만큼 아래를 띄워 마지막 버튼이 가리지 않게 */
+    @apply min-h-0 flex-1 overflow-hidden overscroll-contain pb-[env(safe-area-inset-bottom)];
   }
 
   .mo-sheet.is-open .mo-sheet-body {
