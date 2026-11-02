@@ -1833,6 +1833,11 @@ header {
   color: rgb(16 24 40 / var(--tw-text-opacity, 1));
 }
 
+.text-\[\#F37D5A\] {
+  --tw-text-opacity: 1;
+  color: rgb(243 125 90 / var(--tw-text-opacity, 1));
+}
+
 .underline {
   text-decoration-line: underline;
 }
