@@ -110,6 +110,18 @@
     document.addEventListener('sheet:show', () => {
       if (step < START) moveTo(START);
     });
+
+    // 반쯤(2단계) 열린 채로 지도를 누르거나 끌어 옮기면 지도를 넓게 보도록 1단계로 내린다
+    ['map:click', 'map:dragstart'].forEach((name) => {
+      document.addEventListener(name, () => {
+        if (mobile.matches && step === START) moveTo(0);
+      });
+    });
+
+    // 제보 폼처럼 본문을 스크롤해야 할 때(sheet:open)는 3단계까지 올린다
+    document.addEventListener('sheet:open', () => {
+      if (step !== OPEN) moveTo(OPEN);
+    });
   }
 
   document.addEventListener('DOMContentLoaded', () => {

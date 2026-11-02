@@ -99,8 +99,15 @@
     }
 
     maps.event.addListener(map, 'idle', notifyIdle);
-    // 지도 빈 곳을 클릭하면 검색 점을 지운다
-    maps.event.addListener(map, 'click', () => api.unmark());
+    // 지도 빈 곳을 클릭하면 검색 점을 지우고, 다른 스크립트(바텀시트)에도 알린다
+    maps.event.addListener(map, 'click', () => {
+      api.unmark();
+      document.dispatchEvent(new CustomEvent('map:click'));
+    });
+    // 사용자가 지도를 끌기 시작하면 알린다 (panTo 같은 코드 이동에는 오지 않는다)
+    maps.event.addListener(map, 'dragstart', () => {
+      document.dispatchEvent(new CustomEvent('map:dragstart'));
+    });
 
 
     // 처음 타일 로딩이 끝났을 때 한 번 알려서, 움직이지 않아도 첫 화면에 점이 찍히게 한다.

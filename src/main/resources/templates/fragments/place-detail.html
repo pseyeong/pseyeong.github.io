@@ -23,9 +23,7 @@
 
   <div class="grid grid-cols-3 gap-1-5 lg:gap-2">
     <div class="stat-card">
-      <span class="text-2xs text-zinc-500">
-        <th:block th:unless="${compact}">평균 영업 기간</th:block>
-      </span>
+      <span class="text-2xs text-zinc-500">평균 영업 기간</span>
       <span data-stat-avg data-skel class="self-start text-xs font-bold lg:text-sm">1년 1개월</span>
     </div>
     <div class="stat-card">
@@ -63,13 +61,26 @@
     <form data-report-form class="hidden flex-col gap-2 rounded-lg border border-zinc-200 p-3">
       <input name="actualName" required maxlength="100" placeholder="실제 상호 (필수)"
         class="h-10 rounded-lg border border-zinc-300 bg-zinc-50 px-3 text-sm outline-none focus:border-primary-600">
+      <!-- 월 선택 달력: monthPicker.js 가 고른 값을 숨은 input(YYYY-MM)에 넣는다 -->
       <div class="flex gap-2">
-        <label class="flex min-w-0 flex-1 flex-col gap-1 text-2xs text-zinc-500">언제부터 (대략)
-          <input type="month" name="periodFrom" class="h-10 rounded-lg border border-zinc-300 bg-zinc-50 px-2 text-sm outline-none focus:border-primary-600">
-        </label>
-        <label class="flex min-w-0 flex-1 flex-col gap-1 text-2xs text-zinc-500">언제까지 (비우면 지금까지)
-          <input type="month" name="periodTo" class="h-10 rounded-lg border border-zinc-300 bg-zinc-50 px-2 text-sm outline-none focus:border-primary-600">
-        </label>
+        <div data-month-picker class="relative flex min-w-0 flex-1 flex-col gap-1 text-2xs text-zinc-500">
+          <span>언제부터 (대략)</span>
+          <input type="hidden" name="periodFrom">
+          <button type="button" data-month-trigger class="month-trigger">
+            <span data-month-label data-placeholder="선택">선택</span>
+            <i class="fa-regular fa-calendar text-zinc-400"></i>
+          </button>
+          <div data-month-popup class="month-popup left-0 hidden"></div>
+        </div>
+        <div data-month-picker class="relative flex min-w-0 flex-1 flex-col gap-1 text-2xs text-zinc-500">
+          <span>언제까지</span>
+          <input type="hidden" name="periodTo">
+          <button type="button" data-month-trigger class="month-trigger">
+            <span data-month-label data-placeholder="지금까지">지금까지</span>
+            <i class="fa-regular fa-calendar text-zinc-400"></i>
+          </button>
+          <div data-month-popup class="month-popup right-0 hidden"></div>
+        </div>
       </div>
       <textarea name="memo" maxlength="500" rows="2" placeholder="메모 (선택) 예: 간판은 그대로인데 주인만 바뀌었어요"
         class="rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm outline-none focus:border-primary-600"></textarea>

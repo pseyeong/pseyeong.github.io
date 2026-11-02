@@ -69,6 +69,35 @@
     @apply min-h-11 rounded-xl border border-zinc-300 bg-white text-sm font-semibold text-zinc-900;
   }
 
+  /* 월 선택 달력 (monthPicker.js) */
+  .month-trigger {
+    @apply flex h-10 items-center justify-between gap-2 rounded-lg border border-zinc-300 bg-zinc-50 px-3 text-sm text-zinc-900 outline-none focus:border-primary-600;
+  }
+
+  .month-trigger.is-empty {
+    @apply text-zinc-400;
+  }
+
+  .month-popup {
+    @apply absolute top-full z-50 mt-1 w-[260px] rounded-2xl border border-zinc-200 bg-white p-4 shadow-lg;
+  }
+
+  .month-nav {
+    @apply flex size-8 items-center justify-center rounded-lg text-zinc-700 hover:bg-zinc-100 disabled:text-zinc-300 disabled:hover:bg-transparent;
+  }
+
+  .month-cell {
+    @apply flex h-10 items-center justify-center rounded-lg text-sm text-zinc-900 hover:bg-zinc-100 disabled:text-zinc-300 disabled:hover:bg-transparent;
+  }
+
+  .month-cell.is-current {
+    @apply bg-zinc-100;
+  }
+
+  .month-cell.is-selected {
+    @apply bg-primary-600 font-semibold text-white hover:bg-primary-600;
+  }
+
   /* 불러오는 중: 글자는 숨기고 그 크기만큼 회색 막대로 깜빡인다 */
   .is-loading [data-skel] {
     @apply animate-pulse rounded bg-zinc-200 text-transparent;

@@ -579,7 +579,10 @@
         form.classList.toggle('flex', open);
 
         if (open) {
-          const pane = document.querySelector('[data-pc-pane="detail"]');
+          // 이 버튼을 감싼 스크롤 영역: 모바일은 시트 본문, PC 는 상세 패널
+          const sheetBody = btn.closest('[data-sheet-body]');
+          const pane = sheetBody || btn.closest('[data-pc-pane="detail"]');
+          if (sheetBody) document.dispatchEvent(new CustomEvent('sheet:open')); // 본문은 3단계에서만 스크롤된다
           if (pane) {
             requestAnimationFrame(() => {
               pane.scrollTo({ top: pane.scrollHeight, behavior: 'smooth' });
