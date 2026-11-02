@@ -31,10 +31,15 @@
           const root = document.getElementById('map');
           if (!root) return;
     
+          // 범례 자리: PC 는 지도 오른쪽 아래 / 모바일은 바텀시트 1단계(화면 1/4, sheet.js STOPS[0]) 높이 + 20px 위.
+          // 모바일 안내 버튼([data-map-info])을 범례 오른쪽 위 20px(gap-5) 에 같이 세운다.
+          const wrap = document.createElement('div');
+          wrap.className = 'absolute bottom-3 right-3 z-10 flex flex-col items-end gap-5 max-lg:bottom-[calc(25%+20px)]';
+          const info = root.querySelector('[data-map-info]');
+          if (info) wrap.append(info);
+
           const box = document.createElement('div');
-          // PC: 지도 오른쪽 아래 / 모바일: 바텀시트 1단계(화면 1/4, sheet.js STOPS[0]) 높이 + 20px 위
-          box.className = 'absolute bottom-3 right-3 z-10 flex gap-1 rounded-lg bg-white/90 p-2 text-2xs text-zinc-700 shadow'
-            + ' max-lg:bottom-[calc(25%+20px)] max-lg:gap-0 max-lg:p-1-5';
+          box.className = 'flex gap-1 rounded-lg bg-white/90 p-2 text-2xs text-zinc-700 shadow max-lg:gap-0 max-lg:p-1-5';
     
           // 범례는 빈 자리를 맨 뒤에 보여 준다 (판정 순서와 별개)
           [...LEVELS.slice(1), LEVELS[0]].forEach((l) => {
@@ -63,8 +68,9 @@
             row.append(slot, label);
             box.append(row);
           });
-    
-          root.append(box);
+
+          wrap.append(box);
+          root.append(wrap);
         }
     
       

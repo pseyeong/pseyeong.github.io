@@ -124,7 +124,32 @@
 
       <span data-map-placeholder class="absolute bottom-4 right-4 z-10 hidden rounded-md border border-dashed border-zinc-400 bg-white px-2-5 py-1 text-2xs text-zinc-600 lg:inline">[카카오맵 영역]</span>
       <span data-map-placeholder class="mo-map-badge">[카카오맵 영역]</span>
+
+      <!-- MO 데이터 안내 버튼: places.js 의 renderLegend 가 범례 위로 옮겨 세운다 -->
+      <button type="button" data-map-info data-info-open aria-label="데이터 안내"
+        class="flex size-7 items-center justify-center rounded-full bg-white/90 text-zinc-600 shadow lg:hidden">
+        <i class="fa-regular fa-circle-question"></i>
+      </button>
     </section>
+
+    <!-- 데이터 안내 모달: 딤 배경이나 닫기 버튼을 누르면 닫힌다 (ui.js) -->
+    <div data-info-modal class="fixed inset-0 z-[60] hidden items-center justify-center bg-black/50 px-6"
+      role="dialog" aria-modal="true" aria-labelledby="info-modal-title">
+      <div class="w-full max-w-sm rounded-2xl bg-white p-5 shadow-xl">
+        <div class="mb-3 flex items-center justify-between gap-2">
+          <p id="info-modal-title" class="text-sm font-semibold text-zinc-900">음식점·카페 인허가 데이터 기준</p>
+          <button type="button" data-info-close aria-label="닫기"
+            class="flex size-8 shrink-0 items-center justify-center rounded-full text-zinc-500 hover:bg-zinc-100">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+        <ul class="flex list-disc flex-col gap-1-5 pl-4 text-xs leading-relaxed text-zinc-600">
+          <li>상호는 각 인허가의 현재(최종) 이름 기준이에요. 실제 간판이 바뀐 시점과 다를 수 있어요.</li>
+          <li>같은 업종으로 인수한 가게는 이전 가게와 하나로 표시될 수 있어요.</li>
+          <li>그래서 가게 수는 실제보다 적게 나올 수 있어요(최솟값).</li>
+        </ul>
+      </div>
+    </div>
 
     <!-- ========== MO 바텀시트: 랭킹 ========== -->
     <!-- ========== MO 바텀시트: PC 좌측 패널과 같은 탭 구성 ========== -->

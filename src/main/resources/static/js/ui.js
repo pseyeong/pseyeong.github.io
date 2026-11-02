@@ -85,6 +85,27 @@
       });
     });
 
+    // 데이터 안내 모달 (모바일 지도 위 i 버튼): 닫기 버튼, 딤 배경, Esc 로 닫는다
+    const infoModal = document.querySelector('[data-info-modal]');
+    if (infoModal) {
+      const setInfoOpen = (open) => {
+        infoModal.classList.toggle('hidden', !open);
+        infoModal.classList.toggle('flex', open);
+      };
+      document.querySelectorAll('[data-info-open]').forEach((el) => {
+        el.addEventListener('click', () => setInfoOpen(true));
+      });
+      infoModal.querySelectorAll('[data-info-close]').forEach((el) => {
+        el.addEventListener('click', () => setInfoOpen(false));
+      });
+      infoModal.addEventListener('click', (e) => {
+        if (e.target === infoModal) setInfoOpen(false); // 흰 상자 바깥(딤)만
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') setInfoOpen(false);
+      });
+    }
+
     document.querySelectorAll('.filterBtn').forEach((btn) => {
       btn.addEventListener('click', () => {
         const chips = btn.nextElementSibling;
