@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 네일 리스트 전용 스타일. 색·글꼴 같은 디자인 값은 tailwind.config.js 를 store 와 같이 쓴다. */
+@layer base {
+  html,
+  body {
+    @apply h-full text-zinc-900 font-sans antialiased;
+  }
+}

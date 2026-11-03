@@ -1,9 +1,12 @@
 {
-  "name": "place",
+  "name": "pseyeong",
   "private": true,
   "scripts": {
-    "build": "tailwindcss -i ./src/main/resources/static/css/style.css -o ./src/main/resources/static/css/output.css --minify",
-    "watch": "tailwindcss -i ./src/main/resources/static/css/style.css -o ./src/main/resources/static/css/output.css --watch"
+    "build": "npm run build:store && npm run build:nail",
+    "build:store": "tailwindcss -i ./src/main/resources/static/store/css/style.css -o ./src/main/resources/static/store/css/output.css --content \"./src/main/resources/templates/{store,common}/**/*.html,./src/main/resources/static/{store,common}/**/*.js\" --minify",
+    "build:nail": "tailwindcss -i ./src/main/resources/static/nail/css/style.css -o ./src/main/resources/static/nail/css/output.css --content \"./src/main/resources/templates/{nail,common}/**/*.html,./src/main/resources/static/{nail,common}/**/*.js\" --minify",
+    "watch:store": "tailwindcss -i ./src/main/resources/static/store/css/style.css -o ./src/main/resources/static/store/css/output.css --content \"./src/main/resources/templates/{store,common}/**/*.html,./src/main/resources/static/{store,common}/**/*.js\" --watch",
+    "watch:nail": "tailwindcss -i ./src/main/resources/static/nail/css/style.css -o ./src/main/resources/static/nail/css/output.css --content \"./src/main/resources/templates/{nail,common}/**/*.html,./src/main/resources/static/{nail,common}/**/*.js\" --watch"
   },
   "devDependencies": {
     "tailwindcss": "^3.4.17"
